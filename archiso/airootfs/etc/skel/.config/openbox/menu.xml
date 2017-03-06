@@ -336,6 +336,13 @@
                         </command>
 					</action>
 				</item>
+				<item label="GUI Keybinds">
+					<action name="Execute">
+						<command>
+                            obkey
+                        </command>
+					</action>
+				</item>
 				<separator/>
 				<item label="Reconfigure">
 					<action name="Reconfigure"/>
@@ -359,6 +366,13 @@
 				<action name="Execute">
 					<command>
                         xfce4-appearance-settings
+                    </command>
+				</action>
+			</item>
+			<item label="Tint2 GUI">
+				<action name="Execute">
+					<command>
+                       tint2conf
                     </command>
 				</action>
 			</item>
@@ -449,133 +463,8 @@
 			</menu>
 		</menu>
 		<menu id="system" label="System">
-			<menu id="install" label="ARCHLabs Extras One-By-One">
-				<separator label="Install OBO Scripts"/>
-				<item label="Install Audacious Player">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/audacious.sh</execute>
-				</action>
-			</item>
-				<item label="Install Audacity">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/audacity.sh</execute>
-				</action>
-			</item>
-				<item label="Install Blender">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/blender.sh</execute>
-				</action>
-			</item>
-				<item label="Install Chromium Browser">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/chromium.sh</execute>
-				</action>
-			</item>
-			<item label="Install Dropbox">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/dropbox.sh</execute>
-				</action>
-			</item>
-				<item label="Install Extra Codecs">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/codecs.sh</execute>
-				</action>
-			</item>
-			<item label="Install Filezilla FTP Client">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/filezilla.sh</execute>
-				</action>
-			</item>
-			<item label="Install Firefox Browser">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/firefox.sh</execute>
-				</action>
-			</item>
-				<item label="Install Gigolo">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/gigolo.sh</execute>
-				</action>
-			</item>
-				<item label="Install The Gimp">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/gimp.sh</execute>
-				</action>
-			</item>
-				<item label="Install Gnome MPlayer">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/gnome-mplayer.sh</execute>
-				</action>
-			</item>
-				<item label="Install GTK Record My Desktop">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/gtk-recordmydesktop.sh</execute>
-				</action>
-			</item>
-				<item label="Install Inkscape">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/inkscape.sh</execute>
-				</action>
-			</item>
-				<item label="Install Libre Office">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/libreoffice.sh</execute>
-				</action>
-			</item>
-			<item label="Install Minecraft">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/minecraft.sh</execute>
-				</action>
-			</item>
-				<item label="Install Openshot">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/openshot.sh</execute>
-				</action>
-			</item>
-			<item label="Install Opera Browser">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/opera.sh</execute>
-				</action>
-			</item>
-				<item label="Install XFCE4-Screenshooter">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/screenshooter.sh</execute>
-				</action>
-			</item>
-				<item label="Install SMPlayer">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/smplayer.sh</execute>
-				</action>
-			</item>
-				<item label="Install View Nior">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/viewnior.sh</execute>
-				</action>
-			</item>
-				<item label="Install VNC Server">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/vnc-server.sh</execute>
-				</action>
-			</item>
-				<item label="Install XFBurn">
-				<action name="Execute">
-					<execute>termite -e /usr/bin/xfburn.sh</execute>
-				</action>
-			</item>
-				</menu>
-				<menu id="installmenu" label="ARCHLabs Extras All-In-One">
-				<separator label="Install AIO Script"/>
-				<item label="Install All-In-One Script">
-				<action name="Execute">
-					<execute>urxvt -e /usr/bin/ARCHLabs-extras-AIO.sh</execute>
-				</action>
-			</item>
-			<item label="Edit All-In-One Script">
-				<action name="Execute">
-					<execute>gksudo geany /usr/bin/ARCHLabs-extras-AIO.sh</execute>
-				</action>
-			</item>
-				</menu>
-				<separator/>
+			
+			
 			<item label="Pamac Package Manager">
 				<action name="Execute">
 					<command>

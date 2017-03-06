@@ -114,4 +114,4 @@ double_buffer yes
 update_interval 1
 
 TEXT
-${image $HOME/.config/conky/images/al2.png}
+${image $HOME/.config/conky/images/al.png}

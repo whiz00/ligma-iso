@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/ajjames31/.gtkrc-2.0.mine"
-gtk-theme-name="ARCHLabs Bunsen Blackish GTK3"
+gtk-theme-name="ARCHLabs Bunsen GTK3"
 gtk-icon-theme-name="Faenza-Dark-ARCHLabs"
 gtk-font-name="Cantarell 11"
 gtk-cursor-theme-name="Adwaita"
