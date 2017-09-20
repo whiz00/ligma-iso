@@ -12,10 +12,9 @@ mkdir -p "$storage"
 cp $HOME/.config/openbox/menu.xml $HOME/.config/openbox/menu-switcher/menu-static.xml
 
 ## Check for backup & setup new menu
-if [ -f "$menubase" ]; then
-  obmenu-generator -s -c
-
-else
-  notify-send 'Ooops!' 'A backup was never made & is required.. Nothing was changed.'
-  
+if [ -f "$menubase" ]
+    then
+        obmenu-generator -s -c
+    else
+        notify-send 'Ooops!' 'A backup was never made & is required.. Nothing was changed.'
 fi

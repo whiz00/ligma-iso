@@ -69,6 +69,13 @@ bindsym $mod+Shift+8 move container to workspace 8; workspace 8
 bindsym $mod+Shift+9 move container to workspace 9; workspace 9
 bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 
+#####################################################################################################################
+#################                                  Launchers                                        #################
+#####################################################################################################################
+
+bindsym $mod+shift+d exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'Ubuntu Regular:bold:pixelsize=14'
+
+bindsym Control+space exec --no-startup-id rofi-apps
 
 #####################################################################################################################
 #################                          reload changed configuration                             #################
@@ -83,9 +90,9 @@ bindsym $mod+Shift+c reload
 # kill focused window
 bindsym $mod+Shift+q kill
 
-####################################################################################################
-#######                           Container/window control                                  ########
-####################################################################################################
+#####################################################################################################################
+#################                          Moving around in i3                                      #################
+#####################################################################################################################
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -124,6 +131,10 @@ bindsym mod1+Down   resize grow height 10 px or 10 ppt
 bindsym mod1+Up     resize shrink height 10 px or 10 ppt
 bindsym mod1+Right  resize grow width 10 px or 10 ppt
 
+#####################################################################################################################
+#################                          moving around workspaces                                 #################
+#####################################################################################################################
+
 # next/previous workspace
 bindsym Mod1+Tab workspace next
 bindsym Mod1+Shift+Tab workspace prev
@@ -136,16 +147,20 @@ bindsym Mod1+Ctrl+Left workspace prev
 # switch to workspace with urgent window
 for_window [urgent=latest] focus
 
-# default tiling orientation
+#####################################################################################################################
+#################                          Tiling parameters                                        #################
+#####################################################################################################################
+
 default_orientation horizontal
 
-# container layout
+# split in horizontal or vertical orientation
 bindsym $mod+h split h
 bindsym $mod+v split v
-bindsym $mod+Shift+t layout tabbed
-bindsym $mod+Shift+s layout stacking
-bindsym $mod+Shift+h layout splith
-bindsym $mod+Shift+v layout splitv
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stackin
+bindsym $mod+z layout tabbed
+#bindsym $mod+e layout toggle split
 
 # switch between tiling / floating
 bindsym $mod+space focus mode_toggle
@@ -162,50 +177,46 @@ bindsym $mod+a focus parent
 
 # re-run with every i3 reload
 exec_always --no-startup-id numlockx on
-exec_always --no-startup-id ksuperkey -e 'Super_L=Alt_L|F1'
 exec_always --no-startup-id $HOME/.config/i3/scripts/compositor.sh
-exec_always --no-startup-id $HOME/.config/polybar/launch-i3-polybar.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # run once at startup
-#exec --no-startup-id start-pulseaudio-x11
 exec --no-startup-id xfsettingsd &
-#exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec --no-startup-id nm-applet
+exec --no-startup-id volumeicon
 exec --no-startup-id nitrogen --restore
-#exec --no-startup-id xfce4-power-manager &
-
-# system tray
-#exec --no-startup-id nm-applet
-#exec --no-startup-id volumeicon
-
+exec --no-startup-id xfce4-power-manager &
 
 #####################################################################################################################
 #################                          applications keyboard shortcuts                          #################
 #####################################################################################################################
 
-bindsym $mod+e exec geany
-bindsym Control+space exec rofi-apps
-bindsym mod1+F1 exec --no-startup-id rofi-apps
-bindsym $mod+t exec exo-open --launch TerminalEmulator
-bindsym $mod+w exec exo-open --launch WebBrowser
-bindsym $mod+f exec exo-open --launch FileManager
-bindsym Print exec scrot "'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f'"
+bindsym $mod+t exec --no-startup-id exo-open --launch TerminalEmulator
+bindsym control+mod1+m exec --no-startup-id xfce4-settings-manager
+bindsym $mod+w exec --no-startup-id exo-open --launch WebBrowser
+bindsym $mod+e exec --no-startup-id geany
+bindsym $mod+f exec --no-startup-id exo-open --launch FileManager
+bindsym Print exec --no-startup-id scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES)'
 
 #####################################################################################################################
 #################                          floating                                        #################
 #####################################################################################################################
 
-for_window [class="VirtualBox|qt5ct|Lxappearance|Galculator|Imagewriter|Font-manager|^Gpick$|Pamac|^Skype$\
-|Xfce4-appfinder|Xfce4-taskmanager|Peek|Wine|Steam|Nitrogen|^Gnome-font-viewer$|^Deluge"] floating enable
-for_window [window_role="^Preferences$"] floating enable
-for_window [title="Copying|Deleting|Moving|pop-up|setup|PlayOnLinux"] floating enable
-
+for_window [class="Galculator|Pavucontrol|^Gpick$|Nitrogen"] floating enable
+for_window [title="Copying|Deleting|Moving"] floating enable
+for_window [window_role="pop-up|^Preferences$|setup"] floating enable
 for_window [class="Termite|Thunar|Geany|Firefox"] focus
+
+#####################################################################################################################
+#################                          assign applications to workspaces                       #################
+#####################################################################################################################
 
 # get class with xprop
 assign [class="Firefox"]                      → 1
 assign [class="Geany"]                        → 2
 assign [class="Thunar"]                       → 3
-assign [class="mpv|Audacious"]                → 4
+assign [class="mpv"]                          → 4
 
 #####################################################################################################################
 #################                          audio settings                                           #################
@@ -215,9 +226,6 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioStop exec --no-startup-id playerctl stop
-bindsym XF86AudioRaiseVolume exec $HOME/.config/polybar/scripts/pavolume.sh --up
-bindsym XF86AudioLowerVolume exec $HOME/.config/polybar/scripts/pavolume.sh --down
-bindsym XF86AudioMute exec $HOME/.config/polybar/scripts/pavolume.sh --togmute
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
 
@@ -242,8 +250,16 @@ new_window normal
 new_float normal
 #new_float none
 
+#####################################################################################################################
+#################                          Popups  control                                          #################
+#####################################################################################################################
+
 #Popups during fullscreen mode
 popup_during_fullscreen smart
+
+#####################################################################################################################
+#################                          i3 gaps next                                             #################
+#####################################################################################################################
 
 for_window [class="^.*"] border pixel 2
 gaps inner 8
@@ -304,8 +320,9 @@ bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed 
 #Press $mod (super) and X to exit
 bindsym $mod+X mode "$mode_system"
 
-set $mode_system (l)   (u)   (h) ⏾  (r)   (s) 
+set $mode_system (k)   (l)   (u)   (h) ⏾  (r)   (s) 
 mode "$mode_system" {
+    bindsym k exec --no-startup-id i3lock, mode "default"
     bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
     bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
     bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"

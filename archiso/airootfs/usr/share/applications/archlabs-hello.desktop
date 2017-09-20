@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Archlabs-Hello
+Comment=Greeter from ARCHLabs
+Categories=Utility;
+Exec=archlabs-hello
+Icon=al-hello

@@ -639,8 +639,8 @@ gap=3
 # Values:  'px'
 # Flags:   --xoffset
 #          --yoffset
-yoffset=10
-xoffset=10
+yoffset=20
+xoffset=20
 
 # Image background color
 # Only works with the w3m backend.

@@ -1,7 +1,7 @@
 #!/bin/sh
 case "$1" in
     lock)
-        i3lock-fancy -f Ubuntu
+        slimlock
         ;;
     logout)
         i3-msg exit

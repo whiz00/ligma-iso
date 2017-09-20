@@ -29,7 +29,7 @@ Presentation
         repeat: true
         onTriggered: presentation.goToNextSlide()
     }
-
+    
     Slide {
 
         Image {
@@ -37,15 +37,17 @@ Presentation
             source: "slide1.png"
             width: 800; height: 300
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+			horizontalAlignment: Image.AlignHCenter
+			verticalAlignment: Image.AlignTop
         }
         Text {
             anchors.horizontalCenter: background1.horizontalCenter
             anchors.top: background1.bottom
             text: "Welcome to ArchLabs <br/>"+
-                  "Using a graphical installer, ArchLabs brings the BunsenLabs experience to Arch.<br/>"+
-				          "Our vision doesn't end there, we're changing and improving with each release."
+                  "ArchLabs is based on Arch Linux, with an easy and graphical installer called Calamares.<br/>"+
+                  "ArchLabs brings the BunsenLabs experience to Arch.<br/>"+
+				  "Our vision did not end there. ArchLabs is evolving and innovating all the time.<br/>"+
+		          "Reinventing ourselves with the help of the ArchLabbers."
             wrapMode: Text.WordWrap
             width: 600
             horizontalAlignment: Text.Center
@@ -59,16 +61,16 @@ Presentation
             source: "slide2.png"
             width: 800; height: 300
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+			horizontalAlignment: Image.AlignHCenter
+			verticalAlignment: Image.AlignTop
         }
         Text {
             anchors.horizontalCenter: background2.horizontalCenter
             anchors.top: background2.bottom
-            text: "Featuring the lightning fast Openbox Window Manager.<br/>"+
-				          "Right click to get easy access to commonly used applications.<br/>"+
-                  "Customize it to suit your needs and provide amazing functionality.<br/>"+
-                  "All while looking nice and remaining low on system resources."
+            text: "ArchLabs features the lightning fast openbox menu.<br/>"+
+				  "Right-mouse click to get to the openbox menu.<br/>"+
+                  "Customized to provide amazing functionality.<br/>"+
+                  "ArchLabs aims to be low on cpu and ram consumption."
             wrapMode: Text.WordWrap
             width: 600
             horizontalAlignment: Text.Center
@@ -82,20 +84,21 @@ Presentation
             source: "slide3.png"
             width: 800; height: 300
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+			horizontalAlignment: Image.AlignHCenter
+			verticalAlignment: Image.AlignTop
         }
         Text {
             anchors.horizontalCenter: background3.horizontalCenter
             anchors.top: background3.bottom
-            text: "Made to be minimal at its core, Minimo leaves the choices up to you<br/>"+
-                  "While staying true to the ArchLabs experience out of the box."
+            text: "With incredible theming and tweaking configurations<br/>"+
+                  "ArchLabs aims to provide an awesome desktop experience out of the box.<br/>"+
+				  "Less frustrations. More fun."
             wrapMode: Text.WordWrap
             width: 600
             horizontalAlignment: Text.Center
         }
     }
-
+    
     Slide {
 
         Image {
@@ -103,20 +106,21 @@ Presentation
             source: "slide4.png"
             width: 800; height: 300
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+			horizontalAlignment: Image.AlignHCenter
+			verticalAlignment: Image.AlignTop
         }
         Text {
             anchors.horizontalCenter: background4.horizontalCenter
             anchors.top: background4.bottom
-            text: "Built around Openbox but now including i3 gaps, a tiling window manager.<br/>"+
-                  "Giving you two lightweight and awesome ways to manage your applications."
+            text: "ArchLabs now also features i3 gaps, a tiling window manager.<br/>"+
+                  "This is an awesome way to tile your applications<br/>"+
+                  "over one or more monitors. Very fast, low on cpu and memory as well."
             wrapMode: Text.WordWrap
             width: 600
             horizontalAlignment: Text.Center
         }
     }
-
+    
         Slide {
 
         Image {
@@ -124,15 +128,15 @@ Presentation
             source: "slide5.png"
             width: 800; height: 300
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+			horizontalAlignment: Image.AlignHCenter
+			verticalAlignment: Image.AlignTop
         }
         Text {
             anchors.horizontalCenter: background5.horizontalCenter
             anchors.top: background5.bottom
-            text: "With a solid base, Minimo stays out of the way so you can get work done.<br/>"+
-                  "Install your favorite apps, configure how you like, and have fun.<br/>"+
-                  "We listen, come and share your suggestions to help us improve ArchLabs."
+            text: "ArchLabs is concentrated fun out of the box.<br/>"+
+                  "Install. Change wallpaper, theme, icons, cursor, conky. Done.<br/>"+
+                  "Have fun. Come and share your configs online to improve ArchLabs."
             wrapMode: Text.WordWrap
             width: 600
             horizontalAlignment: Text.Center

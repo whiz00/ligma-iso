@@ -1,6 +1,8 @@
 ! ------------------------------------------------------------------------------
 ! xterm standard archlabs theme
 ! ------------------------------------------------------------------------------
+! https://critical.ch/xterm/
+! ------------------------------------------------------------------------------
 
 xterm*font: 7x13
 xterm*faceName: Monospace:size=12:antialias=false
@@ -34,12 +36,17 @@ xterm*boldMode: false
 
 ! ------------------------------------------------------------------------------
 ! URxvt standard archlabs theme
-! -----------------------------------------------------------------------------
+! ------------------------------------------------------------------------------
+
+
 
 ! general settings
 URxvt*saveline:         15000
 URxvt*termName:         rxvt-256color
 URxvt*iso14755:         false
+! for this icon to load in panels and plank you need to follow the steps described here
+! http://archlabs.prophpbb.com/post1220.html
+URxvt*iconFile:  		/usr/share/icons/Sardi-Mono/scalable/apps/terminal.svg
 
 ! appearance
 URxvt*depth:            32
@@ -80,12 +87,18 @@ URxvt*color14: #93e0e3
 URxvt*color15: #ffffff
 
 ! fonts
-URxvt*letterSpace: 	    		-1
-URxvt.font: xft:Ubuntu Mono:pixelsize=15
+URxvt*letterSpace: 	    		-2
+!Xft.size:						12
+URxvt*font:                 	xft:Monospace:regular:size=13
+URxvt*imFont:               	xft:Monospace:regular:size=13
+URxvt*boldFont:             	xft:Monospace:bold:size=13
+URxvt*italicFont:           	xft:Monospace:italic:size=13
+URxvt*boldItalicFont:     		xft:Monospace:regular:size=13
 ! run :.!fc-list | grep <font-name>
 
 ! perl extensions
 URxvt.perl-ext-common:  default,clipboard,url-select,keyboard-select
+!URxvt.perl-ext-common:  default,clipboard,url-select,keyboard-select,tabbed
 
 ! macros for clipboard and selection "m"=Alt
 URxvt.copyCommand:      xclip -i -selection clipboard
@@ -105,9 +118,12 @@ URxvt.tabbed.tab-bg:    4
 URxvt*buffered:         false
 
 
+
+
 ! ------------------------------------------------------------------------------
 ! UXTerm standard archlabs theme
 ! ------------------------------------------------------------------------------
+
 
 
 ! termtype
@@ -152,11 +168,3 @@ UXTerm*color15: rgb:fc/fc/fc
 UXTerm*boldMode: false
 UXTerm*colorBDMode: true
 UXTerm*colorBD: rgb:3f/3f/3f
-
-Xft.dpi: 96
-Xft.antialias: true
-Xft.hinting: true
-Xft.rgba: rgb
-Xft.autohint: false
-Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault

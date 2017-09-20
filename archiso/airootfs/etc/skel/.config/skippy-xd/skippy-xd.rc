@@ -25,14 +25,14 @@ background =
 showAll = true
 
 [normal]
-tint = #000000
-tintOpacity = 60
-opacity = 250
+tint = black
+tintOpacity = 0
+opacity = 200
 
 [highlight]
 tint = #000000
-tintOpacity = 0
-opacity = 250
+tintOpacity = 50
+opacity = 200
 
 [tooltip]
 show = true
@@ -42,7 +42,7 @@ offsetY = 20
 align = left
 border = #EFF0F1
 background = #212121
-opacity = 240
+opacity = 200
 text = #EFF0F1
 textShadow = none
 font = Ubuntu 10

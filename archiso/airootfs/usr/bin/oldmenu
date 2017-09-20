@@ -7,11 +7,10 @@ set -e
 menubase="$HOME/.config/openbox/menu-switcher/menu-static.xml"
 
 ## switch to menubase
-if [ -f "$menubase" ]; then
-  cp $HOME/.config/openbox/menu-switcher/menu-static.xml $HOME/.config/openbox/menu.xml
-  openbox --reconfigure
-
-else
-  notify-send 'Ooops!' 'It seems a backup was never made or is missing.'
-
+if [ -f "$menubase" ]
+    then
+        cp $HOME/.config/openbox/menu-switcher/menu-static.xml $HOME/.config/openbox/menu.xml
+        openbox --reconfigure
+    else
+        notify-send 'Ooops!' 'It seems a backup was never made or is missing.'
 fi

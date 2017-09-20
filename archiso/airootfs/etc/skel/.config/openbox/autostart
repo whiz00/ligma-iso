@@ -1,32 +1,38 @@
-# compton
-compton -b --config $HOME/.config/compton.conf &
+#
+# These things are run when an Openbox X Session is started.
+# You may place a similar script in $HOME/.config/openbox/autostart
+# to run user-specific things.
+#
 
-# laptops without a numpad may want to comment this out
-numlockx &
+compton -b --config ~/.config/compton.conf &
 
-pactl set-sink-mute @DEFAULT_SINK@ false &
+# bar
+tint2 &
+#(sleep 1; $HOME/.config/polybar/launch-ob-polybar.sh) &
 
-# panel
-(sleep 1; $HOME/.config/polybar/launch-ob-polybar.sh) &
-
-# meta key opens rofi
-ksuperkey -e 'Super_L=Alt_L|F1' &
+# thunar and bookmarks
+(sleep 1; thunar --daemon) &
+(sleep 1; xdg-user-dirs-gtk-update) &
 
 # wallpaper
 (sleep 1; nitrogen --restore) &
 
-# xfce settings
+#on laptops without seperate numeric keyboard put hashtag in front
+numlockx &
+
+## GNOME PolicyKit authentication
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+## systray
+(sleep 2; volumeicon) &
+(sleep 3; nm-applet) &
+(sleep 3; clipit) &
+#(sleep 3; blueberry-tray) &
+
+## XFCE4 Settings
 xfsettingsd &
+xfce4-power-manager &
 
-
-#(sleep 3; thunar --daemon) &
-(sleep 1; xdg-user-dirs-gtk-update) &
-
-# only used if system tray enabled
-#(sleep 2; volumeicon) &
-#(sleep 2; nm-applet) &
-
-# skippy
+# skippy & conky
 (sleep 2; skippy-xd --config $HOME/.config/skippy-xd/skippy-xd.rc --start-daemon) &
-#(sleep 5; termite --geometry=650x450 --exec=/usr/bin/al-hello) &
-(sleep 5; $HOME/.config/first-start.sh) &
+(sleep 2s && al-conky-session --autostart) &
