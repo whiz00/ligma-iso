@@ -57,27 +57,17 @@ class ConfigController:
     def copy_folder(self, source, target):
         if exists("/" + source):
             distutils.dir_util.copy_tree("/" + source, join(self.root, target))
-    
-    def remove_pkg(self, pkg, path):
-        if exists(join(self.root, path)):
-            target_env_call(['pacman', '-R', '--noconfirm', pkg])
-    
+     
     def run(self):
         self.init_keyring()
         self.populate_keyring()
-
-        # Remove calamares
-        self.remove_pkg("calamares", "usr/bin/calamares")
 
         # Generate mirror list
         if exists(join(self.root, "usr/bin/pacman-mirrors")):
             target_env_call(["pacman-mirrors", "-g"])
         else:
             self.copy_file('etc/pacman.d/mirrorlist')
-
-        # Copy skel to root
-        self.copy_folder('etc/skel', 'root')
-        
+  
         # Workaround for pacman-key bug FS#45351 https://bugs.archlinux.org/task/45351
         # We have to kill gpg-agent because if it stays around we can't reliably unmount
         # the target partition.

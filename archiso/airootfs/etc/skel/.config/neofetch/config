@@ -16,21 +16,23 @@ print_info() {
     info "OS" distro
     #info "Model" model
     info "Kernel" kernel
-    info "Memory" memory
     info "Uptime" uptime
     info "Packages" packages
     info "Shell" shell
+    info underline
     #info "Resolution" resolution
     #info "DE" de
     info "WM" wm
     #info "WM Theme" wm_theme
     info "Theme" theme
     info "Icons" icons
-    #info "Terminal" term
+    info "Terminal" term
+    info underline
     #info "Terminal Font" term_font
-    #info "CPU" cpu
-    #info "GPU" gpu
-    
+    info "CPU" cpu
+    info "GPU" gpu
+    info "Memory" memory
+
 
     # info "CPU Usage" cpu_usage
     # info "Disk" disk
@@ -154,7 +156,7 @@ speed_type="bios_limit"
 # tiny:  'i7-6500U (4)'
 # name:  'Intel i7-6500U (4)'
 # speed: '3.1GHz'
-cpu_shorthand="off"
+cpu_shorthand="on"
 
 # CPU Speed
 # Hide/Show CPU speed.
@@ -180,7 +182,7 @@ cpu_speed="on"
 # logical:  'Intel i7-6500U (4) @ 3.1GHz' (All virtual cores)
 # physical: 'Intel i7-6500U (2) @ 3.1GHz' (All physical cores)
 # off:      'Intel i7-6500U @ 3.1GHz'
-cpu_cores="logical"
+cpu_cores="off"
 
 # CPU Temperature
 # Hide/Show CPU temperature.
@@ -210,7 +212,7 @@ cpu_temp="off"
 # Example:
 # on:  'AMD HD 7950'
 # off: 'HD 7950'
-gpu_brand="on"
+gpu_brand="off"
 
 # Which GPU to display
 #
@@ -545,7 +547,7 @@ image_backend="w3m"
 # NOTE: 'auto' will pick the best image source for whatever image backend is used.
 #       In ascii mode, distro ascii art will be used and in an image mode, your
 #       wallpaper will be used.
-image_source="/etc/neofetch/al4.png"
+image_source="$HOME/.config/neofetch/archlabs.png"
 
 
 # Ascii Options
@@ -637,8 +639,8 @@ gap=3
 # Values:  'px'
 # Flags:   --xoffset
 #          --yoffset
-yoffset=0
-xoffset=0
+yoffset=10
+xoffset=10
 
 # Image background color
 # Only works with the w3m backend.

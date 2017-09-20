@@ -1,4 +1,4 @@
-ARCHLabs Conky Manager scripts
+Archlabs Conky Manager scripts
 ================================
 
 A "session" is a group of conkys that can be run together: the commands 

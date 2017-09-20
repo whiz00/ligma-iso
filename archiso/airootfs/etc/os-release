@@ -1,4 +1,9 @@
 NAME="ArchLabs"
-ID=arch
-PRETTY_NAME="ArchLabs"
+ID=ArchLabs
+ID_LIKE="arch"
+VERSION_ID=Minimo
+PRETTY_NAME="Minimo"
 ANSI_COLOR="0;36"
+HOME_URL="https://archlabsblog.wordpress.com"
+SUPPORT_URL="http://archlabs.prophpbb.com"
+BUG_REPORT_URL="https://github.com/ARCHLabs"

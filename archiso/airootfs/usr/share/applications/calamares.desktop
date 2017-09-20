@@ -1,7 +1,8 @@
 [Desktop Entry]
 Type=Application
-Name=Install ArchLabs
+Name=ArchLabs Installer
+StartupNotify=true
 Comment=Installer for ArchLabs
 Categories=Utility;
-Exec=sudo calamares
-Icon=/usr/share/icons/al4.png
+Exec=env QT_QPA_PLATFORMTHEME=Lila-Gtk-master sudo -E calamares
+Icon=/usr/share/icons/hicolor/256x256/apps/al-calamares-logo.png
