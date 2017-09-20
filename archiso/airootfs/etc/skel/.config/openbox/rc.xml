@@ -39,7 +39,7 @@
                     'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>United-Archlabs-Dark</name>
+    <name>ArchLabs-Dark</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -239,17 +239,17 @@
     </keybind>
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
-        <command>~/.config/polybar/scripts/pavolume.sh --up</command>
+        <command>pamixer -i 2</command>
       </action>
     </keybind>
     <keybind key="XF86AudioLowerVolume">
       <action name="Execute">
-        <command>~/.config/polybar/scripts/pavolume.sh --down</command>
+        <command>pamixer -d 2</command>
       </action>
     </keybind>
     <keybind key="XF86AudioMute">
       <action name="Execute">
-        <command>~/.config/polybar/scripts/pavolume.sh --togmute</command>
+        <command>pamixer -t</command>
       </action>
     </keybind>
     <keybind key="XF86AudioStop">
@@ -517,11 +517,11 @@ End of Tiling Binds
  -->
   </keyboard>
   <mouse>
-    <dragThreshold>8</dragThreshold>
+    <dragThreshold>4</dragThreshold>
     <!-- number of pixels the mouse must move before a drag begins -->
     <doubleClickTime>400</doubleClickTime>
     <!-- in milliseconds (1000 = 1 second) -->
-    <screenEdgeWarpTime>400</screenEdgeWarpTime>
+    <screenEdgeWarpTime>0</screenEdgeWarpTime>
     <!-- Time before changing desktops when the pointer touches the edge of the
        screen while moving a window, in milliseconds (1000 = 1 second).
        Set this to 0 to disable warping -->
@@ -598,6 +598,30 @@ End of Tiling Binds
         <action name="Lower"/>
         <action name="FocusToBottom"/>
         <action name="Unfocus"/>
+      </mousebind>
+      <mousebind button="Up" action="Click">
+        <action name="GoToDesktop">
+          <to>previous</to>
+        </action>
+        <action name="Focus"/>
+      </mousebind>
+      <mousebind button="Down" action="Click">
+        <action name="GoToDesktop">
+          <to>next</to>
+        </action>
+        <action name="Focus"/>
+      </mousebind>
+      <mousebind button="A-Up" action="Click">
+        <action name="GoToDesktop">
+          <to>previous</to>
+        </action>
+        <action name="Focus"/>
+      </mousebind>
+      <mousebind button="A-Down" action="Click">
+        <action name="GoToDesktop">
+          <to>next</to>
+        </action>
+        <action name="Focus"/>
       </mousebind>
       <mousebind action="Click" button="Up">
         <action name="if">
@@ -831,6 +855,28 @@ End of Tiling Binds
         </action>
       </mousebind>
     </context>
+    <context name="MoveResize">
+      <mousebind button="Up" action="Click">
+        <action name="GoToDesktop">
+          <to>previous</to>
+        </action>
+      </mousebind>
+      <mousebind button="Down" action="Click">
+        <action name="GoToDesktop">
+          <to>next</to>
+        </action>
+      </mousebind>
+      <mousebind button="A-Up" action="Click">
+        <action name="GoToDesktop">
+          <to>previous</to>
+        </action>
+      </mousebind>
+      <mousebind button="A-Down" action="Click">
+        <action name="GoToDesktop">
+          <to>next</to>
+        </action>
+      </mousebind>
+    </context>
   </mouse>
   <menu>
     <!-- You can specify more than one menu file in here and they are all loaded,
@@ -861,11 +907,94 @@ End of Tiling Binds
     <!-- show the manage desktops section in the client-list-(combined-)menu -->
   </menu>
   <applications>
-      <application name="oblogout">
-        <position force="no">
-          <monitor>1</monitor>
-        </position>
-        <fullscreen>yes</fullscreen>
-      </application>
+    <application name="oblogout">
+      <position force="no">
+        <monitor>1</monitor>
+      </position>
+      <fullscreen>yes</fullscreen>
+    </application>
+    <application name="geany">
+      <position force="no">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application name="subl3">
+      <position force="no">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application name="atom">
+      <position force="no">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application name="obconf">
+      <position force="no">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application name="tint2conf">
+      <position force="no">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application name="nitrogen">
+      <position force="no">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+
+<!--  Set applications to open on a specific desktop  -->
+
+    <application name="chromium">
+      <desktop>2</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="google-chrome">
+      <desktop>2</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="Firefox*">
+      <desktop>2</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="Navigator">
+      <desktop>2</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="pcmanfm">
+      <desktop>4</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="dolphin*">
+      <desktop>3</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="nautilus">
+      <desktop>3</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="Thunar*">
+      <desktop>3</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="gimp*">
+      <desktop>4</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="inkscape">
+      <desktop>4</desktop>
+      <maximized>yes</maximized>
+    </application>
+    <application name="pinta">
+      <desktop>4</desktop>
+      <maximized>yes</maximized>
+    </application>
   </applications>
 </openbox_config>

@@ -79,8 +79,8 @@ our $SCHEMA = [
         {item => ['obmenu-generator -s -c',    'Generate a static menu',            'menu-editor']},
     {end_cat => undef},
     {item => ["oldmenu", 		                   'Switch Menu',       	              'menu-editor']},
-    {sep => undef},
     {pipe => ['al-kb-pipemenu',                'Display Keybinds',                  'cs-keyboard']},
-    {sep => undef},
+		{sep => undef},
+		{pipe => ['i3lock-fancy -p',               'Lock Screen',                      'lock']},
     {item => ['oblogout',                      'Exit Openbox',                      'exit']},
 ]

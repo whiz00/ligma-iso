@@ -170,7 +170,8 @@
         </action>
       </item>
     </menu>
-    <menu execute="al-kb-pipemenu" id="keybinds" label="Display Keybinds"/>
+    <menu execute="al-help-pipemenu" id="help" label="Documentation"/>
+    <menu execute="al-kb-pipemenu" id="keybinds" label="Keybinds"/>
     <separator/>
     <item label="Exit">
       <action name="Execute">

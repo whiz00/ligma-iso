@@ -167,7 +167,6 @@ exec_always --no-startup-id $HOME/.config/i3/scripts/compositor.sh
 exec_always --no-startup-id $HOME/.config/polybar/launch-i3-polybar.sh
 
 # run once at startup
-#exec --no-startup-id start-pulseaudio-x11
 exec --no-startup-id xfsettingsd &
 #exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 exec --no-startup-id nitrogen --restore
@@ -215,9 +214,9 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioStop exec --no-startup-id playerctl stop
-bindsym XF86AudioRaiseVolume exec $HOME/.config/polybar/scripts/pavolume.sh --up
-bindsym XF86AudioLowerVolume exec $HOME/.config/polybar/scripts/pavolume.sh --down
-bindsym XF86AudioMute exec $HOME/.config/polybar/scripts/pavolume.sh --togmute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 2
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 2
+bindsym XF86AudioMute exec --no-startup-id pamixer -t
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
 
@@ -246,8 +245,8 @@ new_float normal
 popup_during_fullscreen smart
 
 for_window [class="^.*"] border pixel 2
-gaps inner 8
-gaps outer 2
+gaps inner 10
+gaps outer 0
 #smart_gaps on
 #smart_borders on
 
@@ -256,42 +255,23 @@ gaps outer 2
 #####################################################################################################################
 
 
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+
+set $mode_gaps Gaps:  +/- (local)  Shift +/- (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
+        bindsym plus  gaps inner current plus 2
+        bindsym minus gaps inner current minus 2
         bindsym 0     gaps inner current set 0
 
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+plus  gaps inner all plus 2
+        bindsym Shift+minus gaps inner all minus 2
         bindsym Shift+0     gaps inner all set 0
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
 
 
 #####################################################################################################################
@@ -299,7 +279,8 @@ mode "$mode_gaps_outer" {
 #####################################################################################################################
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut.\
+Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 #Press $mod (super) and X to exit
 bindsym $mod+X mode "$mode_system"
@@ -326,10 +307,9 @@ font pango:Ubuntu Regular 13
 
 # DarkGrey background with white text - not focus grey background - black text
 # Windows decoration colors
-# class                 border  backgr. text    indicator
-client.placeholder      #242424 #242424 #242424
-client.background       #242424 #242424 #242424
-client.focused          #4A4A4A #4A4A4A #e5e5e5 #4A4A4A
-client.unfocused        #222222 #222222 #aaaaaa #222222
-client.focused_inactive #222222 #222222 #a9a9a9 #222222
-client.urgent           #4A4A4A #4A4A4A #f7f7f7 #4A4A4A
+# class                   border  backgr. text    indicator
+client.focused          #365260 #365260 #D1D1D0 #4E9EC6
+client.focused_inactive #365260 #365260 #D1D1D0 #365260
+client.unfocused        #365260 #D1D1D0 #232729 #365260
+client.urgent           #365260 #A3574A #232729 #A3574A
+client.background       #232729

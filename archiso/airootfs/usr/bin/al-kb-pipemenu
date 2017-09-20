@@ -20,7 +20,7 @@
 
 # al-kb is used to parse rc.xml and send the output to a textfile
 
-#	Renamed for ArchLabs
+#	Renamed and Rewritten for ArchLabs and zenity
 
 HELP='    al-kb-pipemenu an Openbox Pipe Menu for displaying keybinds
     It should normally be called from an openbox menu.
@@ -105,7 +105,7 @@ fi
 menuStart
     menuItem "Backup and Edit rc.xml" "al-kb-pipemenu --rcedit"
     menuSeparator
-    menuItem "Display Keybinds in window" "python2 al-kb --gui"
+    menuItem "Display Keybinds in window" "al-kb --gui"
     echo '        <menu execute="al-kb-pipemenu --keybinds" id="Display keybinds" label="Display Keybinds in menu"/>'
 menuEnd
 

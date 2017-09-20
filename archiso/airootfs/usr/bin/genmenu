@@ -13,9 +13,9 @@ cp $HOME/.config/openbox/menu.xml $HOME/.config/openbox/menu-switcher/menu-stati
 
 ## Check for backup & setup new menu
 if [ -f "$menubase" ]; then
-  obmenu-generator -s -c
+  obmenu-generator -p -c
 
 else
   notify-send 'Ooops!' 'A backup was never made & is required.. Nothing was changed.'
-  
+
 fi

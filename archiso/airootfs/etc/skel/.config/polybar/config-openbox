@@ -66,11 +66,9 @@ underline-size = 2
 ;tray-offset-x = 10%
 ;tray-offset-y = 0
 
-click-right = pavucontrol &
-click-left = python /usr/bin/networkmanager_dmenu
 click-middle = skippy-xd --activate-window-picker
-scroll-up = $HOME/.config/polybar/scripts/pavolume.sh --up
-scroll-down = $HOME/.config/polybar/scripts/pavolume.sh --down
+scroll-up = pamixer -i 2
+scroll-down = pamixer -d 2
 double-click-left = python /usr/bin/networkmanager_dmenu
 double-click-middle = skippy-xd --activate-window-picker
 double-click-right = pavucontrol &
@@ -103,11 +101,9 @@ padding-left = 0
 bottom = false
 underline-size = 2
 
-click-right = pavucontrol &
-click-left = python /usr/bin/networkmanager_dmenu
 click-middle = skippy-xd --activate-window-picker
-scroll-up = $HOME/.config/polybar/scripts/pavolume.sh --up
-scroll-down = $HOME/.config/polybar/scripts/pavolume.sh --down
+scroll-up = pamixer -i 2
+scroll-down = pamixer -d 2
 double-click-left = python /usr/bin/networkmanager_dmenu
 double-click-middle = skippy-xd --activate-window-picker
 double-click-right = pavucontrol &
@@ -171,11 +167,13 @@ type = internal/volume
 master-mixer = Master
 label-volume-padding-right = 4
 format-volume =  <ramp-volume> <label-volume>
+label-volume = %{A3:pavucontrol & disown:}%percentage%% %{A}
 label-muted = "     muted    "
 label-muted-foreground = #66
 label-muted-background = ${colors.b-alt}
 format-volume-background = ${colors.b-alt}
 ramp-volume-0 = "   "
+
 
 
 [module/battery]

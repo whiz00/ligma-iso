@@ -22,7 +22,7 @@ sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
 
 #sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
 
-#sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
+sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
 #sed -i 's/#\(HandleLidSwitch=\)suspend/\1ignore/' /etc/systemd/logind.conf
 #sed -i 's/#\(HandleSuspendKey=\)suspend/\1ignore/' /etc/systemd/logind.conf
 #sed -i 's/#\(HandleHibernateKey=\)hibernate/\1ignore/' /etc/systemd/logind.conf
@@ -34,7 +34,8 @@ chown -R liveuser:users /home/liveuser
 #enable autologin
 groupadd -r autologin
 gpasswd -a liveuser autologin
-#enabling interactive passwordless login
+
+#enabling passwordless login
 groupadd -r nopasswdlogin
 gpasswd -a liveuser nopasswdlogin
 
