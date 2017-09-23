@@ -96,32 +96,11 @@ Presentation
         }
     }
 
-    Slide {
+        Slide {
 
         Image {
             id: background4
             source: "slide4.png"
-            width: 800; height: 300
-            fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
-        }
-        Text {
-            anchors.horizontalCenter: background4.horizontalCenter
-            anchors.top: background4.bottom
-            text: "Built around Openbox but now including i3 gaps, a tiling window manager.<br/>"+
-                  "Giving you two lightweight and awesome ways to manage your applications."
-            wrapMode: Text.WordWrap
-            width: 600
-            horizontalAlignment: Text.Center
-        }
-    }
-
-        Slide {
-
-        Image {
-            id: background5
-            source: "slide5.png"
             width: 800; height: 300
             fillMode: Image.PreserveAspectFit
       			horizontalAlignment: Image.AlignHCenter

@@ -9,7 +9,7 @@
     </item>
     <item label="Web Browser">
       <action name="Execute">
-        <command>exo-open --launch WebBrowser</command>
+        <command>al-open -web</command>
       </action>
     </item>
     <item label="File Manager">
@@ -19,7 +19,7 @@
     </item>
     <item label="Text Editor">
       <action name="Execute">
-        <command>geany</command>
+        <command>al-open -edit</command>
       </action>
     </item>
     <separator/>
@@ -65,12 +65,12 @@
     <menu id="multimedia" label="Multimedia">
       <item label="Music Player">
         <action name="Execute">
-          <command>audacious</command>
+          <command>al-open -music</command>
         </action>
       </item>
       <item label="Video Player">
         <action name="Execute">
-          <command>mpv --player-operation-mode=pseudo-gui -- %U</command>
+          <command>mpv --player-operation-mode=pseudo-gui</command>
         </action>
       </item>
     </menu>
@@ -177,7 +177,7 @@
         </action>
       </item>
     </menu>
-    <menu execute="al-help-pipemenu" id="help" label="Documentation"/>
+    <menu execute="al-help-pipemenu" id="help" label="Help and Info"/>
     <menu execute="al-kb-pipemenu" id="keybinds" label="Keybinds"/>
     <separator/>
     <item label="Install Archlabs">

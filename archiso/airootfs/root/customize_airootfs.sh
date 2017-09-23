@@ -21,8 +21,7 @@ chmod 700 /root
 sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
 
 #sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
-
-sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
+#sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
 #sed -i 's/#\(HandleLidSwitch=\)suspend/\1ignore/' /etc/systemd/logind.conf
 #sed -i 's/#\(HandleSuspendKey=\)suspend/\1ignore/' /etc/systemd/logind.conf
 #sed -i 's/#\(HandleHibernateKey=\)hibernate/\1ignore/' /etc/systemd/logind.conf
@@ -43,7 +42,6 @@ systemctl enable lightdm.service
 systemctl set-default graphical.target
 systemctl enable pacman-init.service NetworkManager.service
 systemctl enable ntpd.service
-
 # choose-mirror.service
 
 # fix networkmanager
@@ -59,7 +57,7 @@ ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
 sed -i 's/#export/export/g' /etc/profile.d/freetype2.sh
 
 
-## Removed for pick your own editor
+## Removed, pick your own editor
 #export _EDITOR=vim
 #echo "EDITOR=${_EDITOR}" >> /etc/environment
 #echo "EDITOR=${_EDITOR}" >> /etc/skel/.bashrc
@@ -68,7 +66,8 @@ sed -i 's/#export/export/g' /etc/profile.d/freetype2.sh
 
 pacman -Syy
 gpg --receive-keys C1A60EACE707FDA5
-gpg --receive-keys 35F52A02854DCCAEC9DD5CC410443C7F54B00041
 pacman-key --init
-pacman-key --keyserver keys.gnupg.net -r 35F52A02854DCCAEC9DD5CC410443C7F54B00041
-pacman-key --lsign-key 35F52A02854DCCAEC9DD5CC410443C7F54B00041
+
+#gpg --receive-keys 35F52A02854DCCAEC9DD5CC410443C7F54B00041
+#pacman-key --keyserver keys.gnupg.net -r 35F52A02854DCCAEC9DD5CC410443C7F54B00041
+#pacman-key --lsign-key 35F52A02854DCCAEC9DD5CC410443C7F54B00041

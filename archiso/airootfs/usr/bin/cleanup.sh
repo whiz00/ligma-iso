@@ -25,11 +25,11 @@ rm /usr/bin/install-al
 
 # touch up
 sed -i 's/Name=File Manager/Name=Thunar Settings/g' /usr/share/applications/thunar-settings.desktop
-sed -i '182,186d' /etc/skel/.config/openbox/menu.xml
-sed -i '6d' /etc/environment
+sed -i '183,187d' /etc/skel/.config/openbox/menu.xml
+# sed -i '6d' /etc/environment
 
 # enable al-hello after install
-sed -i 's/#sleep 5; termite/sleep 5; termite/g' /etc/skel/.config/openbox/autostart
+sed -i 's/#sleep 3; termite/sleep 3; termite/g' /etc/skel/.config/openbox/autostart
 #sed -i '33d' /etc/skel/.config/openbox/autostart
 
 # fix boot messages

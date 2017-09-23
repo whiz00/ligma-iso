@@ -8,6 +8,5 @@ offline=""
 if [[ "$online" ]]; then
     echo %{F#EFF0F1}${connected}
   else
-    echo %{F#EFF0F1}${offline}; sleep 0.5; echo %{F#E64141}${offline}
-    sleep 0.5;echo %{F#EFF0F1}${offline}; sleep 0.5; echo %{F#E64141}${offline}
+    echo %{F#E64141}${offline}; sleep 1; echo %{F#EFF0F1}${offline}
 fi

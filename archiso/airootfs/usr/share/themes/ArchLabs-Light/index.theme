@@ -1,9 +1,11 @@
 [Desktop Entry]
 Type=X-GNOME-Metatheme
 Name=ArchLabs-Light
-Comment=A-mix theme -breeze-Arch and my source
+Comment=Ocea Alex
 Encoding=UTF-8
 
 [X-GNOME-Metatheme]
+Name=ArchLabs-Light
 GtkTheme=ArchLabs-Light
+IconTheme=ArchLabs-Light
 MetacityTheme=ArchLabs-Light

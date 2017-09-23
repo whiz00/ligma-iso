@@ -1,30 +1,32 @@
-# Theme:       Breeze-gtk
-# Description: Breeze theme for GTK+2.0
+# Based on Bridge by ScionicSpectre and Adwaita by GNOME
+# vim:set ts=2 sw=2 sts=2 ai et:
+#
+# This is the GTK+ 2 version of oomox-Ocean. It's whole purpose is to look as the
+# GTK+ 3 version as much as possible until GTK+ 2 dies completely.
+#
+# Note: comments for explaining styles are on the bottom of each file beside the
+# widget matches.
 
-gtk-color-scheme = "text_color:#31363b"
-gtk-color-scheme = "base_color:#fcfcfc"
-gtk-color-scheme = "insensitive_base_color:#e5e5e5"
-gtk-color-scheme = "fg_color:#31363b"
-gtk-color-scheme = "bg_color:#eff0f1"
-gtk-color-scheme = "selected_fg_color:#eff0f1"
-gtk-color-scheme = "selected_bg_color:#3daee9"
-gtk-color-scheme = "button_fg_color:#31363b"
-gtk-color-scheme = "tooltip_fg_color:#eff0f1"
-gtk-color-scheme = "tooltip_bg_color:#31363b"
-gtk-color-scheme = "insensitive_fg_color:#aaadaf"
-gtk-color-scheme = "insensitive_text_color:#b3b4b6"
-gtk-color-scheme = "button_insensitive_fg_color:#aaadaf"
-gtk-color-scheme = "button_active:#3daee9"
-gtk-color-scheme = "border_color:#bfc1c3"
+# Declare the colours used throughout the theme.
+# There shouldn't be any fiddling with them in the theme files themselves in
+# order to not mess up the dark theme.
 
-include "widgets/default"
-include "widgets/buttons"
-include "widgets/menu"
-include "widgets/entry"
-include "widgets/notebook"
-include "widgets/range"
-include "widgets/scrollbar"
-include "widgets/toolbar"
-include "widgets/progressbar"
-include "widgets/misc"
-include "widgets/styles"
+# Text/base
+gtk-color-scheme = "text_color:#2b303b\nbase_color:#eff1f5"
+# Foreground/background
+gtk-color-scheme = "fg_color:#2b303b\nbg_color:#dfe1e8"
+# Selected foreground/background
+gtk-color-scheme = "selected_fg_color:#eff1f5\nselected_bg_color:#8fa1b3"
+# Titlebar foreground/background
+gtk-color-scheme = "titlebar_fg_color:#eff1f5\ntitlebar_bg_color:#2b303b"
+# Links
+gtk-color-scheme = "link_color:#8fa1b3\nvisited_link_color:#E040FB"
+
+# Set GTK settings
+gtk-auto-mnemonics              = 1
+gtk-primary-button-warps-slider = 1
+
+# And hand over the control to the theme files
+include "main.rc"
+include "apps.rc"
+include "hacks.rc"
