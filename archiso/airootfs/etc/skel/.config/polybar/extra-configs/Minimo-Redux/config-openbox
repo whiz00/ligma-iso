@@ -7,7 +7,7 @@ background = #131724
 background-alt = #444
 foreground = #8FA1B3
 foreground-alt = #ffffff
-primary = #688DB3
+primary = #B6C2E7
 graphite = #2e3440
 red = #6BA4E7
 black = #000000
@@ -19,8 +19,8 @@ purple = #D7AFF9
 dontknow = #6B8EE7
 yellow = #F9F1AF
 
-[bar/example]
-monitor = eDP1
+[bar/bar1]
+monitor =
 width = 100%
 height = 28
 radius = 0.0
@@ -43,11 +43,11 @@ module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;3
 font-1 = icomoon :size=11:;1
-font-2 = FontAwesome:size=10;3
+font-2 = MaterialIcons-Regular:size=12:antialias=false;3
 
 modules-left = seperator5 mpd
-modules-center =
-modules-right =   github wired-network wireless-network cpu temperature  pkg redshift volume battery date powermenu network seperator4
+modules-center = volume
+modules-right =   github wired-network wireless-network cpu temperature  pkg redshift  battery date powermenu network seperator4
 ; modules-right = filesystem xbacklight volume xkeyboard memory cpu wlan eth battery temperature date powermenu
 
 tray-position = off
@@ -62,12 +62,12 @@ format-prefix = " "
 format-suffix = "°C"
 format-prefix-foreground = #6BBDE7
 format-background = #2E3440
-exec = /home/pringle/.config/polybar/weather
+exec = $HOME/.config/polybar/weather
 
 [module/network]
 type = custom/script
 label-background = #2E3440
-exec = /home/pringle/.config/polybar/network
+exec = $HOME/.config/polybar/network.sh
 click-left = networkmanager_dmenu
 click-right = networkmanager_dmenu
 label-padding = 1
@@ -136,6 +136,7 @@ format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
 
+label-mode = %mode%
 label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
@@ -210,7 +211,8 @@ animation-packetloss-1-foreground = #000000
 
 animation-packetloss-framerate = 500
 
-click-left = gnome-control-center network
+click-right = networkmanager_dmenu
+click-left = networkmanager_dmenu
 
 ;;;;;;;;;;
 ;; DATE ;;
@@ -232,31 +234,31 @@ label = %date% %time%
 [module/volume]
 type = internal/volume
 
-format-volume = <label-volume> <ramp-volume>
-label-volume = 
-label-muted = 
+format-volume = <label-volume> <bar-volume>
+;label-volume = ""
+label-volume-foreground = #B6C2E7
 
-ramp-volume-0 = 0%
-ramp-volume-1 = 5%
-ramp-volume-2 = 10%
-ramp-volume-3 = 15%
-ramp-volume-4 = 20%
-ramp-volume-5 = 25%
-ramp-volume-6 = 30%
-ramp-volume-7 = 35%
-ramp-volume-8 = 40%
-ramp-volume-9 = 45%
-ramp-volume-10 = 50%
-ramp-volume-11 = 55%
-ramp-volume-12 = 60%
-ramp-volume-13 = 65%
-ramp-volume-14 = 70%
-ramp-volume-15 = 75%
-ramp-volume-16 = 80%
-ramp-volume-17 = 85%
-ramp-volume-18 = 90%
-ramp-volume-19 = 95%
-ramp-volume-20 = 100%
+format-muted-foreground = #E76BB4
+label-muted = "mute"
+
+bar-volume-width = 10
+bar-volume-height = 10
+bar-volume-foreground-0 = #92A3F7
+bar-volume-foreground-1 = #92A3F7
+bar-volume-foreground-2 = #6BB3E7
+bar-volume-foreground-3 = #6BB3E7
+bar-volume-foreground-4 = #6BB3E7
+bar-volume-foreground-5 = #6BE7D8
+bar-volume-foreground-6 = #6BE7D8
+bar-volume-gradient = true
+bar-volume-indicator =
+bar-volume-indicator-font = 2
+bar-volume-fill = •
+bar-volume-fill-font = 2
+bar-volume-empty = ·
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = #666666
+
 
 ;;;;;;;;;;;;;
 ;; BATTERY ;;
@@ -342,7 +344,7 @@ type = custom/script
 interval = 1200
 format = <label>
 label = "%output%"
-exec = /home/pringle/.config/polybar/scripts/pkg.sh
+exec = $HOME/.config/polybar/scripts/pkg.sh
 exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
 ; exec-if = "ping -q -w 2 -c 1 arel.eisti.fr > /dev/null"
 
@@ -378,7 +380,7 @@ thermal-zone = 0
 
 ; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
 hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
-warn-temperature = 80
+warn-temperature = 70
 
 format = <ramp> <label>
 label = %temperature%
@@ -401,7 +403,7 @@ label-warn-foreground = ${colors.red}
 ;;;;;;;;;;;;;
 [module/spotify]
 type = custom/script
-exec = ~/.config/polybar/spotify.sh  %artist% - %title%
+exec = $HOME/.config/polybar/scripts/spotify.sh  %artist% - %title%
 format-foreground = #1ED660
 tail = true
 interval = 2
