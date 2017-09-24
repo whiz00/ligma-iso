@@ -1,0 +1,460 @@
+;=====================================================
+;
+;=====================================================
+
+[colors]
+background = #131724
+background-alt = #444
+foreground = #8FA1B3
+foreground-alt = #ffffff
+primary = #688DB3
+graphite = #2e3440
+red = #6BA4E7
+black = #000000
+green = #6B98E7
+pink = #9181E7
+orange = #FEBE8E
+blue = #AFC5F9
+purple = #D7AFF9
+dontknow = #6B8EE7
+yellow = #F9F1AF
+
+[bar/example]
+monitor = eDP1
+width = 100%
+height = 28
+radius = 0.0
+fixed-center = false
+
+background = ${colors.graphite}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size-left = 8
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = fixed:pixelsize=10;3
+font-1 = icomoon :size=11:;1
+font-2 = FontAwesome:size=10;3
+
+modules-left = seperator5 mpd
+modules-center =
+modules-right =   github wired-network wireless-network cpu temperature  pkg redshift volume battery date powermenu network seperator4
+; modules-right = filesystem xbacklight volume xkeyboard memory cpu wlan eth battery temperature date powermenu
+
+tray-position = off
+tray-padding = 2
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-padding = 2
+format-prefix = " "
+format-suffix = "°C"
+format-prefix-foreground = #6BBDE7
+format-background = #2E3440
+exec = /home/pringle/.config/polybar/weather
+
+[module/network]
+type = custom/script
+label-background = #2E3440
+exec = /home/pringle/.config/polybar/network
+click-left = networkmanager_dmenu
+click-right = networkmanager_dmenu
+label-padding = 1
+interval = 1
+tail = true
+
+;;;;;;;;;;;;;;;
+;; XKEYBOARD ;;
+;;;;;;;;;;;;;;;
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+format = <label-indicator>
+format-prefix-foreground = ${colors.foreground-alt}
+label-indicator = 
+
+[module/seperator]
+type = custom/text
+content =|│
+content-foreground = #101417
+
+[module/seperator2]
+type = custom/text
+content =|│
+content-foreground = #7BB2B5
+
+[module/seperator3]
+type = custom/text
+content =|│
+content-foreground = #2E3440
+
+[module/seperator4]
+type = custom/text
+content =|│
+content-foreground = #2E3440
+
+[module/seperator5]
+type = custom/text
+content =|│
+content-foreground = #2E3440
+
+[module/seperator6]
+type = custom/text
+content =|│
+content-foreground = #7BB2B5
+
+;;;;;;;;
+;; I3 ;;
+;;;;;;;;
+[module/i3]
+type = internal/i3
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+ws-icon-default = ♟
+
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+label-focused = %index%: %icon%
+label-focused-background = ${colors.primary}
+label-focused-foreground = ${colors.black}
+label-focused-padding = 2
+
+label-unfocused = %icon%
+label-unfocused-padding = 2
+
+label-visible = %icon%
+label-visible-background = ${colors.primary}
+label-visible-underline =
+label-visible-padding = 2
+
+label-urgent = %icon%
+label-urgent-background = ${colors.red}
+label-urgent-padding = 2
+
+;;;;;;;;;
+;; CPU ;;
+;;;;;;;;;
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.green}
+label = %percentage%%
+
+;;;;;;;;;;;;;;
+;; ETHERNET ;;
+;;;;;;;;;;;;;;
+[module/wired-network]
+type = internal/network
+interface = enp0s31f6
+format-connected = <label-connected>
+format-connected-foreground = ${colors.purple}
+format-disconnected = <label-disconnected>
+label-connected =  %local_ip%
+
+;;;;;;;;;;
+;; WIFI ;;
+;;;;;;;;;;
+[module/wireless-network]
+type = internal/network
+interface = wlp4s0
+
+format-connected = <ramp-signal>  <label-connected>
+format-packetloss = <animation-packetloss>
+label-connected = %local_ip%
+
+
+ramp-signal-0 = 
+ramp-signal-0-foreground = #F03051
+ramp-signal-1 = 
+ramp-signal-1-foreground = #F07127
+ramp-signal-2 = 
+ramp-signal-2-foreground = #F9CE56
+ramp-signal-3 = 
+ramp-signal-3-foreground = ${colors.purple}
+ramp-signal-4 = 
+ramp-signal-4-foreground = ${colors.purple}
+ramp-signal-5 = 
+ramp-signal-5-foreground = ${colors.purple}
+
+animation-packetloss-0 = ⚠
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 📶
+animation-packetloss-1-foreground = #000000
+
+animation-packetloss-framerate = 500
+
+click-left = gnome-control-center network
+
+;;;;;;;;;;
+;; DATE ;;
+;;;;;;;;;;
+[module/date]
+type = internal/date
+
+interval = 5
+format = <label>
+date = ""
+date-alt = %d %b %y
+time = %H:%M
+time-alt = ""
+label = %date% %time%
+
+;;;;;;;;;;;;
+;; VOLUME ;;
+;;;;;;;;;;;;
+[module/volume]
+type = internal/volume
+
+format-volume = <label-volume> <ramp-volume>
+label-volume = 
+label-muted = 
+
+ramp-volume-0 = 0%
+ramp-volume-1 = 5%
+ramp-volume-2 = 10%
+ramp-volume-3 = 15%
+ramp-volume-4 = 20%
+ramp-volume-5 = 25%
+ramp-volume-6 = 30%
+ramp-volume-7 = 35%
+ramp-volume-8 = 40%
+ramp-volume-9 = 45%
+ramp-volume-10 = 50%
+ramp-volume-11 = 55%
+ramp-volume-12 = 60%
+ramp-volume-13 = 65%
+ramp-volume-14 = 70%
+ramp-volume-15 = 75%
+ramp-volume-16 = 80%
+ramp-volume-17 = 85%
+ramp-volume-18 = 90%
+ramp-volume-19 = 95%
+ramp-volume-20 = 100%
+
+;;;;;;;;;;;;;
+;; BATTERY ;;
+;;;;;;;;;;;;;
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = AC
+full-at = 98
+format-charging = <animation-charging>
+
+format-discharging = <ramp-capacity>
+
+ramp-capacity-0 = 
+ramp-capacity-0-foreground = ${colors.red}
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.dontknow}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+
+;;;;;;;;;;
+;; MENU ;;
+;;;;;;;;;;
+[module/powermenu]
+type = custom/menu
+
+label-open = " %{T4} %{T-}%{T4} %{T-} "
+label-close =
+format = <label-toggle><menu>
+label-separator = "  "
+
+format-foreground =#FFFFFF
+format-background = ${colors.primary}
+
+menu-0-0 = 
+menu-0-0-exec = menu-open-1
+menu-0-1 =  
+menu-0-1-exec = menu-open-2
+menu-0-2 = 
+menu-0-2-exec = menu-open-3
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+menu-0-4 = "  "
+
+menu-1-0 = 
+menu-1-0-exec = redshift
+menu-1-1 = "  "
+
+menu-2-0 = 
+menu-2-0-exec = spotify
+menu-2-1 = "  "
+
+menu-3-0 = 
+menu-3-0-exec = rofi
+menu-3-1 = "  "
+
+menu-4-0 = 
+menu-4-0-exec = thunar
+menu-4-1 = "  "
+
+;;;;;;;;;;;;;;
+;; REDSHIFT ;;
+;;;;;;;;;;;;;;
+[module/redshift]
+type = custom/script
+interval = 5
+exec = ~/.config/polybar/redshift.sh
+
+;;;;;;;;;
+;; PKG ;;
+;;;;;;;;;
+[module/pkg]
+type = custom/script
+interval = 1200
+format = <label>
+label = "%output%"
+exec = /home/pringle/.config/polybar/scripts/pkg.sh
+exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
+; exec-if = "ping -q -w 2 -c 1 arel.eisti.fr > /dev/null"
+
+;;;;;;;;;;;;
+;; GITHUB ;;
+;;;;;;;;;;;;
+[module/github]
+type = internal/github
+token = ${~/.config/polybar/github_access.token}
+empty-notifications = false
+
+;;;;;;;;;;;;;;;;
+;; FILESYSTEM ;;
+;;;;;;;;;;;;;;;;
+[module/filesystem]
+type = internal/fs
+format-mounted = <label-mounted>
+label-mounted = %mountpoint% : %percentage_free%%
+label-mounted-foreground = ${colors.yellow}
+mount-0 = /
+interval = 1200
+fixed-values = false
+spacing = 2
+
+;;;;;;;;;;;;;;;;;
+;; TEMPERATURE ;;
+;;;;;;;;;;;;;;;;;
+[module/temperature]
+type = internal/temperature
+
+interval = 1
+thermal-zone = 0
+
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+warn-temperature = 80
+
+format = <ramp> <label>
+label = %temperature%
+
+ramp-0 = 
+ramp-0-foreground = ${colors.pink}
+ramp-1 = 
+ramp-1-foreground = ${colors.pink}
+ramp-2 = 
+ramp-2-foreground = ${colors.pink}
+ramp-3 = 
+ramp-3-foreground = ${colors.red}
+
+format-warn = <ramp> <label-warn>
+label-warn =  %temperature%
+label-warn-foreground = ${colors.red}
+
+;;;;;;;;;;;;;
+;; SPOTIFY ;;
+;;;;;;;;;;;;;
+[module/spotify]
+type = custom/script
+exec = ~/.config/polybar/spotify.sh  %artist% - %title%
+format-foreground = #1ED660
+tail = true
+interval = 2
+
+;;;;;;;;;;;;;;
+;; SETTINGS ;;
+;;;;;;;;;;;;;;
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[module/mpd]
+type = internal/mpd
+format-online = <bar-progress>  <icon-prev> <icon-stop> <toggle> <icon-next>  <label-song>
+format-online-overline = ${root.background}
+format-online-underline = ${root.background}
+format-offline = <label-offline>
+label-offline = mpd is off
+format-online-prefix = " "
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-random = 
+icon-repeat = 
+
+toggle-on-foreground =
+toggle-off-foreground = #55
+
+bar-progress-width = 35
+bar-progress-format = %{+o +u}%fill%%{-o -u}%indicator%%{+o +u}%empty%%{-u -o}
+; bar-progress-indicator = |
+bar-progress-indicator = █
+bar-progress-indicator-foreground = #A85659
+bar-progress-indicator-font = 2
+; bar-progress-fill = ─
+bar-progress-fill = █
+bar-progress-fill-foreground = #bb
+bar-progress-fill-font = 2
+; bar-progress-empty = ─
+bar-progress-empty = ▒
+bar-progress-empty-font = 2
+bar-progress-empty-foreground = #44
+
+;;;;;;;;;;;;
+;; GLOBAL ;;
+;;;;;;;;;;;;
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+; vim:ft=dosini
