@@ -19,7 +19,8 @@ purple = #D7AFF9
 dontknow = #6B8EE7
 yellow = #F9F1AF
 
-[bar/bar1]
+[bar/example]
+monitor = eDP1
 width = 100%
 height = 28
 radius = 0.0
@@ -61,12 +62,12 @@ format-prefix = " "
 format-suffix = "°C"
 format-prefix-foreground = #6BBDE7
 format-background = #2E3440
-exec = $HOME/.config/polybar/scripts/weather
+exec = /home/pringle/.config/polybar/weather
 
 [module/network]
 type = custom/script
 label-background = #2E3440
-exec = $HOME/.config/polybar/scripts/network.sh
+exec = /home/pringle/.config/polybar/network
 click-left = networkmanager_dmenu
 click-right = networkmanager_dmenu
 label-padding = 1
@@ -341,7 +342,7 @@ type = custom/script
 interval = 1200
 format = <label>
 label = "%output%"
-exec = $HOME/.config/polybar/scripts/pkg.sh
+exec = /home/pringle/.config/polybar/scripts/pkg.sh
 exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
 ; exec-if = "ping -q -w 2 -c 1 arel.eisti.fr > /dev/null"
 
