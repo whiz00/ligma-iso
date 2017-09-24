@@ -127,6 +127,9 @@ wpa_supplicant
 
 #file management
 file-roller
+gvfs
+gvfs-mtp
+gvfs-afc
 thunar
 tumbler
 xdg-user-dirs-gtk
@@ -183,15 +186,12 @@ mkinitcpio-openswap
 neofetch-git
 networkmanager-dmenu-git
 pacli
-papirus-icon-theme-git
 polybar-git
 rofi-git
 skippy-xd-git
 yaourt
 
-#gvfs
-#gvfs-mtp
-#gvfs-afc
+#papirus-icon-theme-git
 #network-manager-applet
 #pygobject-devel
 #python-docopt
