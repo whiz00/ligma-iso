@@ -112,8 +112,6 @@ xfce4-settings
 obconf
 oblogout
 openbox
-lxappearance
-lxappearance-obconf
 
 #lightdm
 lightdm
@@ -182,6 +180,7 @@ broadcom-wl
 calamares
 cower
 downgrade
+i3lock-color-git
 mkinitcpio-openswap
 neofetch-git
 networkmanager-dmenu-git
@@ -191,6 +190,8 @@ rofi-git
 skippy-xd-git
 yaourt
 
+#lxappearance
+#lxappearance-obconf
 #papirus-icon-theme-git
 #network-manager-applet
 #pygobject-devel

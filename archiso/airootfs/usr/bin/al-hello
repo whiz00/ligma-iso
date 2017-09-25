@@ -252,8 +252,8 @@ if ! [ "${defaults,,}" = "${no,,}" ]; then
   clear; printf "\n  What browser do you prefer?\n
   1${red})${reg}Chrome  2${red})${reg}Chromium  3${red})${reg}Opera\n\n\n: "
   read -r bwsr
-  if [[ "$bwsr" = *1* ]] || [[ "$bwsr" = *2* ]] || [[ "$bwsr" = *3* ]]; then
-    if [[ "$bwsr" = *1* ]] || [[ "$bwsr" = *2* ]]; then
+  if [[ "$bwsr" == *1* ]] || [[ "$bwsr" == *2* ]] || [[ "$bwsr" == *3* ]]; then
+    if [[ "$bwsr" == *1* ]] || [[ "$bwsr" == *2* ]]; then
       clear; printf "\n  Install google-talk-plugin? (18M) [y/n]: "
       read -r tlk
 
@@ -276,7 +276,7 @@ if ! [ "${defaults,,}" = "${no,,}" ]; then
     clear; printf "\n  Additional Text Editors\n
   1${red})${reg}Atom  2${red})${reg}Mousepad  3${red})${reg}Sublime\n\n\n: "
     read -r edit
-    if [[ "$edit" = *1* ]] || [[ "$edit" = *2* ]] || [[ "$edit" = *3* ]]; then
+    if [[ "$edit" == *1* ]] || [[ "$edit" == *2* ]] || [[ "$edit" == *3* ]]; then
       clear; printf "\n  Remove Geany?  [y/n]: "
       read -r redit
     fi
@@ -285,7 +285,7 @@ if ! [ "${defaults,,}" = "${no,,}" ]; then
     clear; printf "\n  Additional Text Editors\n
   1${red})${reg}Atom  2${red})${reg}Sublime\n\n\n: "
     read -r edit
-    if [[ "$edit" = *1* ]] || [[ "$edit" = *2* ]]; then
+    if [[ "$edit" == *1* ]] || [[ "$edit" == *2* ]]; then
       clear; printf "\n  Remove Geany?  [y/n]: "
       read -r redit
     fi
@@ -298,7 +298,7 @@ if ! [ "${defaults,,}" = "${no,,}" ]; then
     read -r term
     term_msg="\n  You can copy paste in termite with ${b}[Ctrl + Shift + c] [Ctrl + Shift + v]${reg}\n\n\n"
 
-    if [[ "$term" = *3* ]]; then
+    if [[ "$term" == *3* ]]; then
       clear; echo -e "\n  You can copy paste in urxvt with ${b}[Alt + c] [Alt + v]${reg}\n  and in termite with ${b}[Ctrl + Shift + c] [Ctrl + Shift + v]${reg}\n\n\n"
       read -n1 -rsp $'  Press Any Key to continue...\n'
 
@@ -316,7 +316,7 @@ if ! [ "${defaults,,}" = "${no,,}" ]; then
   clear; printf "\n  Music applications?\n
   1${red})${reg}Spotify  2${red})${reg}Nicotine+  3${red})${reg}Lollypop  4${red})${reg}Rythmbox  5${red})${reg}Clementine\n\n\n: "
   read -r musc
-  if [[ "$musc" = *3* ]] || [[ "$musc" = *4* ]] || [[ "$musc" = *5* ]]; then
+  if [[ "$musc" == *3* ]] || [[ "$musc" == *4* ]] || [[ "$musc" == *5* ]]; then
     clear; printf "\n  Remove Audacious?  [y/n]: "
     read -r rmusc
   fi
@@ -332,12 +332,9 @@ if ! [ "${defaults,,}" = "${no,,}" ]; then
     clear; printf "\n  File managers?\n
   1${red})${reg}PCmanFM  2${red})${reg}Nautilus\n\n\n: "
     read -r file
-    if [[ "$file" = *1* ]] || [[ "$file" = *2* ]]; then
+    if [[ "$file" == *1* ]] || [[ "$file" == *2* ]]; then
       clear; printf "\n  Remove Thunar?  [y/n]: "
       read -r rmfile
-    else
-      clear; printf "\n  Do you need thunar volman and extra thumbnailers?  [y/n]: "
-      read -r ext
     fi
   fi
 
@@ -403,7 +400,7 @@ if ! [ "${tools,,}" = "${no,,}" ]; then
   fi
 
   # if not using xfce we can pick a few xfce apps
-  if ! [[ "$wm" = *1* ]]; then
+  if ! [ "$wm" == "1" ]; then
     clear; printf "\n  Do you want xfce polkit for authentication with gksu?  [y/n]: "
     read -r pol
 
@@ -450,9 +447,6 @@ if ! [ "${cosmetics,,}" = "${no,,}" ]; then
   clear; printf "\n  Would you like support and visual improvements for Qt Applications?  [y/n]: "
   read -r qt
 
-  clear; printf "\n  Do you want a screen locker installed?  [y/n]: "
-  read -r lck
-
   clear; printf "\n  Install the Archlabs wallpaper selection?  [y/n]: "
   read -r wall
 
@@ -478,8 +472,8 @@ if ! [ "${defaults,,}" = "${no,,}" ]; then
   fi
 
   ## Browser
-  if [[ "$bwsr" = *1* ]] || [[ "$bwsr" = *2* ]] || [[ "$bwsr" = *3* ]]; then
-    if [[ "$bwsr" = *1* ]]; then
+  if [[ "$bwsr" == *1* ]] || [[ "$bwsr" == *2* ]] || [[ "$bwsr" == *3* ]]; then
+    if [[ "$bwsr" == *1* ]]; then
       if [ "${tlk,,}" = "${yes,,}" ]; then
         yaourt -S google-chrome google-talkplugin --noconfirm --needed
       else
@@ -501,13 +495,13 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
       sed -i 's/firefox/custom-WebBrowser/g' $CONF_PATH/xfce4/al-xfce-configs/helpers.rc
     fi
 
-    if [[ "$bwsr" = *2* ]]; then
+    if [[ "$bwsr" == *2* ]]; then
     	sudo pacman -S chromium --noconfirm --needed
       sed -i 's/firefox/chromium/g' $HELPERS
       sed -i 's/firefox/chromium/g' $CONF_PATH/xfce4/al-xfce-configs/helpers.rc
     fi
 
-    if [[ "$bwsr" = *3* ]]; then
+    if [[ "$bwsr" == *3* ]]; then
     	sudo pacman -S opera --noconfirm --needed
       sed -i 's/firefox/opera/g' $HELPERS
       sed -i 's/firefox/opera/g' $CONF_PATH/xfce4/al-xfce-configs/helpers.rc
@@ -526,9 +520,9 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
 
 
   # editors
-  if [[ "$edit" = *1* ]] || [[ "$edit" = *2* ]] || [[ "$edit" = *3* ]]; then
+  if [[ "$edit" == *1* ]] || [[ "$edit" == *2* ]] || [[ "$edit" == *3* ]]; then
     if ! [ "${rmob,,}" = "${yes,,}" ]; then
-      if [[ "$edit" = *1* ]]; then
+      if [[ "$edit" == *1* ]]; then
         sudo pacman -S atom --noconfirm --needed
         sed -i 's/geany/atom/g' $MIMEAPP
         sed -i 's/geany/atom/g' $MENU
@@ -537,7 +531,7 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
         sudo sed -i 's/TEXT_EDITOR="geany"/TEXT_EDITOR="atom"/g' /usr/bin/al-open
       fi
 
-      if [[ "$edit" = *2*]]; then
+      if [[ "$edit" == *2*]]; then
         sudo pacman -S mousepad --noconfirm --needed
         sed -i 's/geany/mousepad/g' $MIMEAPP
         sed -i 's/geany/mousepad/g' $MENU
@@ -546,7 +540,7 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
         sudo sed -i 's/TEXT_EDITOR="geany"/TEXT_EDITOR="mousepad"/g' /usr/bin/al-open
       fi
 
-      if [[ "$edit" = *3*]]; then
+      if [[ "$edit" == *3*]]; then
         yaourt -S sublime-text-dev --noconfirm --needed
         sed -i 's/geany/sublime_text_3/g' $MIMEAPP
         sed -i 's/geany/subl3/g' $RC_PATH
@@ -558,7 +552,7 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
     else
       sed -i 's/geany/mousepad/g' $MIMEAPP
 
-      if [[ "$edit" = *1*]]; then
+      if [[ "$edit" == *1*]]; then
         sudo pacman -S atom --noconfirm --needed
         sed -i 's/mousepad/atom/g' $MIMEAPP
       fi
@@ -583,15 +577,15 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
   if ! [ "$wm" == "1" ]; then
 
     # file manager
-    if [[ "$file" = *1* ]] || [[ "$file" = *2* ]]; then
-      if [[ "$file" = *1* ]]; then
+    if [[ "$file" == *1* ]] || [[ "$file" == *2* ]]; then
+      if [[ "$file" == *1* ]]; then
         sudo pacman -S pcmanfm --noconfirm --needed
         sed -i 's/thunar --daemon/pcmanfm -d/g' $AUTOSTART
         sed -i 's/Thunar-folder-handler/pcmanfm/g' $MIMEAPP
         sed -i 's/Thunar/pcmanfm/g' $HELPERS
       fi
 
-      if [[ "$file" = *2* ]]; then
+      if [[ "$file" == *2* ]]; then
         sudo pacman -S nautilus nautilus-open-terminal nautilus-terminal --noconfirm --needed
         sed -i 's/(sleep 3; thunar --daemon) &//g' $AUTOSTART
         sed -i 's/Thunar-folder-handler/org.gnome.Nautilus/g' $MIMEAPP
@@ -605,36 +599,36 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
       fi
 
     else
-      if [ "${ext,,}" = "${yes,,}" ]; then
+      if ! [ "${rmfile,,}" = "${yes,,}" ]; then
         sudo pacman -S thunar-volman ffmpegthumbnailer raw-thumbnailer --noconfirm --needed
       fi
     fi
 
     # terminal emulators
-    if [[ "$term" = *1* ]] || [[ "$term" = *2* ]] || [[ "$term" = *3* ]] || [[ "$term" = *4* ]] || [[ "$term" = *5* ]]; then
-      if [[ "$term" = *1* ]]; then
+    if [[ "$term" == *1* ]] || [[ "$term" == *2* ]] || [[ "$term" == *3* ]] || [[ "$term" == *4* ]] || [[ "$term" == *5* ]]; then
+      if [[ "$term" == *1* ]]; then
         sudo pacman -S xfce4-terminal --noconfirm --needed
         sed -i 's/custom-TerminalEmulator/xfce4-terminal/g' $HELPERS
       fi
 
-      if [[ "$term" = *2* ]]; then
+      if [[ "$term" == *2* ]]; then
         sudo pacman -S terminator --noconfirm --needed
         sed -i 's/custom-TerminalEmulator/terminator/g' $HELPERS
       fi
 
-      if [[ "$term" = *3* ]]; then
+      if [[ "$term" == *3* ]]; then
         sudo pacman -S rxvt-unicode urxvt-perls xclip --noconfirm --needed
         sed -i 's/custom-TerminalEmulator/urxvt/g' $HELPERS
         echo '(sleep 3; xclip) &' >> $AUTOSTART
       fi
 
-      if [[ "$term" = *4* ]]; then
+      if [[ "$term" == *4* ]]; then
         sudo pacman -S tilda --noconfirm --needed
         sed -i 's/Termite/Tilda/g' /home/$USER/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
         sed -i 's/termite/tilda/g' /home/$USER/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
       fi
 
-      if [[ "$term" = *5* ]]; then
+      if [[ "$term" == *5* ]]; then
         yaourt -S tilix --noconfirm --needed
         sed -i 's/Termite/Tilix/g' /home/$USER/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
         sed -i 's/termite/tilix/g' /home/$USER/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
@@ -646,16 +640,16 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
     fi
 
     # disc burner
-    if [[ "$brn" = *1* ]] || [[ "$brn" = *2* ]] || [[ "$brn" = *3* ]]; then
-      if [[ "$brn" = *1* ]]; then
+    if [[ "$brn" == *1* ]] || [[ "$brn" == *2* ]] || [[ "$brn" == *3* ]]; then
+      if [[ "$brn" == *1* ]]; then
         sudo pacman -S xfburn --noconfirm --needed
       fi
 
-      if [[ "$brn" = *2* ]]; then
+      if [[ "$brn" == *2* ]]; then
         yaourt -S simpleburn --noconfirm --needed
       fi
 
-      if [[ "$brn" = *3* ]]; then
+      if [[ "$brn" == *3* ]]; then
         sudo pacman -S k3b --noconfirm --needed
       fi
 
@@ -680,11 +674,6 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
     if [ "${pol,,}" = "${yes,,}" ]; then
       yaourt -S xfce-polkit --noconfirm --needed
       sed -i 's/#exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/g' $CONF_PATH/i3/config
-      sed -i 's/#exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/g' $CONF_PATH/i3/config-lock
-
-    else
-      echo -e "\n  No polkit installed"
-
     fi
 
     # pamac & polkit
@@ -692,25 +681,23 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
       yaourt -S pamac-aur xfce-polkit --noconfirm --needed
       echo  "(sleep 2; pamac-tray) &" >> $AUTOSTART
       sed -i 's/#exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/g' $CONF_PATH/i3/config
-      sed -i 's/#exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/exec --no-startup-id \/usr\/lib\/xfce-polkit\/xfce-polkit/g' $CONF_PATH/i3/config-lock
       sed -i 's/termite --geometry=750x550 --exec=pacli/pamac-manager/g' $CONF_PATH/openbox/menu*
-      sed -i 's/termite --geometry=750x550 --exec=pacli/pamac-manager/g' $CONF_PATH/polybar/config-open*
-      sed -i 's/termite --exec=pacli/pamac-manager/g' $CONF_PATH/polybar/config-i*
-
+      sed -i 's/termite --geometry=750x550 --exec=pacli/pamac-manager/g' $CONF_PATH/polybar/config-openbox
+      sed -i 's/termite --exec=pacli/pamac-manager/g' $CONF_PATH/polybar/config-i3
     fi
   fi
 
   # usb image writers
-  if [[ "$usb" = *1* ]] || [[ "$usb" = *2* ]] || [[ "$usb" = *3* ]] || [[ "$usb" = *4* ]]; then
-    if [[ "$usb" = *1* ]]; then
+  if [[ "$usb" == *1* ]] || [[ "$usb" == *2* ]] || [[ "$usb" == *3* ]] || [[ "$usb" == *4* ]]; then
+    if [[ "$usb" == *1* ]]; then
       yaourt -S etcher --noconfirm --needed
     fi
 
-    if [[ "$usb" = *2* ]]; then
+    if [[ "$usb" == *2* ]]; then
       yaourt -S mintstick-git --noconfirm --needed
     fi
 
-    if [[ "$usb" = *3* ]]; then
+    if [[ "$usb" == *3* ]]; then
       sudo pacman -S unetbootin --noconfirm --needed
     fi
 
@@ -720,28 +707,28 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
   fi
 
   # music
-  if [[ "$musc" = *1* ]] || [[ "$musc" = *2* ]] || [[ "$musc" = *3* ]] || [[ "$musc" = *4* ]] || [[ "$musc" = *5* ]]; then
-    if [[ "$musc" = *1* ]]; then
+  if [[ "$musc" == *1* ]] || [[ "$musc" == *2* ]] || [[ "$musc" == *3* ]] || [[ "$musc" == *4* ]] || [[ "$musc" == *5* ]]; then
+    if [[ "$musc" == *1* ]]; then
       yaourt -S spotify --noconfirm --needed
     fi
 
-    if [[ "$musc" = *2* ]]; then
+    if [[ "$musc" == *2* ]]; then
       yaourt -S nicotine+ --noconfirm --needed
     fi
 
-    if [[ "$musc" = *3* ]]; then
+    if [[ "$musc" == *3* ]]; then
       yaourt -S lollypop --noconfirm --needed
       sed -i 's/audacious/lollypop/g' $MENU $RC_PATH $TINT_MENU
       sudo sed -i 's/MUSIC_PLAYER="audacious"/MUSIC_PLAYER="lollypop"/g' /usr/bin/al-open
     fi
 
-    if [[ "$musc" = *4* ]]; then
+    if [[ "$musc" == *4* ]]; then
       yaourt -S rythmbox --noconfirm --needed
       sed -i 's/audacious/rythmbox/g' $MENU $TINT_MENU $RC_PATH
       sudo sed -i 's/MUSIC_PLAYER="audacious"/MUSIC_PLAYER="rythmbox"/g' /usr/bin/al-open
     fi
 
-    if [[ "$musc" = *5* ]]; then
+    if [[ "$musc" == *5* ]]; then
       sudo pacman -S clementine qt5ct qt5-styleplugins --noconfirm --needed
       sed -i 's/audacious/clementine/g' $MENU $TINT_MENU $RC_PATH
       sudo sed -i 's/MUSIC_PLAYER="audacious"/MUSIC_PLAYER="clementine"/g' /usr/bin/al-open
@@ -766,39 +753,39 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
   fi
 
   # image editor
-  if [[ "$img" = *1* ]] || [[ "$img" = *2* ]] || [[ "$img" = *3* ]]; then
-    if [[ "$img" = *1* ]]; then
+  if [[ "$img" == *1* ]] || [[ "$img" == *2* ]] || [[ "$img" == *3* ]]; then
+    if [[ "$img" == *1* ]]; then
       sudo pacman -S gimp --noconfirm --needed
     fi
 
-    if [[ "$img" = *2* ]]; then
+    if [[ "$img" == *2* ]]; then
       sudo pacman -S inkscape --noconfirm --needed
     fi
 
-    if [[ "$img" = *3* ]]; then
+    if [[ "$img" == *3* ]]; then
       sudo pacman -S pinta --noconfirm --needed
     fi
   fi
 
   # screen capture
-  if [[ "$cap" = *1* ]] || [[ "$cap" = *2* ]] || [[ "$cap" = *3* ]]; then
-    if [[ "$cap" = *1* ]]; then
+  if [[ "$cap" == *1* ]] || [[ "$cap" == *2* ]] || [[ "$cap" == *3* ]]; then
+    if [[ "$cap" == *1* ]]; then
       sudo pacman -S simplescreenrecorder --noconfirm --needed
     fi
 
-    if [[ "$cap" = *2* ]]; then
+    if [[ "$cap" == *2* ]]; then
       sudo pacman -S obs-studio --noconfirm --needed
     fi
 
-    if [[ "$cap" = *3* ]]; then
+    if [[ "$cap" == *3* ]]; then
       yaourt -S peek --noconfirm --needed
     fi
   fi
 
 
   # video
-  if [[ "$vid" = *1* ]] || [[ "$vid" = *2* ]] || [[ "$vid" = *3* ]]; then
-    if [[ "$vid" = *1* ]]; then
+  if [[ "$vid" == *1* ]] || [[ "$vid" == *2* ]] || [[ "$vid" == *3* ]]; then
+    if [[ "$vid" == *1* ]]; then
       sudo pacman -Rn breeze-snow-cursor-theme --noconfirm
       sudo pacman -S kdenlive kdebase-runtime dvdauthor frei0r-plugins qt5ct qt5-styleplugins breeze breeze-icons --noconfirm --needed
       echo "QT_QPA_PLATFORMTHEME=qt5ct" >> $CONF_PATH/openbox/environment
@@ -823,63 +810,63 @@ toolbutton_style=4
 wheel_scroll_lines=3" > $CONF_PATH/qt5ct/qt5ct.conf
     fi
 
-    if [[ "$vid" = *2* ]]; then
+    if [[ "$vid" == *2* ]]; then
       sudo pacman -S openshot --noconfirm --needed
     fi
 
-    if [[ "$vid" = *3* ]]; then
+    if [[ "$vid" == *3* ]]; then
       yaourt -S lwks --noconfirm --needed
     fi
   fi
 
   # office
-  if [[ "$off" = *1* ]] || [[ "$off" = *2* ]] || [[ "$off" = *3* ]]; then
-    if [[ "$off" = *1* ]]; then
+  if [[ "$off" == *1* ]] || [[ "$off" == *2* ]] || [[ "$off" == *3* ]]; then
+    if [[ "$off" == *1* ]]; then
       sudo pacman -S libreoffice-fresh --noconfirm --needed
     fi
 
-    if [[ "$off" = *2* ]]; then
+    if [[ "$off" == *2* ]]; then
       sudo pacman -S abiword --noconfirm --needed
     fi
 
-    if [[ "$off" = *3* ]]; then
+    if [[ "$off" == *3* ]]; then
       sudo pacman -S calligra --noconfirm --needed
     fi
   fi
 
   # mail client
-  if [[ "$mail" = *1* ]] || [[ "$mail" = *2* ]] || [[ "$mail" = *3* ]] || [[ "$mail" = *4* ]]; then
-    if [[ "$mail" = *1* ]]; then
+  if [[ "$mail" == *1* ]] || [[ "$mail" == *2* ]] || [[ "$mail" == *3* ]] || [[ "$mail" == *4* ]]; then
+    if [[ "$mail" == *1* ]]; then
       sudo pacman -S thunderbird --noconfirm --needed
       echo "MailReader=thunderbird" >> $HELPERS
     fi
 
-    if [[ "$mail" = *2* ]]; then
+    if [[ "$mail" == *2* ]]; then
       sudo pacman -S  geary --noconfirm --needed
       echo "MailReader=geary" >> $HELPERS
     fi
 
-    if [[ "$mail" = *3* ]]; then
+    if [[ "$mail" == *3* ]]; then
       sudo pacman -S evolution --noconfirm --needed
       echo "MailReader=evolution" >> $HELPERS
     fi
 
-    if [[ "$mail" = *4* ]]; then
+    if [[ "$mail" == *4* ]]; then
       sudo pacman -S mutt --noconfirm --needed
     fi
   fi
 
   # torrent client
-  if [[ "$tor" = *1* ]] || [[ "$tor" = *2* ]] || [[ "$tor" = *3* ]]; then
-    if [[ "$tor" = *1* ]]; then
+  if [[ "$tor" == *1* ]] || [[ "$tor" == *2* ]] || [[ "$tor" == *3* ]]; then
+    if [[ "$tor" == *1* ]]; then
       sudo pacman -S deluge --noconfirm --needed
     fi
 
-    if [[ "$tor" = *1* ]]; then
+    if [[ "$tor" == *2* ]]; then
       sudo pacman -S transmission-gtk --noconfirm --needed
     fi
 
-    if [[ "$tor" = *3* ]]; then
+    if [[ "$tor" == *3* ]]; then
       sudo pacman -S qbittorrent --noconfirm --needed
     fi
   fi
@@ -891,16 +878,16 @@ fi
 if ! [ "${cosmetics,,}" = "${no,,}" ]; then
 
   # terminal apps
-  if [[ "$ter" = *1* ]] || [[ "$ter" = *2* ]] || [[ "$ter" = *3* ]]; then
-    if [[ "$ter" = *1* ]]; then
+  if [[ "$ter" == *1* ]] || [[ "$ter" == *2* ]] || [[ "$ter" == *3* ]]; then
+    if [[ "$ter" == *1* ]]; then
       sudo pacman -S mpd ncmpcpp --noconfirm --needed
     fi
 
-    if [[ "$ter" = *2* ]]; then
+    if [[ "$ter" == *2* ]]; then
       yaourt -S cava --noconfirm --needed
     fi
 
-    if [[ "$ter" = *3* ]]; then
+    if [[ "$ter" == *3* ]]; then
       yaourt -S s-tui python2-psutil --noconfirm --needed
     fi
   fi
@@ -996,16 +983,14 @@ fi
 
 
 # color picker
-if [ "$pick" == "1" ]; then
-  sudo pacman -S gpick --noconfirm --needed
+if [[ "$pick" == *1* ]] || [[ "$pick" == *2* ]]; then
+  if [[ "$pick" == *1* ]]; then
+    sudo pacman -S gpick --noconfirm --needed
+  fi
 
-elif [ "$pick" == "2" ]; then
-  sudo pacman -S gcolor2 --noconfirm --needed
-
-else
-  echo -e "\n  No color picker selected"
-  clear
-
+  if [[ "$pick" == *2* ]]; then
+    sudo pacman -S gcolor2 --noconfirm --needed
+  fi
 fi
 
 # dropbox
@@ -1048,7 +1033,7 @@ fi
 # window manager and session
 if [[ "$wm" =~ ^[1-2]$ ]]; then
   if [ "$wm" == "1" ]; then
-    sudo pacman -S xfce4 xfce4-goodies volumeicon network-manager-applet xfce4-pulseaudio-plugin arc-gtk-theme --noconfirm --needed
+    sudo pacman -S xfce4 xfce4-goodies volumeicon network-manager-applet xfce4-pulseaudio-plugin --noconfirm --needed
     yaourt -S pamac-aur --noconfirm --needed
     mv -f $CONF_PATH/xfce4/al-xfce-configs/.gtkrc-2.0 /home/$USER/.gtkrc-2.0
     cp -r $CONF_PATH/xfce4/al-xfce-configs/* $CONF_PATH/xfce4/
@@ -1061,7 +1046,7 @@ if [[ "$wm" =~ ^[1-2]$ ]]; then
       sed -i 's/custom-TerminalEmulator/xfce4-terminal/g' $HELPERS
 
       if [ "${rmob,,}" = "${yes,,}" ]; then
-        sudo pacman -Rn openbox polybar-git lxappearance-obconf lxappearance obconf networkmanager-dmenu-git --noconfirm
+        sudo pacman -Rn openbox polybar-git obconf networkmanager-dmenu-git --noconfirm
         # sudo rm -f $BIN/{exit-openbox,al-help*,al-recent*,al-k*,al-places*}  ## removed
         rm -rf $CONF_PATH/{openbox,tint2,polybar,networkmanager-dmenu}
 
@@ -1075,7 +1060,7 @@ if [[ "$wm" =~ ^[1-2]$ ]]; then
   		sudo sed -i 's/openbox/i3/g' /etc/lightdm/lightdm.conf
 
       if [ "${rmob,,}" = "${yes,,}" ]; then
-        sudo pacman -Rn openbox lxappearance-obconf oblogout obconf --noconfirm
+        sudo pacman -Rn openbox oblogout obconf --noconfirm
         sudo rm -f $BIN/{exit-openbox,kickshaw,al-help*,al-recent*,al-k*,al-places*}
         sudo rm -f /etc/oblogout.conf
         rm -rf $CONF_PATH/{openbox,tint2}
@@ -1091,8 +1076,6 @@ else
   rm -f $CONF_PATH/polybar/{config-i3,launch-i3-polybar.sh}
 
 fi
-
-
 
 
 # Swapfile setup
@@ -1131,24 +1114,24 @@ fi
 
 
 # dock
-if [[ "$dock" = *1* ]] || [[ "$dock" = *2* ]] || [[ "$dock" = *3* ]]; then
-  if [[ "$dock" = *1* ]]; then
+if [[ "$dock" == *1* ]] || [[ "$dock" == *2* ]] || [[ "$dock" == *3* ]]; then
+  if [[ "$dock" == *1* ]]; then
     sudo pacman -S plank --noconfirm --needed
-    if [ "${rmob,,}" = "${yes,,}" ]; then
+    if ! [ "${rmob,,}" = "${yes,,}" ]; then
       echo "(sleep 2; plank) &" >> $AUTOSTART
     fi
   fi
 
-  if [[ "$dock" = *2* ]]; then
+  if [[ "$dock" == *2* ]]; then
     sudo pacman -S docky --noconfirm --needed
-    if [ "${rmob,,}" = "${yes,,}" ]; then
+    if ! [ "${rmob,,}" = "${yes,,}" ]; then
       echo "(sleep 2; docky) &" >> $AUTOSTART
     fi
   fi
 
-  if [[ "$dock" = *3* ]]; then
+  if [[ "$dock" == *3* ]]; then
     sudo pacman -S cairo-dock cairo-dock-plug-ins --noconfirm --needed
-    if [ "${rmob,,}" = "${yes,,}" ]; then
+    if ! [ "${rmob,,}" = "${yes,,}" ]; then
       echo "(sleep 2; cairo-dock) &" >> $AUTOSTART
     fi
   fi
@@ -1182,7 +1165,6 @@ if ! [ "${rmob,,}" = "${yes,,}" ]; then
   # menu switcher  (MUST be done after tint2 was picked or not)
   if ! [ "${obm,,}" = "${no,,}" ]; then
     sed -i '/al-kb-pipemenu/ a\
-    <separator/>
     <item label="Switch Menu">\
       <action name="Execute">\
         <command>genmenu</command>\
@@ -1203,49 +1185,10 @@ if ! [ "${rmob,,}" = "${yes,,}" ]; then
     sudo rm -f $BIN/{genmenu,oldmenu}
   fi
 
-  # screen lock (to be done after menu switcher)
-  if [ "${lck,,}" = "${yes,,}" ]; then
-    yaourt -S i3lock-color-git --noconfirm --needed
-    sudo mv -f /etc/oblogout-lock.conf /etc/oblogout.conf
-    mv -f $CONF_PATH/i3/config-lock $CONF_PATH/i3/config
-    # mv -f $CONF_PATH/polybar/config-i3-lock $CONF_PATH/polybar/config-i3   ### removed
-    # mv -f $CONF_PATH/polybar/config-openbox-lock $CONF_PATH/polybar/config-openbox   ### removed
-    sed -i '/al-kb-pipemenu/ a\
-    <item label="Lock Screen">\
-      <action name="Execute">\
-        <command>i3lock-fancy -p</command>\
-      </action>\
-    </item>' $MENU
-
-  else
-    sudo rm -rf /usr/share/i3lock-fancy
-    sudo rm -f $BIN/i3lock-fancy
-    sudo rm -f /etc/oblogout-lock.conf
-    # rm -f $CONF_PATH/polybar/config-{i3-lock,openbox-lock} ### removed
-    rm -f $CONF_PATH/i3/config-lock
-    echo -e "\n  No screen lock needed"
-  fi
-
 else  # if openbox was removed, make sure to clean up ~/.config
-
   rm -rf $CONF_PATH/{tint2,openbox,obmenu-generator}
   rm -f $CONF_PATH/polybar/{config-openbox,launch-ob-polybar.sh}
 
-  # screen lock
-  if [ "${lck,,}" = "${yes,,}" ]; then
-    yaourt -S i3lock-color-git --noconfirm --needed
-    sudo mv -f /etc/oblogout-lock.conf /etc/oblogout.conf
-    mv -f $CONF_PATH/i3/config-lock $CONF_PATH/i3/config
-    # mv -f $CONF_PATH/polybar/config-i3-lock $CONF_PATH/polybar/config-i3   ### removed
-
-  else
-    sudo rm -rf /usr/share/i3lock-fancy
-    sudo rm -f $BIN/i3lock-fancy
-    sudo rm -f /etc/oblogout-lock.conf
-    # rm -f $CONF_PATH/polybar/config-i3-lock ### removed
-    rm -f $CONF_PATH/i3/config-lock
-    echo -e "\n  No screen lock needed"
-  fi
 fi
 
 # nvidia drivers
@@ -1276,26 +1219,25 @@ fi
 openbox --reconfigure
 
 # shell
-if [[ "$shll" = *1* ]] || [[ "$shll" = *2* ]] || [[ "$shll" = *3* ]]; then
+if [[ "$shll" == *1* ]] || [[ "$shll" == *2* ]] || [[ "$shll" == *3* ]]; then
   # friendly reboot reminder
-  clear; printf "\n${b}  You're now at the last step of the setup, after which you will be dropped
-    off in your chosen shell. (${red}Please type exit after you change shells,
-    this will return you here to finish the installation)\n${reg}
+  clear; printf "\n${b}  You're now at the shell step of the setup, after you'll be dropped in it.
+  (Please type ${red}'exit'${reg} and [Enter] after the change to return here)\n
   \n\n  Press any key to proceed..."
   read -r reboot
 
-  if [[ "$shll" = *1* ]]; then
+  if [[ "$shll" == *1* ]]; then
     sudo pacman -S git --needed --noconfirm
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     echo "neofetch" >> /home/$USER/.zshrc
   fi
 
-  if [[ "$shll" = *2* ]]; then
+  if [[ "$shll" == *2* ]]; then
     sudo pacman -S fish --noconfirm --needed
     chsh -s fish $USER
   fi
 
-  if [[ "$shll" = *3* ]]; then
+  if [[ "$shll" == *3* ]]; then
     yaourt -S  loksh --noconfirm --needed
     chsh -s loksh $USER
   fi

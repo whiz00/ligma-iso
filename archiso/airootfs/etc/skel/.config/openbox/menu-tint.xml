@@ -80,11 +80,6 @@
     <separator/>
     <menu id="preferences" label="Preferences">
       <menu id="obConfig" label="Openbox">
-        <item label="GUI Config">
-          <action name="Execute">
-            <command>obconf</command>
-          </action>
-        </item>
         <item label="GUI Menu">
           <action name="Execute">
             <command>kickshaw</command>
@@ -120,23 +115,23 @@
           <command>tint2conf</command>
         </action>
       </item>
-      <item label="Rofi Theme">
+      <item label="Rofi Launcher Theme">
         <action name="Execute">
           <command>rofi-theme-selector</command>
         </action>
       </item>
       <separator/>
-      <item label="Appearance">
+      <item label="XFCE Appearance">
         <action name="Execute">
           <command>xfce4-appearance-settings</command>
         </action>
       </item>
-      <item label="Lxappearance">
+      <item label="Openbox Config">
         <action name="Execute">
-          <command>lxappearance</command>
+          <command>obconf</command>
         </action>
       </item>
-      <item label="Wallpaper">
+      <item label="Change Background">
         <action name="Execute">
           <command>nitrogen</command>
         </action>
@@ -164,6 +159,11 @@
           <command>termite --geometry=750x550 --exec=pacli</command>
         </action>
       </item>
+      <item label="Root File Manager">
+        <action name="Execute">
+          <command>gksudo thunar</command>
+        </action>
+      </item>
       <item label="GParted">
         <action name="Execute">
           <command>gksudo gparted</command>
@@ -173,7 +173,12 @@
     <menu execute="al-help-pipemenu" id="help" label="Help and Info"/>
     <menu execute="al-kb-pipemenu" id="keybinds" label="Keybinds"/>
     <separator/>
-    <item label="Exit">
+    <item label="Lock Screen">
+      <action name="Execute">
+        <command>i3lock-fancy -p</command>
+      </action>
+    </item>
+    <item label="Exit Openbox">
       <action name="Execute">
         <command>exit-openbox</command>
       </action>

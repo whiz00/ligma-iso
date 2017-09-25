@@ -2,6 +2,18 @@
 ;
 ;=====================================================
 
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+
+
 [colors]
 background = #131724
 background-alt = #444
@@ -20,11 +32,13 @@ dontknow = #6B8EE7
 yellow = #F9F1AF
 
 [bar/bar1]
+; Use  xrandr -q | grep " connected" | cut -d ' ' -f1
+; for a list of connected monitors
 monitor =
 width = 100%
 height = 28
 radius = 0.0
-fixed-center = false
+fixed-center = true
 
 background = ${colors.graphite}
 foreground = ${colors.foreground}
@@ -32,8 +46,8 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size-left = 8
-border-color = #00000000
+border-bottom-size = 2
+border-color = ${colors.foreground}
 
 padding-left = 0
 padding-right = 0
@@ -41,14 +55,14 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;3
-font-1 = icomoon :size=11:;1
+font-0 = Iosevka Nerd Font:size=10:antialias=true;1
+font-1 = icomoon:size=11;1
 font-2 = MaterialIcons-Regular:size=12:antialias=false;3
+font-3 = Ubuntu Nerd Font:size=13;2
 
-modules-left = seperator5 mpd
-modules-center = volume
-modules-right =   github wired-network wireless-network cpu temperature  pkg redshift  battery date powermenu network seperator4
-; modules-right = filesystem xbacklight volume xkeyboard memory cpu wlan eth battery temperature date powermenu
+modules-left = workspaces
+modules-center = window_count volume
+modules-right = menu pkg battery cpu temperature network clock
 
 tray-position = off
 tray-padding = 2
@@ -62,17 +76,26 @@ format-prefix = " "
 format-suffix = "°C"
 format-prefix-foreground = #6BBDE7
 format-background = #2E3440
-exec = $HOME/.config/polybar/weather
+exec = $HOME/.config/polybar/scripts/weather
 
 [module/network]
 type = custom/script
 label-background = #2E3440
-exec = $HOME/.config/polybar/network.sh
-click-left = networkmanager_dmenu
-click-right = networkmanager_dmenu
+exec = $HOME/.config/polybar/scripts/network.sh
+click-left = python /usr/bin/networkmanager_dmenu
+click-right = python /usr/bin/networkmanager_dmenu
 label-padding = 1
 interval = 1
 tail = true
+
+[module/window_count]
+type = custom/script
+interval = 2
+label = "%{A1:skippy-xd --activate-window-picker:}   %output%  %{A}        "
+exec = echo "$(($(wmctrl -l -i | wc -l)-1))"
+format = <label>
+format-prefix = "   "
+format-padding = 0
 
 ;;;;;;;;;;;;;;;
 ;; XKEYBOARD ;;
@@ -84,96 +107,63 @@ format = <label-indicator>
 format-prefix-foreground = ${colors.foreground-alt}
 label-indicator = 
 
-[module/seperator]
-type = custom/text
-content =|│
-content-foreground = #101417
 
-[module/seperator2]
-type = custom/text
-content =|│
-content-foreground = #7BB2B5
+[module/workspaces]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+format-padding = 0
+Additional formatting
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+;icon-default = 
 
-[module/seperator3]
-type = custom/text
-content =|│
-content-foreground = #2E3440
+format = <label-state>
 
-[module/seperator4]
-type = custom/text
-content =|│
-content-foreground = #2E3440
+label-active = "  %icon% %name%  "
+label-active-foreground = ${colors.blue}
+label-active-background = ${colors.graphite}
+label-active-underline = ${colors.blue}
 
-[module/seperator5]
-type = custom/text
-content =|│
-content-foreground = #2E3440
+label-occupied = "  %icon% %name%  "
+label-occupied-underline = ${colors.blue}
+label-occupied-background = ${colors.graphite}
+label-occupied-foreground = ${colors.foreground}
 
-[module/seperator6]
-type = custom/text
-content =|│
-content-foreground = #7BB2B5
+label-urgent = "  %icon% %name%  "
+label-urgent-foreground = ${colors.red}
+label-urgent-background = ${colors.background-alt}
+label-urgent-underline = ${colors.red}
 
-;;;;;;;;
-;; I3 ;;
-;;;;;;;;
-[module/i3]
-type = internal/i3
+label-empty = "  %icon% %name%  "
+label-empty-foreground = ${colors.foreground}
+label-empty-background = ${colors.graphite}
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
-ws-icon-default = ♟
-
-format = <label-state> <label-mode>
-index-sort = true
-wrapping-scroll = false
-
-label-mode = %mode%
-label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
-
-label-focused = %index%: %icon%
-label-focused-background = ${colors.primary}
-label-focused-foreground = ${colors.black}
-label-focused-padding = 2
-
-label-unfocused = %icon%
-label-unfocused-padding = 2
-
-label-visible = %icon%
-label-visible-background = ${colors.primary}
-label-visible-underline =
-label-visible-padding = 2
-
-label-urgent = %icon%
-label-urgent-background = ${colors.red}
-label-urgent-padding = 2
 
 ;;;;;;;;;
 ;; CPU ;;
 ;;;;;;;;;
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.green}
-label = %percentage%%
+[module/memory]
+type = internal/memory
+interval = 3
+format = <label>
+format-prefix = "    "
+label = %{A1:termite --exec=htop & disown:}%percentage_used%%%{A}
 
 ;;;;;;;;;;;;;;
 ;; ETHERNET ;;
 ;;;;;;;;;;;;;;
 [module/wired-network]
 type = internal/network
-interface = enp0s31f6
+interface =
 format-connected = <label-connected>
 format-connected-foreground = ${colors.purple}
 format-disconnected = <label-disconnected>
@@ -184,7 +174,7 @@ label-connected =  %local_ip%
 ;;;;;;;;;;
 [module/wireless-network]
 type = internal/network
-interface = wlp4s0
+interface =
 
 format-connected = <ramp-signal>  <label-connected>
 format-packetloss = <animation-packetloss>
@@ -211,22 +201,21 @@ animation-packetloss-1-foreground = #000000
 
 animation-packetloss-framerate = 500
 
-click-right = networkmanager_dmenu
-click-left = networkmanager_dmenu
+click-right = python /usr/bin/networkmanager_dmenu
+click-left = python /usr/bin/networkmanager_dmenu
 
 ;;;;;;;;;;
 ;; DATE ;;
 ;;;;;;;;;;
-[module/date]
+[module/clock]
 type = internal/date
-
-interval = 5
 format = <label>
-date = ""
-date-alt = %d %b %y
-time = %H:%M
-time-alt = ""
-label = %date% %time%
+label-padding-right = 4
+format-prefix = 
+format-foreground = ${colors.foreground}
+interval = 2
+time = %R
+label = %{A1:gsimplecal & disown:} %{A3:gsimplecal & disown:} %time% %{A}%{A}
 
 ;;;;;;;;;;;;
 ;; VOLUME ;;
@@ -235,14 +224,14 @@ label = %date% %time%
 type = internal/volume
 
 format-volume = <label-volume> <bar-volume>
-;label-volume = ""
+label-volume = "  "
 label-volume-foreground = #B6C2E7
 
 format-muted-foreground = #E76BB4
-label-muted = "mute"
+label-muted = "   mute"
 
-bar-volume-width = 10
-bar-volume-height = 10
+bar-volume-width = 15
+bar-volume-height = 15
 bar-volume-foreground-0 = #92A3F7
 bar-volume-foreground-1 = #92A3F7
 bar-volume-foreground-2 = #6BB3E7
@@ -251,82 +240,89 @@ bar-volume-foreground-4 = #6BB3E7
 bar-volume-foreground-5 = #6BE7D8
 bar-volume-foreground-6 = #6BE7D8
 bar-volume-gradient = true
-bar-volume-indicator =
-bar-volume-indicator-font = 2
+bar-volume-indicator = |
 bar-volume-fill = •
 bar-volume-fill-font = 2
-bar-volume-empty = ·
+bar-volume-empty = .
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = #666666
-
+; ···
 
 ;;;;;;;;;;;;;
 ;; BATTERY ;;
 ;;;;;;;;;;;;;
 [module/battery]
 type = internal/battery
-battery = BAT1
-adapter = AC
 full-at = 98
-format-charging = <animation-charging>
 
-format-discharging = <ramp-capacity>
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT1
+adapter = ACAD
 
-ramp-capacity-0 = 
+poll-interval = 5
+time-format = %H:%M
+format-charging = <animation-charging><label-charging>
+format-discharging = <ramp-capacity><label-discharging>
+format-full = <ramp-capacity>
+format-padding = 0
+label-charging = "  %percentage%%  "
+label-discharging = " %percentage%%  "
+ramp-capacity-0 = "    "
 ramp-capacity-0-foreground = ${colors.red}
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-1 = "    "
+ramp-capacity-2 = "    "
+ramp-capacity-3 = "    "
+ramp-capacity-4 = "    "
 ramp-capacity-foreground = ${colors.dontknow}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-foreground = ${colors.foreground-alt}
+bar-capacity-width = 10
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
 animation-charging-framerate = 750
+animation-charging-background = ${colors.foreground-alt}
+
 
 ;;;;;;;;;;
 ;; MENU ;;
 ;;;;;;;;;;
-[module/powermenu]
+[module/menu]
 type = custom/menu
-
-label-open = " %{T4} %{T-}%{T4} %{T-} "
-label-close =
-format = <label-toggle><menu>
-label-separator = "  "
-
-format-foreground =#FFFFFF
-format-background = ${colors.primary}
-
-menu-0-0 = 
+format-spacing = 1
+format-background = ${colors.b-alt}
+label-open = "   "
+label-open-foreground = ${colors.foreground}
+label-close = "    "
+label-close-foreground = ${colors.red}
+label-separator = " | "
+label-separator-foreground = ${colors.foreground}
+# Top level
+menu-0-0 = "  "
 menu-0-0-exec = menu-open-1
-menu-0-1 =  
+menu-0-1 = "    |"
 menu-0-1-exec = menu-open-2
-menu-0-2 = 
-menu-0-2-exec = menu-open-3
-menu-0-3 = 
-menu-0-3-exec = menu-open-4
-menu-0-4 = "  "
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch WebBrowser
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch TerminalEmulator
+menu-1-2 = "    |"
+menu-1-2-exec = exo-open --launch FileManager
+# 3
+menu-2-0 = "  "
+menu-2-0-exec = menu-open-0
+menu-2-1 = "   "
+menu-2-1-exec = i3lock-fancy -p -f Ubuntu
+menu-2-2 = "   "
+menu-2-2-exec = openbox --exit
+menu-2-3 = "   "
+menu-2-3-exec = systemctl reboot
+menu-2-4 = "      |"
+menu-2-4-exec = systemctl poweroff
 
-menu-1-0 = 
-menu-1-0-exec = redshift
-menu-1-1 = "  "
-
-menu-2-0 = 
-menu-2-0-exec = spotify
-menu-2-1 = "  "
-
-menu-3-0 = 
-menu-3-0-exec = rofi
-menu-3-1 = "  "
-
-menu-4-0 = 
-menu-4-0-exec = thunar
-menu-4-1 = "  "
 
 ;;;;;;;;;;;;;;
 ;; REDSHIFT ;;
@@ -334,19 +330,22 @@ menu-4-1 = "  "
 [module/redshift]
 type = custom/script
 interval = 5
-exec = ~/.config/polybar/redshift.sh
+exec = $HOME/.config/polybar/scripts/redshift
+
 
 ;;;;;;;;;
 ;; PKG ;;
 ;;;;;;;;;
 [module/pkg]
 type = custom/script
-interval = 1200
-format = <label>
-label = "%output%"
 exec = $HOME/.config/polybar/scripts/pkg.sh
 exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
-; exec-if = "ping -q -w 2 -c 1 arel.eisti.fr > /dev/null"
+click-left = termite --geometry=750x550 --exec=pacli &
+click-right = termite --geometry=750x550 --exec=pacli &
+label-padding = 2
+interval = 1500
+tail = true
+
 
 ;;;;;;;;;;;;
 ;; GITHUB ;;
@@ -355,6 +354,7 @@ exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
 type = internal/github
 token = ${~/.config/polybar/github_access.token}
 empty-notifications = false
+
 
 ;;;;;;;;;;;;;;;;
 ;; FILESYSTEM ;;
@@ -375,11 +375,11 @@ spacing = 2
 [module/temperature]
 type = internal/temperature
 
-interval = 1
+interval = 2
 thermal-zone = 0
 
 ; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
-hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+;hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
 warn-temperature = 70
 
 format = <ramp> <label>
@@ -408,15 +408,6 @@ format-foreground = #1ED660
 tail = true
 interval = 2
 
-;;;;;;;;;;;;;;
-;; SETTINGS ;;
-;;;;;;;;;;;;;;
-[settings]
-screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
 
 [module/mpd]
 type = internal/mpd

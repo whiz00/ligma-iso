@@ -28,4 +28,4 @@ sleep 1; xdg-user-dirs-gtk-update &
 # skippy
 sleep 2; skippy-xd --config $HOME/.config/skippy-xd/skippy-xd.rc --start-daemon &
 #sleep 3; termite --geometry=650x450 --exec=/usr/bin/al-hello &
-sleep 5; $HOME/.config/first-start.sh &
+#sleep 4; $HOME/.config/first-start.sh &

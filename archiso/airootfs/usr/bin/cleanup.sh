@@ -6,7 +6,7 @@ rm -f /etc/sudoers.d/g_wheel
 rm -f /etc/polkit-1/rules.d/49-nopasswd_global.rules
 rm -rf /etc/systemd/system/{,pacman-init.service,etc-pacman.d-gnupg.mount,getty@tty1.service.d,default.target}
 #choose-mirror.service  choose-mirror.service
-#rm /etc/systemd/scripts/choose-mirror
+rm /etc/systemd/scripts/choose-mirror
 systemctl disable pacman-init.service
 rm /root/{.automated_script.sh,.zlogin}
 rm /etc/mkinitcpio-archiso.conf
@@ -30,7 +30,7 @@ sed -i '183,187d' /etc/skel/.config/openbox/menu.xml
 
 # enable al-hello after install
 sed -i 's/#sleep 3; termite/sleep 3; termite/g' /etc/skel/.config/openbox/autostart
-#sed -i '33d' /etc/skel/.config/openbox/autostart
+sed -i 's/#sleep 4/sleep 4' /etc/skel/.config/openbox/autostart
 
 # fix boot messages
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet nowatchdog systemd.legacy_systemd_cgroup_controller=true"/g' /etc/default/grub
