@@ -2,11 +2,11 @@
 
 online=$(ip addr | grep "state UP" | cut -d ":" -f2)
 
-connected=""
-offline=""
+connected=""
+offline=""
 
 if [[ "$online" ]]; then
-    echo %{F#EFF0F1}${connected}
+    echo %{F#8FA1B3}${connected}
   else
-    echo %{F#E64141}${offline}; sleep 1; echo %{F#EFF0F1}${offline}
+    echo %{F#6BBDE7}${offline}; sleep 1; echo %{F#8FA1B3}${offline}
 fi

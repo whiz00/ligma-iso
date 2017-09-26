@@ -113,12 +113,12 @@
       <menu id="polybar" label="Polybar Config">
         <item label="Polybar Config">
           <action name="Execute">
-            <command>exo-open ~/.config/polybar/config-openbox</command>
+            <command>exo-open ~/.config/polybar/config</command>
           </action>
         </item>
         <item label="Reload Polybar">
           <action name="Execute">
-            <command>~/.config/polybar/launch-ob-polybar.sh</command>
+            <command>~/.config/polybar/scripts/launch.sh</command>
           </action>
         </item>
       </menu>
@@ -183,11 +183,6 @@
     <item label="Install Archlabs">
       <action name="Execute">
         <command>install-al</command>
-      </action>
-    </item>
-    <item label="Lock Screen">
-      <action name="Execute">
-        <command>i3lock-fancy -p</command>
       </action>
     </item>
     <item label="Exit Openbox">

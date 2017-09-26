@@ -25,8 +25,8 @@ rm /usr/bin/install-al
 
 # touch up
 sed -i 's/Name=File Manager/Name=Thunar Settings/g' /usr/share/applications/thunar-settings.desktop
-sed -i '183,187d' /etc/skel/.config/openbox/menu.xml
-# sed -i '6d' /etc/environment
+sed -i 's/Install Archlabs/Lock Screen/g' /etc/skel/.config/openbox/menu.xml
+sed -i 's/install-al/i3lock-fancy -p/g' /etc/skel/.config/openbox/menu.xml
 
 # enable al-hello after install
 sed -i 's/#sleep 3; termite/sleep 3; termite/g' /etc/skel/.config/openbox/autostart

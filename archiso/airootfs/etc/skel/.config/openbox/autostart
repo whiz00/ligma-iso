@@ -7,7 +7,7 @@ numlockx &
 pactl set-sink-mute @DEFAULT_SINK@ false &
 
 # panel
-sleep 1; $HOME/.config/polybar/launch-ob-polybar.sh &
+sleep 1; $HOME/.config/polybar/scripts/launch.sh &
 
 # meta key opens rofi
 ksuperkey -e 'Super_L=Alt_L|F1' &
@@ -15,7 +15,7 @@ ksuperkey -e 'Super_L=Alt_L|F1' &
 # wallpaper
 sleep 1; nitrogen --restore &
 
-# xfce settings (uncomment to reload settings on login)
+# xfce settings
 xfsettingsd &
 
 #sleep 3; thunar --daemon &

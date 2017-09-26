@@ -2,12 +2,9 @@
 
 pac=$(checkupdates | wc -l)
 
-if [[ "$pac" > "1" ]]; then
-  echo %{F#6BA4E7}$pac %{F#6BA4E7}
-
-else
-  echo %{F#EFF0F1}%{F#EFF0F1} 
-
+if [[ "$pac" > "0" ]]
+then
+    echo %{F#EFF0F1}$pac %{F#EFF0F1}
 fi
 
 

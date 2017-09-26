@@ -179,7 +179,7 @@ bindsym $mod+a focus parent
 exec_always --no-startup-id numlockx on
 exec_always --no-startup-id ksuperkey -e 'Super_L=Alt_L|F1'
 exec_always --no-startup-id $HOME/.config/i3/scripts/compositor.sh
-exec_always --no-startup-id $HOME/.config/polybar/launch-i3-polybar.sh
+exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
 
 # run once at startup
 exec --no-startup-id xfsettingsd &
