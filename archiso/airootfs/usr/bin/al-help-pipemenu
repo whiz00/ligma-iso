@@ -16,8 +16,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#	Renamed for Archlabs
-
 HELP='    al-help-pipemenu an Openbox Pipe Menu for displaying help files
     It should normally be called from an openbox menu.
 
@@ -62,12 +60,10 @@ menuItem 'Scripts, Tutorials & Tips' 'exo-open "https://bbs.archlinux.org/viewfo
 menuSeparator
 
 menuSubmenu 'OpenboxWWW' 'Openbox'
-menuSubmenu 'ObWWW' 'Openbox Website'
 menuItem 'Openbox Homepage' 'exo-open "http://openbox.org/"'
 menuItem 'Openbox Getting Started' 'exo-open "http://openbox.org/wiki/Help:Getting_started"'
 menuItem 'Openbox Documentation' 'exo-open "http://openbox.org/wiki/Help:Contents"'
 menuItem 'Openbox FAQs' 'exo-open "http://openbox.org/wiki/Help:FAQ"'
-menuSubmenuEnd
 menuItem 'Arch Wiki Openbox Guide' 'exo-open "http://wiki.archlinux.org/index.php/Openbox"'
 menuItem 'Debian Wiki Openbox Guide' 'exo-open "https://wiki.debian.org/Openbox"'
 menuItem 'Urukramas Openbox Guide' 'exo-open "https://urukrama.wordpress.com/openbox-faq/"'
@@ -88,6 +84,7 @@ menuItem 'Conky Archive' 'exo-open "http://crunchbang.org/forums/viewtopic.php?p
 menuItem 'Conky Reddit' 'exo-open "https://www.reddit.com/r/conky/"'
 menuItem 'Conky Man Pages' 'termite --exec=man conky'
 menuSubmenuEnd
+
 menuSeparator
 
 menuSubmenu 'ThemesWWW' 'Theme Resources'

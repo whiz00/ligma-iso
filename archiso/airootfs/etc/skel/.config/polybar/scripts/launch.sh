@@ -11,7 +11,19 @@ sed -i "/base/ a\
 include-file = ${MODULES}" $CONF_PATH/config
 sed -i "/base/ a\
 include-file = ${MASTER}" $CONF_PATH/config
-sed -i '6,15d' $CONF_PATH/scripts/launch-polybar.sh
+# set firefox homepage
+sed -i "s/liveuser/${USER}/g" /home/$USER/.mozilla/firefox/archlabs.default/prefs.js
+sed -i "s/liveuser/${USER}/g" /home/$USER/.mozilla/firefox/archlabs.default/sessionstore.js
+
+# set bookmarks
+sed -i "s/liveuser/${USER}/g" /home/$USER/.config/gtk-3.0/bookmarks
+
+# remove some stuff from autostart
+sed -i '30d' /home/$USER/.config/openbox/autostart
+sed -i '22d' /home/$USER/.config/openbox/autostart
+sed -i '6,7d' /home/$USER/.config/openbox/autostart
+
+sed -i '6,27d' $CONF_PATH/scripts/launch.sh
 
 
 # Terminate already running bar instances
@@ -21,10 +33,10 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Check WM
-cur_wm='wmctrl -m | grep Name | cut -d " " -f2'
+cur_wm=$(wmctrl -m | grep Name | cut -d " " -f2)
 
 # if i3 launch the i3-bar
-if [ "$cur_wm" == "i3" ]; then
+if [ $cur_wm == i3 ]; then
   polybar -r --config=$CONF_PATH/config i3-bar &
 
 else  # otherwise we assume openbox

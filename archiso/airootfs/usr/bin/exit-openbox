@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-if pgrep -x oblogout > /dev/null
-then
-    oblogout
+if ! pgrep -x oblogout > /dev/null; then
+  oblogout
 else
-    killall oblogout
+  killall oblogout
 fi
-
-exit 0

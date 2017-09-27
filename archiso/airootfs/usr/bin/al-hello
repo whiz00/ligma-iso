@@ -261,7 +261,7 @@ if ! [ ${defaults,,} = ${no,,} ]; then
     read -r remove
 
     clear; echo -e "\n  ArchLabs provides a local homepage ${b}~/.ArchLabs-homepage/index.html${reg}
-    This can be opened with a browser and set as the homepage if you like\n\n\n"
+  This can be opened with a browser and set as the homepage if you like\n\n\n"
     read -n1 -rsp $'  Press Any Key to continue...\n'
   else
     clear; printf "\n  Install flash plugin? (20M) [y/n]: "
@@ -513,20 +513,20 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
 
   # editors
   if [[ $edit == *1* ]] || [[ $edit == *2* ]] || [[ $edit == *3* ]]; then
-    if ! [[ $wm == 1 ]]; then
+    if ! [[ $wm == "1" ]]; then
       if [[ $edit == *1* ]]; then
         sudo pacman -S atom --noconfirm --needed
         sed -i 's/geany/atom/g' $MIMEAPP $MENU $TINT_MENU $RC_PATH
         sudo sed -i 's/TEXT_EDITOR="geany"/TEXT_EDITOR="atom"/g' /usr/bin/al-open
       fi
 
-      if [[ $edit == *2*]]; then
+      if [[ $edit == *2* ]]; then
         sudo pacman -S mousepad --noconfirm --needed
         sed -i 's/geany/mousepad/g' $MIMEAPP $MENU $TINT_MENU $RC_PATH
         sudo sed -i 's/TEXT_EDITOR="geany"/TEXT_EDITOR="mousepad"/g' /usr/bin/al-open
       fi
 
-      if [[ $edit == *3*]]; then
+      if [[ $edit == *3* ]]; then
         yaourt -S sublime-text-dev --noconfirm --needed
         sed -i 's/geany/sublime_text_3/g' $MIMEAPP
         sed -i 's/geany/subl3/g' $RC_PATH $MENU $TINT_MENU
@@ -536,7 +536,7 @@ X-XFCE-Commands=google-chrome-stable' > /home/$USER/.local/share/xfce4/helpers/c
     else
       sed -i 's/geany/mousepad/g' $MIMEAPP
 
-      if [[ $edit == *1*]]; then
+      if [[ $edit == *1* ]]; then
         sudo pacman -S atom --noconfirm --needed
         sed -i 's/mousepad/atom/g' $MIMEAPP
       fi
@@ -895,10 +895,10 @@ if ! [ ${cosmetics,,} = ${no,,} ]; then
 
   # conky
   if [[ $conk =~ ^[1-3]$ ]]; then
-    if [ $conk == 1 ]; then
+    if [ $conk == "1" ]; then
       sudo pacman -S conky --noconfirm --needed
 
-    elif [ $conk == 2 ]; then
+    elif [ $conk == "2" ]; then
       yaourt -S  conky-lua --noconfirm --needed
 
     else
@@ -1013,7 +1013,7 @@ fi
 
 # window manager and session
 if [[ $wm =~ ^[1-2]$ ]]; then
-  if [ $wm == 1 ]; then
+  if [ $wm == "1" ]; then
     sudo pacman -S xfce4 xfce4-goodies volumeicon network-manager-applet xfce4-pulseaudio-plugin --noconfirm --needed
     yaourt -S pamac-aur --noconfirm --needed
     mv -f $CONF_PATH/xfce4/al-xfce-configs/.gtkrc-2.0 /home/$USER/.gtkrc-2.0
@@ -1127,7 +1127,7 @@ if ! [ ${rmob,,} = ${yes,,} ]; then
     sed -i 's/$HOME\/.config\/polybar\/scripts\/launch.sh/tint2/g' $AUTOSTART
     sudo pacman -S tint2 volumeicon network-manager-applet --noconfirm --needed
 
-    if ! [ $wm == 2 ]; then   # if NOT using i3 remove polybar
+    if ! [ $wm == "2" ]; then   # if NOT using i3 remove polybar
       sudo pacman -Rns polybar-git --noconfirm
       rm -rf $CONF_PATH/polybar
     fi
@@ -1164,7 +1164,7 @@ fi
 
 # nvidia drivers
 if [ ${nvd,,} = ${yes,,} ]; then
-  if [ $wm == 2 ] && [ ${ses,,} = ${yes,,} ]; then # if we are logging in to i3 we need to set it up is autostart
+  if [ $wm == "2" ] && [ ${ses,,} = ${yes,,} ]; then # if we are logging in to i3 we need to set it up is autostart
     echo 'exec --no-startup-id sleep 5; termite --exec=/usr/bin/nvidia-easy-install' >> $CONF_PATH/i3/config
     clear; echo -e "\n${g}  A reboot is currently pending, next boot you will be promted to install drivers${reg}"
     sleep 3
