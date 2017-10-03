@@ -1,14 +1,18 @@
 ---
 componentName:  archlabs
 
+welcomeExpandingLogo:   false
 strings:
-    productName:         ArchLabs
+    productName:         ArchLabs Linux
     shortProductName:    ArchLabs
-    version:             1.0
-    shortVersion:        1.0
-    versionedName:       ArchLabs
-    shortVersionedName:  ArchLabs
+    version:             6.0
+    shortVersion:        6.0
+    versionedName:       ArchLabs 2017.10 "Minimo"
+    shortVersionedName:  ArchLabs 2017.10
     bootloaderEntryName: ArchLabs
+    productUrl:          http://calamares.io/
+    supportUrl:          https://github.com/ARCHLabs/Archlabs-Iso
+    releaseNotesUrl:     http://calamares.io/about/
 
 images:
     productLogo:         "squid.png"

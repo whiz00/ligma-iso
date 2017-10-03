@@ -65,7 +65,7 @@
     <menu id="multimedia" label="Multimedia">
       <item label="Music Player">
         <action name="Execute">
-          <command>al-open -music</command>
+          <command>audacious</command>
         </action>
       </item>
       <item label="Video Player">
@@ -80,9 +80,26 @@
     <separator/>
     <menu id="preferences" label="Preferences">
       <menu id="obConfig" label="Openbox">
-        <item label="GUI Menu">
+        <item label="Settings Editor">
+          <action name="Execute">
+            <command>obconf</command>
+          </action>
+        </item>
+        <item label="Menu Editor">
           <action name="Execute">
             <command>kickshaw</command>
+          </action>
+        </item>
+        <!--
+        <item label="Keybind Editor">
+          <action name="Execute">
+            <command>obkey</command>
+          </action>
+        </item>
+        -->
+        <item label="Autostart Editor">
+          <action name="Execute">
+            <command>ob-autostart</command>
           </action>
         </item>
         <separator/>
@@ -102,15 +119,15 @@
           </action>
         </item>
         <separator/>
-        <item label="Reconfigure">
+        <item label="Openbox Reconfigure">
           <action name="Reconfigure"/>
         </item>
-        <item label="Restart">
+        <item label="Openbox Restart">
           <action name="Restart"/>
         </item>
       </menu>
       <menu execute="al-compositor" id="CompositingPipeMenu" label="Compositor"/>
-      <menu id="polybar" label="Polybar Config">
+      <menu id="polybar" label="Polybar">
         <item label="Polybar Config">
           <action name="Execute">
             <command>exo-open ~/.config/polybar/config</command>
@@ -122,33 +139,28 @@
           </action>
         </item>
       </menu>
-      <item label="Rofi Launcher Theme">
+      <separator/>
+      <item label="Appearance">
+        <action name="Execute">
+          <command>xfce4-appearance-settings</command>
+        </action>
+      </item>
+      <item label="Wallpaper">
+        <action name="Execute">
+          <command>nitrogen</command>
+        </action>
+      </item>
+      <item label="Rofi Theme">
         <action name="Execute">
           <command>rofi-theme-selector</command>
         </action>
       </item>
       <separator/>
-      <item label="XFCE Appearance">
-        <action name="Execute">
-          <command>xfce4-appearance-settings</command>
-        </action>
-      </item>
-      <item label="Openbox Config">
-        <action name="Execute">
-          <command>obconf</command>
-        </action>
-      </item>
-      <item label="Change Background">
-        <action name="Execute">
-          <command>nitrogen</command>
-        </action>
-      </item>
       <item label="Settings Manager">
         <action name="Execute">
           <command>xfce4-settings-manager</command>
         </action>
       </item>
-      <separator/>
       <item label="Audio Settings">
         <action name="Execute">
           <command>pavucontrol</command>

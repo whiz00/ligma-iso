@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Exec=/usr/bin/ob-autostart
+Icon=openbox
+StartupNotify=true
+Terminal=false
+Type=Application
+Name=Openbox Autostart
+Comment=Add/Remove startup applications

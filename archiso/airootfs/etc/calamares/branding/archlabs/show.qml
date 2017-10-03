@@ -35,19 +35,16 @@ Presentation
         Image {
             id: background1
             source: "slide1.png"
-            width: 800; height: 300
+            width: 700; height: 400
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+      		anchors.centerIn: parent
         }
         Text {
             anchors.horizontalCenter: background1.horizontalCenter
             anchors.top: background1.bottom
-            text: "Welcome to ArchLabs <br/>"+
-                  "Using a graphical installer, ArchLabs brings the BunsenLabs experience to Arch.<br/>"+
-				          "Our vision doesn't end there, we're changing and improving with each release."
+            text: "Welcome to ArchLabs Minimo."
             wrapMode: Text.WordWrap
-            width: 600
+            width: 800
             horizontalAlignment: Text.Center
         }
     }
@@ -57,20 +54,16 @@ Presentation
         Image {
             id: background2
             source: "slide2.png"
-            width: 800; height: 300
+            width: 700; height: 400
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+      		anchors.centerIn: parent
         }
         Text {
             anchors.horizontalCenter: background2.horizontalCenter
             anchors.top: background2.bottom
-            text: "Featuring the lightning fast Openbox Window Manager.<br/>"+
-				          "Right click to get easy access to commonly used applications.<br/>"+
-                  "Customize it to suit your needs and provide amazing functionality.<br/>"+
-                  "All while looking nice and remaining low on system resources."
+            text: "Featuring the lightning fast Openbox Window Manager."
             wrapMode: Text.WordWrap
-            width: 600
+            width: 800
             horizontalAlignment: Text.Center
         }
     }
@@ -80,18 +73,16 @@ Presentation
         Image {
             id: background3
             source: "slide3.png"
-            width: 800; height: 300
+            width: 700; height: 400
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+      		anchors.centerIn: parent
         }
         Text {
             anchors.horizontalCenter: background3.horizontalCenter
             anchors.top: background3.bottom
-            text: "Made to be minimal at its core, Minimo leaves the choices up to you<br/>"+
-                  "While staying true to the ArchLabs experience out of the box."
+            text: "Made to be minimal at its core, leaving the choices up to you."
             wrapMode: Text.WordWrap
-            width: 600
+            width: 800
             horizontalAlignment: Text.Center
         }
     }
@@ -101,19 +92,16 @@ Presentation
         Image {
             id: background4
             source: "slide4.png"
-            width: 800; height: 300
+            width: 700; height: 400
             fillMode: Image.PreserveAspectFit
-      			horizontalAlignment: Image.AlignHCenter
-      			verticalAlignment: Image.AlignTop
+      		anchors.centerIn: parent
         }
         Text {
-            anchors.horizontalCenter: background5.horizontalCenter
-            anchors.top: background5.bottom
-            text: "With a solid base, Minimo stays out of the way so you can get work done.<br/>"+
-                  "Install your favorite apps, configure how you like, and have fun.<br/>"+
-                  "We listen, come and share your suggestions to help us improve ArchLabs."
+            anchors.horizontalCenter: background4.horizontalCenter
+            anchors.top: background4.bottom
+            text: "We listen, share your suggestions to help us improve."
             wrapMode: Text.WordWrap
-            width: 600
+            width: 800
             horizontalAlignment: Text.Center
         }
     }

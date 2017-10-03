@@ -2,16 +2,25 @@
 ##     ARCHLabs      ##
 #######################
 
-##########################################
-#keep it alphabetical and organised please
-##########################################
+#linux-headers
 
-#base
-base
+# base
+linux-lts
+linux-lts-headers
 
 # devel
-gcc
+autoconf
+automake
+binutils
+bison
 fakeroot
+flex
+gcc
+libtool
+m4
+make
+patch
+pkg-config
 
 # drivers
 mesa
@@ -33,12 +42,14 @@ xf86-video-vesa
 xf86-video-vmware
 xf86-input-vmmouse
 xf86-video-voodoo
+xf86-video-openchrome
 
 #archiso
+acpi_call-lts
 arch-install-scripts
-acpi_call
 bash-completion
 btrfs-progs
+broadcom-wl-dkms
 b43-fwcutter
 bluez-firmware
 clonezilla
@@ -46,6 +57,7 @@ crda
 dosfstools
 exfat-utils
 f2fs-tools
+fish
 gpm
 gptfdisk
 grub
@@ -54,7 +66,6 @@ hdparm
 jsoncpp
 ipw2100-fw
 ipw2200-fw
-linux-atm
 mtools
 mlocate
 nfs-utils
@@ -62,27 +73,39 @@ nilfs-utils
 ntfs-3g
 ntp
 openssh
-rsync
 parted
 partclone
 partimage
+ppp
+r8168-lts
 refind-efi
 reflector
 rfkill
+rsync
 sdparm
 squashfs-tools
 usb_modeswitch
 wget
 zd1211-firmware
+zsh
 
 #vbox
-virtualbox-guest-modules-arch
+virtualbox-guest-dkms
 virtualbox-guest-utils
 
 #installation/encryption
+boost
+ckbcomp
+cmake
+dmidecode
 extra-cmake-modules
 kpmcore
 os-prober
+pythonqt
+upower
+qt5-base
+qt5ct
+yaml-cpp
 
 #audio & codecs
 alsa-firmware
@@ -107,11 +130,15 @@ pavucontrol
 
 #xfce4
 xfce4-settings
+gtk-engine-murrine
+gtk-engine-aurora
 
 #openbox
 obconf
 oblogout
 openbox
+lxappearance
+lxappearance-obconf
 
 #lightdm
 lightdm
@@ -120,6 +147,7 @@ lightdm-gtk-greeter
 #network
 networkmanager
 networkmanager-dispatcher-ntpd
+wireless-regdb
 wireless_tools
 wpa_supplicant
 
@@ -151,6 +179,7 @@ compton
 dialog
 feh
 gksu
+gnome-keyring
 htop
 imagemagick
 intltool
@@ -162,6 +191,8 @@ p7zip
 playerctl
 polkit
 sudo
+pygobject-devel
+python-docopt
 python2-gobject2
 python2-dbus
 python2-lxml
@@ -176,7 +207,6 @@ ttf-roboto
 ttf-ubuntu-font-family
 
 #archlabs repo
-broadcom-wl
 calamares
 cower
 downgrade
@@ -184,15 +214,11 @@ i3lock-color-git
 mkinitcpio-openswap
 neofetch-git
 networkmanager-dmenu-git
+obkey
 pacli
 polybar-git
 rofi-git
 skippy-xd-git
 yaourt
 
-#lxappearance
-#lxappearance-obconf
-#papirus-icon-theme-git
 #network-manager-applet
-#pygobject-devel
-#python-docopt
