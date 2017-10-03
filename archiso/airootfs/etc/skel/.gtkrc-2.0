@@ -4,7 +4,7 @@
 gtk-theme-name="ArchLabs-Light"
 gtk-icon-theme-name="ArchLabs-Dark"
 gtk-font-name="Ubuntu Light 10"
-gtk-cursor-theme-name="ArchLabs-Light"
+gtk-cursor-theme-name="ArchLabs-Dark"
 gtk-cursor-theme-size=0
 gtk-toolbar-style=GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR

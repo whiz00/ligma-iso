@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 
-# bulk (best not to touch these unless you are certain)
 rm -f /etc/sudoers.d/g_wheel
 rm -f /etc/polkit-1/rules.d/49-nopasswd_global.rules
 rm -rf /etc/systemd/system/{,pacman-init.service,etc-pacman.d-gnupg.mount,getty@tty1.service.d,default.target}
 #choose-mirror.service  choose-mirror.service
-rm /etc/systemd/scripts/choose-mirror
+#rm /etc/systemd/scripts/choose-mirror
 systemctl disable pacman-init.service
 rm /root/{.automated_script.sh,.zlogin}
 rm /etc/mkinitcpio-archiso.conf
@@ -32,7 +31,7 @@ sed -i 's/install-al/i3lock-fancy -p/g' /etc/skel/.config/openbox/menu.xml
 sed -i 's/#sleep 3; termite/sleep 3; termite/g' /etc/skel/.config/openbox/autostart
 
 # fix boot messages
-sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet nowatchdog systemd.legacy_systemd_cgroup_controller=true"/g' /etc/default/grub
+#sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nowatchdog systemd.legacy_systemd_cgroup_controller=true"/g' /etc/default/grub
 
 # remove this script
 rm /usr/bin/cleanup.sh

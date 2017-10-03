@@ -240,6 +240,16 @@
         </finalactions>
       </action>
     </keybind>
+    <keybind key="W-Tab">
+      <action name="NextWindow">
+        <allDesktops>yes</allDesktops>
+        <finalactions>
+          <action name="SendToDesktop"><to>current</to></action>
+          <action name="focus"/>
+          <action name="raise"/>
+        </finalactions>
+      </action>
+    </keybind>
     <keybind key="S-W-Left">
       <action name="SendToDesktopLeft"/>
     </keybind>
@@ -317,11 +327,13 @@
         <command>scrot -d 5 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f'</command>
       </action>
     </keybind>
+    <!-- Needed for super key to launch rofi  -->
     <keybind key="A-F1">
       <action name="Execute">
         <command>rofi-apps</command>
       </action>
     </keybind>
+    <!--   -->
     <keybind key="W-f">
       <action name="Execute">
         <command>exo-open --launch FileManager</command>
@@ -344,7 +356,7 @@
     </keybind>
     <keybind key="W-m">
       <action name="Execute">
-        <command>al-open -music</command>
+        <command>audacious</command>
       </action>
     </keybind>
     <keybind key="W-v">
@@ -362,14 +374,9 @@
         <command>xkill</command>
       </action>
     </keybind>
-    <keybind key="W-Tab">
-      <action name="ShowMenu">
-        <menu>client-list-combined-menu</menu>
-      </action>
-    </keybind>
     <keybind key="W-s">
       <action name="Execute">
-        <command>skippy-xd --toggle-window-picker</command>
+        <command>skippy-xd</command>
       </action>
     </keybind>
     <keybind key="C-space">
@@ -580,11 +587,25 @@
         <action name="Focus"/>
         <action name="Raise"/>
       </mousebind>
-      <mousebind action="Drag" button="Left">
-        <action name="Move"/>
+      <mousebind button="Left" action="Drag">
+        <action name="if">
+          <maximizedvertical>yes</maximizedvertical>
+          <then>
+            <action name="Unmaximize"/>
+              <direction>vertical</direction>
+            <action name="MoveResizeTo">
+              <x>center</x>
+              <y>current</y>
+            </action>
+            <action name="Move"/>
+          </then>
+          <else>
+            <action name="Move"/>
+          </else>
+        </action>
       </mousebind>
       <mousebind action="DoubleClick" button="Left">
-        <action name="Move"/>
+        <action name="ToggleMaximizeFull"/>
       </mousebind>
       <mousebind action="Click" button="Up">
         <action name="if">
@@ -680,9 +701,6 @@
         <action name="Unshade"/>
       </mousebind>
       <mousebind action="Drag" button="Left">
-        <action name="Resize"/>
-      </mousebind>
-      <mousebind action="Click" button="Left">
         <action name="Resize"/>
       </mousebind>
     </context>
@@ -788,7 +806,7 @@
     <file>/var/lib/openbox/debian-menu.xml</file>
     <file>debian-menu.xml</file> -->
     <file>menu.xml</file>
-    <hideDelay>400</hideDelay>
+    <hideDelay>200</hideDelay>
     <!-- if a press-release lasts longer than this setting (in milliseconds), the
        menu is hidden again -->
     <middle>no</middle>
@@ -798,7 +816,7 @@
        entry.
        if this is a negative value, then the delay is infinite and the
        submenu will not be shown until it is clicked on -->
-    <submenuHideDelay>400</submenuHideDelay>
+    <submenuHideDelay>200</submenuHideDelay>
     <!-- time to delay before hiding a submenu when selecting another
        entry in parent menu
        if this is a negative value, then the delay is infinite and the

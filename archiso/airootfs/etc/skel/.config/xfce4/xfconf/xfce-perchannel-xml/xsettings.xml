@@ -31,11 +31,11 @@
     <property name="MenuImages" type="bool" value="false"/>
     <property name="ButtonImages" type="bool" value="false"/>
     <property name="MenuBarAccel" type="empty"/>
-    <property name="CursorThemeName" type="string" value="ArchLabs-Light"/>
+    <property name="CursorThemeName" type="string" value="ArchLabs-Dark"/>
     <property name="CursorThemeSize" type="empty"/>
     <property name="DecorationLayout" type="empty"/>
   </property>
   <property name="Xfce" type="empty">
-    <property name="LastCustomDPI" type="int" value="92"/>
+    <property name="LastCustomDPI" type="int" value="96"/>
   </property>
 </channel>

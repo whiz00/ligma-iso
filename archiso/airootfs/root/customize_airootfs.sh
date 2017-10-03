@@ -20,10 +20,9 @@ sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
 
 #sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
 #sed -i 's/#\(HandleLidSwitch=\)suspend/\1ignore/' /etc/systemd/logind.conf
-
-sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
-sed -i 's/#\(HandleSuspendKey=\)suspend/\1ignore/' /etc/systemd/logind.conf
-sed -i 's/#\(HandleHibernateKey=\)hibernate/\1ignore/' /etc/systemd/logind.conf
+#sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
+#sed -i 's/#\(HandleSuspendKey=\)suspend/\1ignore/' /etc/systemd/logind.conf
+#sed -i 's/#\(HandleHibernateKey=\)hibernate/\1ignore/' /etc/systemd/logind.conf
 
 
 useradd -m -p "archlabs" -u 500 -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /bin/zsh liveuser
@@ -62,14 +61,12 @@ echo "EDITOR=${_EDITOR}" >> /etc/skel/.bashrc
 echo "EDITOR=${_EDITOR}" >> /etc/profile
 
 
+pacman -Syy
+
 gpg --receive-keys C1A60EACE707FDA5
 
-dirmngr </dev/null
-pacman-key --init && sudo pacman-key --populate archlinux
 
-pacman -Sc --noconfirm
-#pacman -Rs $(pacman -Qtdq)
-pacman -Syyuu --noconfirm
+#pacman-key --init && sudo pacman-key --populate archlinux
 #gpg --receive-keys 35F52A02854DCCAEC9DD5CC410443C7F54B00041
 #pacman-key --keyserver keys.gnupg.net -r 35F52A02854DCCAEC9DD5CC410443C7F54B00041
 #pacman-key --lsign-key 35F52A02854DCCAEC9DD5CC410443C7F54B00041
