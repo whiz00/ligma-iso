@@ -5,10 +5,11 @@ compton -b --config $HOME/.config/compton.conf &
 
 nitrogen --restore &
 
-sleep 1; nm-applet &
-
 # panel
 $HOME/.config/polybar/scripts/launch.sh &
 
 # Openbox autostart
 ob-autostart -d &
+
+# Required for xfce setting to work
+xfsettingsd &

@@ -32,15 +32,15 @@ newconf = False
 
 class RestartCompton(Thread):
 	def __init__(self, parent):
-		
+
 		self.parent = parent
-		
+
 		Thread.__init__(self)
-		
+
 	def run(self):
-		
+
 		os.system("pkill compton")
-		
+
 		# Start only if we are sure the effects are enabled.
 		if self.parent.main_switch.get_active():
 			os.system("compton -b")
@@ -63,7 +63,7 @@ def getBool(value):
 
 def getInt(value):
 	""" Returns the value if in defaults, 0 if not. """
-	
+
 	if value in defaults:
 		return defaults[value]
 	else:
@@ -79,7 +79,7 @@ def invertBool(bool):
 
 def isInt(item):
 	"""Returns True if item is an integer, False if not."""
-	
+
 	if type(item) == int or item.strip("+-").isdigit():
 		return True
 	else:
@@ -87,7 +87,7 @@ def isInt(item):
 
 def isBool(item):
 	""" Returns True if item is a boolean object, False if not. """
-	
+
 	if type(item) == bool or item.lower() in ("true","false","0","1"):
 		return True
 	else:
@@ -95,13 +95,13 @@ def isBool(item):
 
 def boolFromString(item):
 	""" Returns a boolean object from a string which resembles one. """
-	
+
 	if isBool(item):
 		if item.lower() in ("true", "1"):
 			return True
 		elif item.lower() in ("false", "0"):
 			return False
-	
+
 	return None
 
 def isFloat(item):
@@ -114,10 +114,10 @@ def isFloat(item):
 
 def returnValues():
 	""" Returns every value in the config value """
-	
+
 	dct = {}
 	if not os.path.exists(COMPTON): return dct
-	
+
 	with open(COMPTON, "r") as f:
 		for line in f.readlines():
 			line = line.replace(" ","").replace("\n","").replace("\r","").split("=")
@@ -125,30 +125,30 @@ def returnValues():
 			if len(line) != 2:
 				# Unable to parse this line.
 				continue
-			
+
 			item, value = line
-						
+
 			# Remove ; and " from value
 			value = value.replace(";","").replace('"',"")
-			
+
 			# Convert value
-			if isBool(value):				
+			if isBool(value):
 				value = boolFromString(value)
 			elif isFloat(value):
 				value = float(value)
 			elif isInt(value):
 				value = int(value)
-			
+
 			# Add to dct
 			dct[item] = value
-	
+
 	return dct
 
 defaults = returnValues()
 
 class GUI():
 	def __init__(self, donotshow=False):
-		
+
 		# GUI setup
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file(GUIFILE)
@@ -157,24 +157,24 @@ class GUI():
 		self.main = self.builder.get_object("main")
 
 		# Get main notebook
-		self.notebook = self.builder.get_object("notebook")		
+		self.notebook = self.builder.get_object("notebook")
 
 		# Get main switch
-		self.main_switch = self.builder.get_object("de-effects")	
+		self.main_switch = self.builder.get_object("de-effects")
 		self.main_switch.connect("notify::active", self.main_switch_event)
 		if os.path.isfile(AUTOSTART):
 			self.main_switch.set_active(True)
-	
+
 		# Shadow
 		#
 		# Get Box
 		self.shadow_box = self.builder.get_object("shadow-box")
 
-		# Main switch 
+		# Main switch
 		self.shadow = self.builder.get_object("shadow")
 		self.shadow.set_active(getBool("shadow"))
 		self.shadow.connect("notify::active", self.shadow_switch)
-		
+
 		# Panel shadow bool
 		self.panel_shadow = self.builder.get_object("panel_shadow")
 		self.panel_shadow.set_active(invertBool(getBool("no-dock-shadow")))
@@ -232,7 +232,10 @@ class GUI():
 		# Backend
 		self.backend_combo = self.builder.get_object("backend-combobox")
 
-		# Inactive opacity override 
+		# Vsync
+		self.vsync_combo = self.builder.get_object("vsync-combobox")
+
+		# Inactive opacity override
 		self.inactive_opacity_override = self.builder.get_object("inactive-opacity-override")
 		self.inactive_opacity_override.set_active(getBool("inactive-opacity-override"))
 
@@ -298,13 +301,36 @@ class GUI():
 			self.backend_combo.set_active(0)
 
 
+		list_vsync = Gtk.ListStore(GObject.TYPE_STRING)
+		list_vsync.append(("none",))
+		list_vsync.append(("opengl",))
+		list_vsync.append(("opengl-oml",))
+		if isValue("backend","glx"):
+			list_vsync.append(("opengl-swc",))
+		self.vsync_combo.set_model(list_vsync)
+		cell = Gtk.CellRendererText()
+		self.vsync_combo.pack_start(cell, True)
+		self.vsync_combo.add_attribute(cell, "text", 0)
+
+		if newconf == False:
+			if isValue("vsync","opengl"):
+				self.vsync_combo.set_active(1)
+			elif isValue("vsync","opengl-oml"):
+				self.vsync_combo.set_active(2)
+			elif isValue("vsync","opengl-swc"):
+				self.vsync_combo.set_active(3)
+			else:
+				self.vsync_combo.set_active(0)
+		else:
+			self.vsync_combo.set_active(0)
+
 	def defaults_button_execute(self, obj, opt = None):
 		self.defaults_settings()
 
 	def view(self):
 		# Setting up objects sensitive
 		# Generate default settings if compton.conf doesn't exist
-						
+
 		# Shadow panel sensitive
 		if self.shadow.get_active() == False:
 			self.shadow_box.set_sensitive(False)
@@ -355,7 +381,7 @@ class GUI():
 		self.notebook.set_sensitive(val)
 
 		if not val and os.path.exists(AUTOSTART):
-			# Delete .composite_enabled 
+			# Delete .composite_enabled
 			os.remove(AUTOSTART)
 		elif val and not os.path.exists(AUTOSTART):
 			# Touch .composite_enabled
@@ -364,7 +390,7 @@ class GUI():
 
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
-		self.fading_box.set_sensitive(self.fading.get_active())	
+		self.fading_box.set_sensitive(self.fading.get_active())
 
 	def shadow_switch(self, obj, opt = None):
 		# Switch Shadow on/off
@@ -373,14 +399,26 @@ class GUI():
 	def thread_killcompton(self):
 		thrd = RestartCompton(self)
 		thrd.start()
-	
+
 	def combo2backend(self, value):
 		""" Combobox value to backend compton config file value """
 		if value == 0:
 			return '"glx"'
 		else:
 			return '"xrender"'
-	
+
+	def combo2vsync(self, value):
+		""" Combobox value to vsync compton config file value """
+		if value == 1:
+			return '"opengl"'
+		elif value == 2:
+			return '"opengl-oml"'
+		elif value == 3:
+			return '"opengl-swc"'
+		else:
+			return '"none"'
+
+
 	def save_apply(self, obj):
 		# Save & apply click event
 		# this should write the new configuration into compton.conf
@@ -393,18 +431,19 @@ class GUI():
 			'shadow-radius': self.radius.get_value(),
 			'fading': self.fading.get_active(), # fade settings
 			'no-fading-openclose': invertBool(self.fading_openclose.get_active()),
-			'fade-delta': self.fade_delta.get_value(), 
+			'fade-delta': self.fade_delta.get_value(),
 			'menu-opacity': self.menu_opacity.get_value()/10, # opacity settings
 			'inactive-opacity': (self.inactive_opacity.get_value()/10.0),
-			'frame-opacity': (self.frame_opacity.get_value()/10.0), 
+			'frame-opacity': (self.frame_opacity.get_value()/10.0),
 			'inactive-opacity-override': self.inactive_opacity_override.get_active(), # other settings
-			'backend': self.combo2backend(self.backend_combo.get_active()), 
+			'backend': self.combo2backend(self.backend_combo.get_active()),
+			'vsync': self.combo2vsync(self.vsync_combo.get_active()),
 			'shadow-ignore-shaped': self.shadow_ignore_shaped.get_active(),
 			'mark-wmwin-focused': self.mark_wmwin_focused.get_active(),
 			'blur-background-fixed': self.blur_background_fixed.get_active(),
 			'detect-rounded-corners': self.detect_rounded_corners.get_active()
 		}
-				
+
 		#print settings2file[7][1]/10
 
 		# Open and read old configuration file
@@ -421,14 +460,14 @@ class GUI():
 				old_config = re.sub(string_start, r"%(item)s = %(value)s;" % {"item":item, "value":str(value)}, old_config,flags=re.MULTILINE)
 			else:
 				old_config = old_config + "%(item)s = %(value)s;\n" % {"item":item, "value":str(value)}
-			
+
 		# Fix uppercase
 		old_config = re.sub("False","false",old_config)
 		old_config = re.sub("True","true",old_config)
 
 		# Float fix?
 		old_config = re.sub("00000","",old_config)
-		
+
 		# Debug
 		#print old_config
 
@@ -449,7 +488,7 @@ if __name__ == "__main__":
 	signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 	if not os.path.isfile(COMPTON):
-		
+
 		with open(COMPTON, "w+") as f:
 			f.write("# compton.conf generated by paranoid\n")
 		newconf = True

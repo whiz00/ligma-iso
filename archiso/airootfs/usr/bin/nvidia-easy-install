@@ -64,7 +64,7 @@ if [[ "$nvd" =~ ^[1-3]$ ]]; then
 
   sudo rm -f /etc/xorg.conf.d/20-nvidia.conf
 
-  printf "\n${green}  Installation finished you can run this again anytime [nvidia-easy-install]${reg}\n\n\n
+  clear; printf "\n${green}  Installation finished you can run this again anytime [nvidia-easy-install]${reg}\n\n\n
   Press any key to exit..\n\n  "
   read -r fin
 
