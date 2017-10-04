@@ -389,7 +389,7 @@ if ! [ "${tools,,}" = "${no,,}" ]; then
   #  read -r pol
   #fi
 
-  clear; printf "\n  Do you need the Samba plugin for Gvfs?  [y/n]: "
+  clear; printf "\n  Install Samba plugin for Gvfs?  [y/n]: "
   read -r smba
 
   # if not using xfce we can pick a few xfce apps
@@ -400,7 +400,7 @@ if ! [ "${tools,,}" = "${no,,}" ]; then
     clear; printf "\n  Install XFCE Power Manager?  [y/n]: "
     read -r pwr
 
-    clear; printf "\n  Install Pamac package manager? (Pacli is default) [y/n]: "
+    clear; printf "\n  Install Pamac package manager? (the default is Pacli) [y/n]: "
     read -r pac
   fi
 
@@ -932,19 +932,19 @@ wheel_scroll_lines=3" > $CONF_PATH/qt5ct/qt5ct.conf
   if [[ $mail == *1* ]] || [[ $mail == *2* ]] || [[ $mail == *3* ]] || [[ $mail == *4* ]]; then
     if [[ $mail == *1* ]]; then
       sudo pacman -S thunderbird --noconfirm --needed
-      if ! (grep "thunderbird" $HELPERS); then
+      if ! (grep "MailReader" $HELPERS); then
         echo "MailReader=thunderbird" >> $HELPERS
       fi
     fi
     if [[ $mail == *2* ]]; then
       sudo pacman -S  geary --noconfirm --needed
-      if ! (grep "geary" $HELPERS); then
+      if ! (grep "MailReader" $HELPERS); then
         echo "MailReader=geary" >> $HELPERS
       fi
     fi
     if [[ $mail == *3* ]]; then
       sudo pacman -S evolution --noconfirm --needed
-      if ! (grep "evolution" $HELPERS); then
+      if ! (grep "MailReader" $HELPERS); then
         echo "MailReader=evolution" >> $HELPERS
       fi
     fi
@@ -985,7 +985,7 @@ wheel_scroll_lines=3" > $CONF_PATH/qt5ct/qt5ct.conf
   if [ "${steam,,}" = "${yes,,}" ]; then
     sudo pacman -S steam steam-native-runtime --noconfirm --needed
     yaourt -S ttf-ms-fonts --noconfirm --needed
-    if ! [ "${rmob,,}" = "${yes,,}" ] && (grep "steam" $AUTOSTART); then
+    if ! (grep "steam" $AUTOSTART); then
       echo "sleep 2; steam -silent &" >> $AUTOSTART
     fi
   fi
@@ -1030,7 +1030,7 @@ if ! [ "${cosmetics,,}" = "${no,,}" ]; then
   fi
 
   # conky
-  if [[ $conk =~ ^[1-3]$ ]]; then
+  if [[ $conk == *1* ]] || [[ $conk == *2* ]] || [[ $conk == *3* ]]; then
     if [[ $conk == *1* ]]; then
       sudo pacman -S conky --noconfirm --needed
     elif [[ $conk == *2* ]]; then
@@ -1039,6 +1039,13 @@ if ! [ "${cosmetics,,}" = "${no,,}" ]; then
       yaourt -S conky-lua-nv --noconfirm --needed
     fi
 
+    if [[ $dock == *1* ]] || [[ $dock == *2* ]] || [[ $dock == *3* ]]; then
+      sed -i '/$(wmctrl/ c\
+exec = echo "$(($(wmctrl -l -i | wc -l)-3))"' $CONF_PATH/polybar/modules.conf
+    else
+      sed -i '/$(wmctrl/ c\
+exec = echo "$(($(wmctrl -l -i | wc -l)-2))"' $CONF_PATH/polybar/modules.conf
+    fi
 
     if ! [ "${alconk,,}" = "${no,,}" ]; then
       sudo pacman -S zenity webkit2gtk python2-lxml --noconfirm --needed
@@ -1227,6 +1234,11 @@ if [[ $dock == *1* ]] || [[ $dock == *2* ]] || [[ $dock == *3* ]]; then
       fi
     fi
   fi
+
+  if [ -e $CONF_PATH/polybar/modules.conf ]; then
+    sed -i '/$(wmctrl/ c\
+exec = echo "$(($(wmctrl -l -i | wc -l)-2))"' $CONF_PATH/polybar/modules.conf
+  fi
 fi
 
 
@@ -1264,7 +1276,7 @@ fi
 openbox --reconfigure
 
 
-read -n1 -rsp $'\n  Install Complete!!\n\n\n  Press Any Key to Reboot or Ctrl + c to exit...'
+read -n1 -rsp $'\n  Setup Complete!!\n\n\n  Press Any Key to Reboot or Ctrl + c to exit...'
 systemctl reboot
 
 exit 0
