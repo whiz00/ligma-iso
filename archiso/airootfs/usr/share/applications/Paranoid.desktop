@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Exec=/usr/bin/paranoid.py
-Icon=compton
+Icon=desktop-effects
 StartupNotify=true
 Terminal=false
 Type=Application
