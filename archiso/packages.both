@@ -2,8 +2,6 @@
 ##     ARCHLabs      ##
 #######################
 
-#linux-headers
-
 # base
 linux-lts
 linux-lts-headers
@@ -95,13 +93,11 @@ virtualbox-guest-utils
 
 #installation/encryption
 boost
-ckbcomp
 cmake
 dmidecode
 extra-cmake-modules
 kpmcore
 os-prober
-pythonqt
 upower
 qt5-base
 qt5ct
@@ -130,8 +126,6 @@ pavucontrol
 
 #xfce4
 xfce4-settings
-gtk-engine-murrine
-gtk-engine-aurora
 
 #openbox
 obconf
@@ -192,7 +186,7 @@ playerctl
 polkit
 sudo
 pygobject-devel
-python-docopt
+python2-gobject
 python2-gobject2
 python2-dbus
 python2-lxml
@@ -202,23 +196,31 @@ unrar
 wmctrl
 w3m
 
-#fonts
+#fonts and themes
 ttf-roboto
 ttf-ubuntu-font-family
+gtk-engine-murrine
+gtk-engine-aurora
 
 #archlabs repo
+archlabs-autostart
+archlabs-obkey
+archlabs-pipemenus
+archlabs-kickshaw
+archlabs-paranoid
+archlabs-wallpapers
 calamares
-cower
 downgrade
 i3lock-color-git
 mkinitcpio-openswap
 neofetch-git
 networkmanager-dmenu-git
-obkey
 pacli
 polybar-git
 rofi-git
 skippy-xd-git
 yaourt
 
-#network-manager-applet
+#ckbcomp
+#cower
+#python-docopt

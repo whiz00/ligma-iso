@@ -1,13 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-start="compton -b --config $HOME/.config/compton.conf"
-stop="pkill compton"
-
-if pgrep "compton" > /dev/null; then
-    $stop
+start="al-compositor --start"
+restart="al-compositor --restart"
+if [ -e ${HOME}/.config/.composite_enabled ]; then
+  if pgrep "compton" > /dev/null; then
+    $restart
+  else
     $start
-else
-    $start
+  fi
 fi
-
-exit 0
