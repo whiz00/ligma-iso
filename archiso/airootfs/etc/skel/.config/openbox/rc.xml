@@ -339,6 +339,11 @@
         <command>exo-open --launch FileManager</command>
       </action>
     </keybind>
+    <keybind key="W-l">
+      <action name="Execute">
+        <command>i3lock-fancy -p -f Ubuntu</command>
+      </action>
+    </keybind>
     <keybind key="W-t">
       <action name="Execute">
         <command>exo-open --launch TerminalEmulator</command>
