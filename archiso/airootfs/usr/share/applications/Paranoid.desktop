@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Exec=/usr/bin/paranoid.py
-Icon=desktop-effects
-StartupNotify=true
-Terminal=false
-Type=Application
-Name=Compositing Editor
-Comment=Settings Editor for Compton

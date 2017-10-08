@@ -90,13 +90,11 @@
             <command>kickshaw</command>
           </action>
         </item>
-        <!--
         <item label="Keybind Editor">
           <action name="Execute">
             <command>obkey</command>
           </action>
         </item>
-        -->
         <item label="Autostart Editor">
           <action name="Execute">
             <command>ob-autostart</command>

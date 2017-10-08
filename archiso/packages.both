@@ -2,29 +2,19 @@
 ##     ARCHLabs      ##
 #######################
 
-# base
-base
-
 # devel
+linux-headers
 autoconf
 automake
-binutils
-bison
 fakeroot
-flex
 gcc
-libtool
-m4
 make
-patch
 pkg-config
 
-# drivers
+# xorg
 mesa
 xorg-apps
 xorg-server
-
-# xorg drivers
 xf86-video-amdgpu
 xf86-video-ati
 xf86-video-dummy
@@ -41,11 +31,13 @@ xf86-input-vmmouse
 xf86-video-voodoo
 xf86-video-openchrome
 
-#archiso
+
+# Needed packages
 acpi_call
 arch-install-scripts
 bash-completion
 btrfs-progs
+broadcom-wl-dkms
 b43-fwcutter
 bluez-firmware
 clonezilla
@@ -83,7 +75,6 @@ squashfs-tools
 usb_modeswitch
 wget
 zd1211-firmware
-zsh
 
 #vbox
 virtualbox-guest-modules-arch
@@ -91,24 +82,14 @@ virtualbox-guest-utils
 
 #installation/encryption
 boost
-ckbcomp
 cmake
 dmidecode
 extra-cmake-modules
-kcoreaddons
 kpmcore
-kwidgetsaddons
 os-prober
-pythonqt
 upower
 qt5-base
 qt5ct
-qt5-declarative
-qt5-location
-qt5-networkauth
-qt5-styleplugins
-qt5-tools
-qt5-translations
 yaml-cpp
 
 #audio & codecs
@@ -134,7 +115,7 @@ pavucontrol
 
 #xfce4
 xfce4-settings
-gtk-engine-murrine
+gufw
 
 #openbox
 obconf
@@ -149,7 +130,6 @@ lightdm-gtk-greeter
 
 #network
 networkmanager
-network-manager-applet
 networkmanager-dispatcher-ntpd
 wireless-regdb
 wireless_tools
@@ -186,7 +166,6 @@ gksu
 gnome-keyring
 htop
 imagemagick
-intltool
 libmpdclient
 lm_sensors
 lsb-release
@@ -195,33 +174,51 @@ p7zip
 playerctl
 polkit
 sudo
-pygobject-devel
-python-docopt
-python2-gobject2
-python2-dbus
 python2-lxml
 python2-xdg
 scrot
 unrar
 wmctrl
 w3m
+zenity
 
-#fonts
+# fonts and themes
 ttf-roboto
 ttf-ubuntu-font-family
+gtk-engine-murrine
+gtk-engine-aurora
 
-#archlabs repo
-broadcom-wl
+# archlabs repo
+al-ckbcomp
+al-locale
+archlabs-autostart
+archlabs-common
+archlabs-homepage
+archlabs-kickshaw
+archlabs-keyring
+archlabs-obkey
+archlabs-opensnap
+archlabs-paranoid
+archlabs-pipemenus
+archlabs-screenlock
+archlabs-wallpapers
+
+# third party archlabs repo
 calamares
-cower
 downgrade
-i3lock-color-git
+gtk3-nocsd-git
 mkinitcpio-openswap
 neofetch-git
 networkmanager-dmenu-git
-obkey
 pacli
-polybar-git
+polybar
 rofi-git
 skippy-xd-git
 yaourt
+
+
+#cower
+#python-docopt
+#pygobject-devel
+#python2-gobject
+#python2-gobject2

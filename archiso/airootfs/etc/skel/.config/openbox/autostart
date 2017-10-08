@@ -1,7 +1,7 @@
-#sleep 3; termite --geometry=650x450 --exec=/usr/bin/al-hello &
+#sleep 5; termite --geometry=650x450 --exec=/usr/bin/al-hello &
 pactl set-sink-mute @DEFAULT_SINK@ false &
 
-compton -b --config $HOME/.config/compton.conf &
+$HOME/.config/openbox/scripts/compositor.sh &
 
 nitrogen --restore &
 
