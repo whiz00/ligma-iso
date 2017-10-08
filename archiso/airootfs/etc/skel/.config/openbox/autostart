@@ -13,3 +13,6 @@ ob-autostart -d &
 
 # Required for xfce setting to work
 xfsettingsd &
+
+# Launch conky if session exists
+sleep 2; al-conky-session &

@@ -182,8 +182,9 @@ exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
 
 # run once at startup
 exec --no-startup-id xfsettingsd &
-#exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id al-conky-session
+#exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 #exec --no-startup-id xfce4-power-manager &
 
 # system tray
@@ -195,7 +196,7 @@ exec --no-startup-id nitrogen --restore
 #################                    application keyboard shortcuts               ##################
 ####################################################################################################
 
-bindsym $mod+e exec --no-startup-id geany
+bindsym $mod+e exec --no-startup-id al-open -edit
 bindsym Control+space exec --no-startup-id rofi-apps
 bindsym mod1+F1 exec --no-startup-id rofi-apps
 bindsym $mod+t exec --no-startup-id exo-open --launch TerminalEmulator

@@ -125,6 +125,7 @@
         </item>
       </menu>
       <menu execute="al-compositor" id="CompositingPipeMenu" label="Compositor"/>
+      <menu execute="al-conky-pipemenu" id="ConkyPipeMenu" label="Conky"/>
       <menu id="polybar" label="Polybar">
         <item label="Polybar Config">
           <action name="Execute">

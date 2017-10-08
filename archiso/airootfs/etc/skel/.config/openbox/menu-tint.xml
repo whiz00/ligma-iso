@@ -125,6 +125,7 @@
         </item>
       </menu>
       <menu execute="al-compositor" id="CompositingPipeMenu" label="Compositor"/>
+      <menu execute="al-conky-pipemenu" id="ConkyPipeMenu" label="Conky"/>
       <item label="Tint2 Settings">
         <action name="Execute">
           <command>tint2conf</command>

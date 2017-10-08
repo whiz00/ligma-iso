@@ -3,8 +3,8 @@
 set -e -u
 
 iso_name=archlabs
-iso_label="archlabs-minimo-$(date +%Y%m)-x86_64"
-iso_version="minimo-$(date +%Y.%m)"
+iso_label="archlabs-$(date +%Y%m)-x86_64"
+iso_version="$(date +%Y.%m)"
 install_dir=arch
 work_dir=work
 out_dir=out

@@ -4,12 +4,6 @@
 
 # devel
 linux-headers
-autoconf
-automake
-fakeroot
-gcc
-make
-pkg-config
 
 # xorg
 mesa
@@ -148,6 +142,7 @@ xdg-user-dirs-gtk
 audacious
 audacious-plugins
 arandr
+conky
 firefox
 mpv
 galculator
