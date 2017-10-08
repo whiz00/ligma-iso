@@ -191,6 +191,8 @@ gtk-engine-murrine
 gtk-engine-aurora
 
 # archlabs repo
+al-ckbcomp
+al-locale
 archlabs-autostart
 archlabs-common
 archlabs-homepage
@@ -207,7 +209,6 @@ archlabs-wallpapers
 calamares
 downgrade
 gtk3-nocsd-git
-mintlocale
 mkinitcpio-openswap
 neofetch-git
 networkmanager-dmenu-git
@@ -216,7 +217,6 @@ polybar
 rofi-git
 skippy-xd-git
 yaourt
-ckbcomp
 
 #cower
 #python-docopt
