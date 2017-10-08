@@ -77,7 +77,6 @@ squashfs-tools
 usb_modeswitch
 wget
 zd1211-firmware
-zsh
 
 #vbox
 virtualbox-guest-dkms

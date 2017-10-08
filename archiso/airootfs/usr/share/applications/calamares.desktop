@@ -4,5 +4,5 @@ Name=ArchLabs Installer
 StartupNotify=true
 Comment=Installer for ArchLabs
 Categories=Utility;
-Exec=env QT_QPA_PLATFORMTHEME=Lila-Gtk-master sudo -E calamares
+Exec=env QT_QPA_PLATFORMTHEME=ArchLabs-Light sudo -E calamares
 Icon=/usr/share/icons/hicolor/256x256/apps/al-calamares-logo.png
