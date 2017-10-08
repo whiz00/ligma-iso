@@ -9,23 +9,15 @@ linux-lts-headers
 # devel
 autoconf
 automake
-binutils
-bison
 fakeroot
-flex
 gcc
-libtool
-m4
 make
-patch
 pkg-config
 
-# drivers
+# xorg
 mesa
 xorg-apps
 xorg-server
-
-# xorg drivers
 xf86-video-amdgpu
 xf86-video-ati
 xf86-video-dummy
@@ -126,6 +118,7 @@ pavucontrol
 
 #xfce4
 xfce4-settings
+gufw
 
 #openbox
 obconf
@@ -176,7 +169,6 @@ gksu
 gnome-keyring
 htop
 imagemagick
-intltool
 libmpdclient
 lm_sensors
 lsb-release
@@ -185,10 +177,6 @@ p7zip
 playerctl
 polkit
 sudo
-pygobject-devel
-python2-gobject
-python2-gobject2
-python2-dbus
 python2-lxml
 python2-xdg
 scrot
@@ -196,31 +184,42 @@ unrar
 wmctrl
 w3m
 
-#fonts and themes
+# fonts and themes
 ttf-roboto
 ttf-ubuntu-font-family
 gtk-engine-murrine
 gtk-engine-aurora
 
-#archlabs repo
+# archlabs repo
 archlabs-autostart
-archlabs-obkey
-archlabs-pipemenus
+archlabs-common
+archlabs-homepage
 archlabs-kickshaw
+archlabs-keyring
+archlabs-obkey
+archlabs-opensnap
 archlabs-paranoid
+archlabs-pipemenus
+archlabs-screenlock
 archlabs-wallpapers
+
+# third party archlabs repo
 calamares
 downgrade
-i3lock-color-git
+gtk3-nocsd-git
+mintlocale
 mkinitcpio-openswap
 neofetch-git
 networkmanager-dmenu-git
 pacli
-polybar-git
+polybar
 rofi-git
 skippy-xd-git
 yaourt
+ckbcomp
 
-#ckbcomp
 #cower
 #python-docopt
+#pygobject-devel
+#python2-gobject
+#python2-gobject2

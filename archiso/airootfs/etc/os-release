@@ -1,7 +1,7 @@
 NAME="ArchLabs"
 ID=ArchLabs
 ID_LIKE="arch"
-VERSION_ID=Minimo
+VERSION_ID=x86_64
 PRETTY_NAME="Minimo"
 ANSI_COLOR="0;36"
 HOME_URL="https://archlabsblog.wordpress.com"

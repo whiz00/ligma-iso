@@ -1,20 +1,35 @@
-# KEY DEFINITIONS TO REMEMBER
+#########################################
+###         KEY DEFINITIONS          ####
+#########################################
+##     $Mod = Super key or Mod4        ##
+##         Mod1 = ALT key              ##
+##       Control = CTRL key            ##
+##        Shift = SHIFT key            ##
+##       Escape = ESCAPE key           ##
+##    Return = ENTER or RETURN key     ##
+##        Pause = PAUSE key            ##
+##        Print = PRINT key            ##
+##          Tab = TAB key              ##
+#########################################
 
-# $Mod = WINDOWS key or Super key or Mod4
-# Mod1 = ALT key
-# Control = CTRL key
-# Shift = SHIFT key
-# Escape = ESCAPE key
-# Return = ENTER or RETURN key
-# Pause = PAUSE key
-# Print = PRINT key
-# Tab = TAB key
-# Mod4 = Windows or Super key on keyboard
-# Mod1 = Alt key on keyboard
+####################################################################################################
+#################                              colors                             ##################
+####################################################################################################
 
-#####################################################################################################################
-#################                          Define variables                    #################
-#####################################################################################################################
+# font
+font pango:Ubuntu Regular 10
+
+# class                   border  backgr. text    indicator
+client.focused          #365260 #365260 #D1D1D0 #4E9EC6
+client.focused_inactive #365260 #365260 #D1D1D0 #365260
+client.unfocused        #365260 #D1D1D0 #232729 #365260
+client.urgent           #365260 #A3574A #232729 #A3574A
+client.background       #232729
+
+
+####################################################################################################
+#################                          Define variables                        #################
+####################################################################################################
 
 #set Super or Alt key
 set $mod Mod4
@@ -26,9 +41,9 @@ set $down k
 set $left j
 set $right semicolon
 
-#####################################################################################################################
-#################                          Single and Dual screen                                   #################
-#####################################################################################################################
+####################################################################################################
+#################                   Define Workspaces and screens                  #################
+####################################################################################################
 
 # monitors
 set $firstMonitor HDMI1
@@ -69,22 +84,6 @@ bindsym $mod+Shift+8 move container to workspace 8; workspace 8
 bindsym $mod+Shift+9 move container to workspace 9; workspace 9
 bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 
-
-###################################################################################################
-#################                           appearance                            #################
-###################################################################################################
-
-# font
-font pango:Ubuntu Regular 10
-
-# class                   border  backgr. text    indicator
-client.focused          #365260 #365260 #D1D1D0 #4E9EC6
-client.focused_inactive #365260 #365260 #D1D1D0 #365260
-client.unfocused        #365260 #D1D1D0 #232729 #365260
-client.urgent           #365260 #A3574A #232729 #A3574A
-client.background       #232729
-
-
 ####################################################################################################
 #################                          reload configs                          #################
 ####################################################################################################
@@ -99,7 +98,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+q kill
 
 ####################################################################################################
-#######                           Container/window control                                  ########
+################                       Container/window control                   ##################
 ####################################################################################################
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -171,9 +170,9 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-###################################################################################################
-#################               Autostart applications                            #################
-###################################################################################################
+####################################################################################################
+#################               Autostart applications                            ##################
+####################################################################################################
 
 # re-run with every i3 reload
 exec_always --no-startup-id numlockx on
@@ -192,9 +191,9 @@ exec --no-startup-id nitrogen --restore
 #exec --no-startup-id volumeicon
 
 
-###################################################################################################
-#################                    application keyboard shortcuts               #################
-###################################################################################################
+####################################################################################################
+#################                    application keyboard shortcuts               ##################
+####################################################################################################
 
 bindsym $mod+e exec --no-startup-id geany
 bindsym Control+space exec --no-startup-id rofi-apps
@@ -204,27 +203,25 @@ bindsym $mod+w exec --no-startup-id exo-open --launch WebBrowser
 bindsym $mod+f exec --no-startup-id exo-open --launch FileManager
 bindsym Print exec --no-startup-id scrot "'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f'"
 
-################################################################################################
-#################                       window settings                        #################
-################################################################################################
+####################################################################################################
+#################                        application settings                      #################
+####################################################################################################
 
-for_window [class="VirtualBox|qt5ct|Lxappearance|Galculator|Imagewriter|Font-manager|^Gpick$|Pamac|^Skype$\
-|Xfce4-appfinder|Xfce4-taskmanager|Peek|Wine|Steam|Nitrogen|^Gnome-font-viewer$|^Deluge"] floating enable
+for_window [class="qt5ct|Lxappearance|^Gpick$|Pamac|Peek|Nitrogen"] floating enable
 for_window [window_role="^Preferences$"] floating enable
-for_window [title="Copying|Deleting|Moving|pop-up|setup|PlayOnLinux"] floating enable
 
-for_window [class="Termite|Thunar|Geany|Firefox"] focus
+for_window [class="Termite|^Thunar|Geany|Firefox"] focus
 
 # Assign Applications to specific workspace
 # get class with xprop
 assign [class="Firefox"]                      → 1
 assign [class="Geany"]                        → 2
 assign [class="Thunar"]                       → 3
-assign [class="mpv|Audacious"]                → 4
+assign [class="^Gimp"]                        → 4
 
-#####################################################################################################################
-#################                          audio settings                                           #################
-#####################################################################################################################
+####################################################################################################
+#################                          audio settings                          #################
+####################################################################################################
 
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
@@ -236,9 +233,9 @@ bindsym XF86AudioMute exec --no-startup-id pamixer -t
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
 
-#####################################################################################################################
-#################                          border control                                           #################
-#####################################################################################################################
+####################################################################################################
+#################                          border control                          #################
+####################################################################################################
 
 hide_edge_borders both
 bindsym $mod+shift+b exec --no-startup-id i3-msg border toggle
@@ -258,9 +255,9 @@ gaps outer 2
 #smart_gaps on
 #smart_borders on
 
-############################################################################################################
-#################                          Modes                                           #################
-############################################################################################################
+####################################################################################################
+#################                          Modes                                   #################
+####################################################################################################
 
 # sets gaps
 set $mode_gaps Gaps:  +/- (local)  Shift +/- (global)
