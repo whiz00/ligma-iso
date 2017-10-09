@@ -4,13 +4,13 @@
 rm -f /etc/sudoers.d/g_wheel
 rm /etc/mkinitcpio-archiso.conf
 rm /root/{.automated_script.sh,.zlogin}
+rm -rf /etc/systemd/system/default.target
 rm -f /etc/polkit-1/rules.d/49-nopasswd_global.rules
-rm -rf /etc/systemd/system/{getty@tty1.service.d,default.target}
-
+rm -rf /etc/systemd/system/getty@tty1.service.d
+rm -rf /etc/initcpio
 
 # unsure if these are needed
 #rm etc/systemd/system/{pacman-init.service,etc-pacman.d-gnupg.mount}
-#rm -r /etc/initcpio
 #systemctl disable pacman-init.service
 
 # remove installers

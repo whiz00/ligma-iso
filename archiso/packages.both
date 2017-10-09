@@ -2,9 +2,6 @@
 ##     ARCHLabs      ##
 #######################
 
-# devel
-linux-headers
-
 # xorg
 mesa
 xorg-apps
@@ -27,11 +24,9 @@ xf86-video-openchrome
 
 
 # Needed packages
-acpi_call
 arch-install-scripts
 bash-completion
 btrfs-progs
-broadcom-wl-dkms
 b43-fwcutter
 bluez-firmware
 clonezilla
@@ -211,9 +206,3 @@ rofi-git
 skippy-xd-git
 yaourt
 
-
-#cower
-#python-docopt
-#pygobject-devel
-#python2-gobject
-#python2-gobject2

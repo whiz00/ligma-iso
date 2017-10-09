@@ -20,8 +20,8 @@ inherit = bar/master
 monitor =
 
 modules-left = i3-workspaces menu
-modules-center = window_count volume
-modules-right = pkg keyboard battery memory cpu temperature network clock
+modules-center = volume
+modules-right = pkg keyboard battery memory temperature coreuse network clock
 
 ;;;;;; Tray is commented out ;;;;;;;;
 ;tray-position = center
@@ -42,7 +42,7 @@ monitor =
 
 modules-left = workspaces menu
 modules-center = window_count volume
-modules-right = pkg keyboard battery memory cpu temperature network clock
+modules-right = pkg keyboard battery memory temperature coreuse network clock
 
 ;;;;;; Tray is commented out ;;;;;;;;
 ;tray-position = center
