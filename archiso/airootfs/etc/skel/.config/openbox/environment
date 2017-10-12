@@ -10,6 +10,7 @@ export $(gnome-keyring-daemon --start --components=pkcs11,secrets)
 
 ## Modify xdg-open behaviour
 export XDG_CURRENT_DESKTOP=XFCE
+export DE="xfce"
 
 # fix for D-bus with openbox
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then

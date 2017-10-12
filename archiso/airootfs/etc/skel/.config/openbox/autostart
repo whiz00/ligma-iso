@@ -1,12 +1,13 @@
-#sleep 5; termite --geometry=650x450 --exec=/usr/bin/al-hello &
-pactl set-sink-mute @DEFAULT_SINK@ false &
+# launch compton
+al-compositor --start &
 
-$HOME/.config/openbox/scripts/compositor.sh &
-
+# restore wallpaper
 nitrogen --restore &
 
 # panel
+al-tint2-session &
 $HOME/.config/polybar/scripts/launch.sh &
+
 
 # Openbox autostart
 ob-autostart -d &
@@ -16,3 +17,7 @@ xfsettingsd &
 
 # Launch conky if session exists
 sleep 2; al-conky-session &
+
+xdg-user-dirs-gtk-update &
+xdg-autostart GNOME XFCE LXDE XFCE
+#al-hello

@@ -2,10 +2,15 @@
 ##     ARCHLabs      ##
 #######################
 
+# devel
+make
+fakeroot
+
 # xorg
 mesa
 xorg-apps
 xorg-server
+xorg-xinit
 xf86-video-amdgpu
 xf86-video-ati
 xf86-video-dummy
@@ -21,17 +26,14 @@ xf86-video-vmware
 xf86-input-vmmouse
 xf86-video-voodoo
 xf86-video-openchrome
-
+xf86-video-sisusb
 
 # Needed packages
 arch-install-scripts
 bash-completion
-btrfs-progs
-b43-fwcutter
 bluez-firmware
 clonezilla
 crda
-dhcpcd
 dosfstools
 exfat-utils
 f2fs-tools
@@ -45,7 +47,6 @@ jsoncpp
 ipw2100-fw
 ipw2200-fw
 mtools
-mlocate
 nfs-utils
 nilfs-utils
 ntfs-3g
@@ -61,7 +62,6 @@ rfkill
 rsync
 sdparm
 squashfs-tools
-usb_modeswitch
 wget
 zd1211-firmware
 
@@ -69,34 +69,17 @@ zd1211-firmware
 virtualbox-guest-modules-arch
 virtualbox-guest-utils
 
-#installation/encryption
-boost
-cmake
-dmidecode
-extra-cmake-modules
-kpmcore
-os-prober
-upower
-qt5-base
-qt5ct
-yaml-cpp
-
-#audio & codecs
+# audio & codecs
 alsa-firmware
 alsa-plugins
 alsa-lib
-dcadec
 ffmpeg2.8
 gst-libav
 gst-plugins-base
 gst-plugins-good
 gstreamer
-libdvbpsi
-libebml
 libmad
 libmatroska
-libtar
-libupnp
 pamixer
 pulseaudio
 pulseaudio-alsa
@@ -116,18 +99,24 @@ lxappearance-obconf
 #lightdm
 lightdm
 lightdm-gtk-greeter
+lightdm-gtk-greeter-settings
 
 #network
-networkmanager
-networkmanager-dispatcher-ntpd
-wireless-regdb
-wireless_tools
-wpa_supplicant
+wicd
+wicd-gtk
+ntp
+
+#networkmanager
+#networkmanager-dispatcher-ntpd
+#wireless-regdb
+#wireless_tools
+#wpa_supplicant
 
 #file management
 file-roller
 gvfs
 gvfs-mtp
+gvfs-nfs
 gvfs-afc
 thunar
 tumbler
@@ -151,7 +140,6 @@ termite
 #utilities
 compton
 dialog
-feh
 gksu
 gnome-keyring
 htop
@@ -164,9 +152,9 @@ p7zip
 playerctl
 polkit
 sudo
-python2-lxml
 python2-xdg
 scrot
+tint2
 unrar
 wmctrl
 w3m
@@ -181,6 +169,7 @@ gtk-engine-aurora
 # archlabs repo
 al-ckbcomp
 al-locale
+al-gtk3-nocsd-git
 archlabs-autostart
 archlabs-common
 archlabs-homepage
@@ -192,17 +181,15 @@ archlabs-paranoid
 archlabs-pipemenus
 archlabs-screenlock
 archlabs-wallpapers
+archlabs-downgrade
+archlabs-neofetch
+archlabs-pacli
+archlabs-polybar
+archlabs-rofi
+archlabs-skippy-xd
+archlabs-yaourt
 
-# third party archlabs repo
-calamares
-downgrade
-gtk3-nocsd-git
+# installation
+archlabs-calamares
+dmidecode
 mkinitcpio-openswap
-neofetch-git
-networkmanager-dmenu-git
-pacli
-polybar
-rofi-git
-skippy-xd-git
-yaourt
-

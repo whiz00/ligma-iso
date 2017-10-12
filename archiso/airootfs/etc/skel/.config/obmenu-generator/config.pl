@@ -73,7 +73,7 @@
 =cut
 
 our $CONFIG = {
-  "editor"              => "geany",
+  "editor"              => "exo-open",
   "Linux::DesktopFiles" => {
                              desktop_files_paths     => [
                                                           "/usr/share/applications",
