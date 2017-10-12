@@ -44,7 +44,7 @@ Presentation
             anchors.top: background1.bottom
             text: "Welcome to ArchLabs Minimo."
             wrapMode: Text.WordWrap
-            width: 800
+            width: 700
             horizontalAlignment: Text.Center
         }
     }
@@ -63,7 +63,7 @@ Presentation
             anchors.top: background2.bottom
             text: "Featuring the lightning fast Openbox Window Manager."
             wrapMode: Text.WordWrap
-            width: 800
+            width: 700
             horizontalAlignment: Text.Center
         }
     }
@@ -82,7 +82,7 @@ Presentation
             anchors.top: background3.bottom
             text: "Made to be minimal at its core, leaving the choices up to you."
             wrapMode: Text.WordWrap
-            width: 800
+            width: 700
             horizontalAlignment: Text.Center
         }
     }
@@ -101,7 +101,7 @@ Presentation
             anchors.top: background4.bottom
             text: "We listen, share your suggestions to help us improve."
             wrapMode: Text.WordWrap
-            width: 800
+            width: 700
             horizontalAlignment: Text.Center
         }
     }

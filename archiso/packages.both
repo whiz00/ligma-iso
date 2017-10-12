@@ -169,8 +169,8 @@ gtk-engine-aurora
 # archlabs repo
 al-ckbcomp
 al-locale
-al-gtk3-nocsd-git
-archlabs-autostart
+al-gtk3-nocsd
+archlabs-ob-autostart
 archlabs-common
 archlabs-homepage
 archlabs-kickshaw
