@@ -1,17 +1,15 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;  Include Master and Modules
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;=====================================================
+;     Includes
+;=====================================================
 
 [section/base]
 include-file = /home/liveuser/.config/polybar/master.conf
 include-file = /home/liveuser/.config/polybar/modules.conf
 
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;          i3 Bars
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;=====================================================
+;     i3 Bars
+;=====================================================
 
 [bar/i3-bar]
 inherit = bar/master
@@ -20,8 +18,13 @@ inherit = bar/master
 monitor =
 
 modules-left = i3-workspaces menu
-modules-center = window_count volume
-modules-right = pkg keyboard battery memory cpu temperature network clock
+modules-center = clock
+modules-right = pkg keyboard memory temperature coreuse network volume
+
+; All available modules (some require configuration in modules.conf)
+; redshift github filesystem mpd wired-network wireless-network battery menu volume-bar
+; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
+
 
 ;;;;;; Tray is commented out ;;;;;;;;
 ;tray-position = center
@@ -30,9 +33,9 @@ modules-right = pkg keyboard battery memory cpu temperature network clock
 ;tray-offset-x = 20%
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;         Openbox Bars
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;=====================================================
+;     Openbox Bars
+;=====================================================
 
 [bar/openbox-bar]
 inherit = bar/master
@@ -40,9 +43,14 @@ inherit = bar/master
 ; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
 monitor =
 
-modules-left = workspaces menu
-modules-center = window_count volume
-modules-right = pkg keyboard battery memory cpu temperature network clock
+modules-left = window_switch workspaces menu
+modules-center = clock
+modules-right = pkg memory temperature coreuse network volume
+
+; All available modules (some require configuration in modules.conf)
+; redshift github filesystem mpd wired-network wireless-network battery menu volume-bar
+; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
+
 
 ;;;;;; Tray is commented out ;;;;;;;;
 ;tray-position = center

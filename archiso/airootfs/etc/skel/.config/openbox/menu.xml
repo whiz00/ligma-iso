@@ -125,18 +125,9 @@
         </item>
       </menu>
       <menu execute="al-compositor" id="CompositingPipeMenu" label="Compositor"/>
-      <menu id="polybar" label="Polybar">
-        <item label="Polybar Config">
-          <action name="Execute">
-            <command>exo-open ~/.config/polybar/config</command>
-          </action>
-        </item>
-        <item label="Reload Polybar">
-          <action name="Execute">
-            <command>~/.config/polybar/scripts/launch.sh</command>
-          </action>
-        </item>
-      </menu>
+      <menu execute="al-polybar-pipemenu" id="PolybarPipeMenu" label="Polybar"/>
+      <menu execute="al-conky-pipemenu" id="ConkyPipeMenu" label="Conky"/>
+      <menu execute="al-tint2-pipemenu" id="TintPipeMenu" label="Tint2"/>
       <separator/>
       <item label="Appearance">
         <action name="Execute">
@@ -173,7 +164,7 @@
     <menu id="system-settings" label="System Settings">
       <item label="Package Manager">
         <action name="Execute">
-          <command>termite --geometry=750x550 --exec=pacli</command>
+          <command>termite --exec=pacli</command>
         </action>
       </item>
       <item label="Root File Manager">

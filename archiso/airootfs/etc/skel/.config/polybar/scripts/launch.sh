@@ -4,34 +4,42 @@
 CONF_PATH=$HOME/.config/polybar
 
 
-MASTER=$CONF_PATH/master.conf
-MODULES=$CONF_PATH/modules.conf
 sed -i '/base/{n;N;N;d}' $CONF_PATH/config
 sed -i "/base/ a\
-include-file = ${MODULES}" $CONF_PATH/config
+include-file = ${CONF_PATH}/master.conf" $CONF_PATH/config
 sed -i "/base/ a\
-include-file = ${MASTER}" $CONF_PATH/config
+include-file = ${CONF_PATH}/modules.conf" $CONF_PATH/config
 # set firefox homepage
-sed -i "s/liveuser/${USER}/g" /home/$USER/.mozilla/firefox/archlabs.default/prefs.js
-sed -i "s/liveuser/${USER}/g" /home/$USER/.mozilla/firefox/archlabs.default/sessionstore.js
-
+sed -i "s/liveuser/${USER}/g" $HOME/.mozilla/firefox/archlabs.default/prefs.js
+sed -i "s/liveuser/${USER}/g" $HOME/.mozilla/firefox/archlabs.default/sessionstore.js
 # set bookmarks
-sed -i "s/liveuser/${USER}/g" /home/$USER/.config/gtk-3.0/bookmarks
-
+sed -i "s/liveuser/${USER}/g" $HOME/.config/gtk-3.0/bookmarks
 # remove some stuff from autostart
-sed -i '1,3d' /home/$USER/.config/openbox/autostart
+sed -i '6,19d' $CONF_PATH/scripts/launch.sh
 
-sed -i '6,25d' $CONF_PATH/scripts/launch.sh
 
+# Check WM
+cur_wm=$(wmctrl -m | grep Name | cut -d " " -f2)
+
+if [ "$1" == "--reload" ]; then
+  if ! [ "$cur_wm" == "i3" ]; then
+    openbox --restart
+    al-compositor --restart
+    al-tint2restart
+  fi
+fi
 
 # Terminate already running bar instances
 killall -q polybar
 
-# Wait until the processes have been shut down
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+if pgrep -x "tint2" >/dev/null; then
+  echo "Tint is running, not launching bars"
+  exit 1
+fi
 
-# Check WM
-cur_wm=$(wmctrl -m | grep Name | cut -d " " -f2)
+# Wait until the processes have been shut down
+while pgrep -u $UID -x polybar >/dev/null; do sleep 0.5; done
+
 
 # if i3 launch the i3-bar
 if [ "$cur_wm" == "i3" ]; then

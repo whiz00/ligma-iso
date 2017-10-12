@@ -29,11 +29,12 @@ sed -i 's/Install Archlabs/Lock Screen/g' /etc/skel/.config/openbox/menu.xml
 sed -i 's/install-al/i3lock-fancy -p/g' /etc/skel/.config/openbox/menu.xml
 
 # enable al-hello after install
-sed -i 's/#sleep 5; termite/sleep 5; termite/g' /etc/skel/.config/openbox/autostart
+sed -i '/#al-hello/ c\
+sleep 6; termite --geometry=650x450 --exec=/usr/bin/al-hello &' /etc/skel/.config/openbox/autostart
 
 # fix boot messages
-sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/ c\
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nowatchdog systemd.legacy_systemd_cgroup_controller=true"' /etc/default/grub
+#sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/ c\
+#GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nowatchdog systemd.legacy_systemd_cgroup_controller=true"' /etc/default/grub
 
 # remove this script
 rm /usr/bin/cleanup.sh

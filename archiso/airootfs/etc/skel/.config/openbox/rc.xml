@@ -389,6 +389,11 @@
         <menu>root-menu</menu>
       </action>
     </keybind>
+    <keybind key="W-S-r">
+      <action name="Execute">
+        <command>~/.config/polybar/scripts/launch.sh --reload</command>
+      </action>
+    </keybind>
     <keybind key="C-S-BackSpace">
       <action name="Execute">
         <command>openbox --reconfigure</command>

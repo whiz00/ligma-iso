@@ -4,20 +4,17 @@
 
 # base
 linux-lts
-linux-lts-headers
+#linux-lts-headers
 
 # devel
-autoconf
-automake
-fakeroot
-gcc
 make
-pkg-config
+fakeroot
 
 # xorg
 mesa
 xorg-apps
 xorg-server
+xorg-xinit
 xf86-video-amdgpu
 xf86-video-ati
 xf86-video-dummy
@@ -35,11 +32,9 @@ xf86-video-voodoo
 xf86-video-openchrome
 
 #archiso
-acpi_call-lts
 arch-install-scripts
 bash-completion
 btrfs-progs
-broadcom-wl-dkms
 b43-fwcutter
 bluez-firmware
 clonezilla
@@ -47,7 +42,6 @@ crda
 dosfstools
 exfat-utils
 f2fs-tools
-fish
 gpm
 gptfdisk
 grub
@@ -56,6 +50,7 @@ hdparm
 jsoncpp
 ipw2100-fw
 ipw2200-fw
+libisoburn
 mtools
 mlocate
 nfs-utils
@@ -67,7 +62,6 @@ parted
 partclone
 partimage
 ppp
-r8168-lts
 refind-efi
 reflector
 rfkill
@@ -78,38 +72,17 @@ usb_modeswitch
 wget
 zd1211-firmware
 
-#vbox
-virtualbox-guest-dkms
-virtualbox-guest-utils
-
-#installation/encryption
-boost
-cmake
-dmidecode
-extra-cmake-modules
-kpmcore
-os-prober
-upower
-qt5-base
-qt5ct
-yaml-cpp
-
-#audio & codecs
+# audio & codecs
 alsa-firmware
 alsa-plugins
 alsa-lib
-dcadec
 ffmpeg2.8
 gst-libav
 gst-plugins-base
 gst-plugins-good
 gstreamer
-libdvbpsi
-libebml
 libmad
 libmatroska
-libtar
-libupnp
 pamixer
 pulseaudio
 pulseaudio-alsa
@@ -129,6 +102,7 @@ lxappearance-obconf
 #lightdm
 lightdm
 lightdm-gtk-greeter
+lightdm-gtk-greeter-settings
 
 #network
 networkmanager
@@ -137,10 +111,12 @@ wireless-regdb
 wireless_tools
 wpa_supplicant
 
+
 #file management
 file-roller
 gvfs
 gvfs-mtp
+gvfs-nfs
 gvfs-afc
 thunar
 tumbler
@@ -150,6 +126,7 @@ xdg-user-dirs-gtk
 audacious
 audacious-plugins
 arandr
+conky
 firefox
 mpv
 galculator
@@ -163,7 +140,6 @@ termite
 #utilities
 compton
 dialog
-feh
 gksu
 gnome-keyring
 htop
@@ -176,12 +152,13 @@ p7zip
 playerctl
 polkit
 sudo
-python2-lxml
 python2-xdg
 scrot
+tint2
 unrar
 wmctrl
 w3m
+zenity
 
 # fonts and themes
 ttf-roboto
@@ -192,33 +169,34 @@ gtk-engine-aurora
 # archlabs repo
 al-ckbcomp
 al-locale
-archlabs-autostart
+al-gtk3-nocsd
+archlabs-ob-autostart
 archlabs-common
 archlabs-homepage
 archlabs-kickshaw
 archlabs-keyring
+archlabs-networkmanager-dmenu
 archlabs-obkey
 archlabs-opensnap
 archlabs-paranoid
 archlabs-pipemenus
 archlabs-screenlock
 archlabs-wallpapers
+archlabs-downgrade
+archlabs-neofetch
+archlabs-pacli
+archlabs-polybar
+archlabs-rofi
+archlabs-skippy-xd
+archlabs-yaourt
 
-# third party archlabs repo
+# installation
+qt5ct
+qt5-styleplugins
+os-prober
 calamares
-downgrade
-gtk3-nocsd-git
+dmidecode
 mkinitcpio-openswap
-neofetch-git
-networkmanager-dmenu-git
-pacli
-polybar
-rofi-git
-skippy-xd-git
-yaourt
 
-#cower
-#python-docopt
-#pygobject-devel
-#python2-gobject
-#python2-gobject2
+#vbox
+virtualbox-guest-modules-lts
