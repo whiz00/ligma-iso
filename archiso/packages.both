@@ -4,10 +4,6 @@
 
 # base
 linux-lts
-#linux-lts-headers
-
-# devel
-make
 fakeroot
 
 # xorg
@@ -62,6 +58,7 @@ parted
 partclone
 partimage
 ppp
+ranger
 refind-efi
 reflector
 rfkill
@@ -69,6 +66,7 @@ rsync
 sdparm
 squashfs-tools
 usb_modeswitch
+vim
 wget
 zd1211-firmware
 
@@ -87,6 +85,7 @@ pamixer
 pulseaudio
 pulseaudio-alsa
 pavucontrol
+volumeicon
 
 #xfce4
 xfce4-settings
@@ -106,11 +105,11 @@ lightdm-gtk-greeter-settings
 
 #network
 networkmanager
+network-manager-applet
 networkmanager-dispatcher-ntpd
 wireless-regdb
 wireless_tools
 wpa_supplicant
-
 
 #file management
 file-roller
@@ -140,6 +139,7 @@ termite
 #utilities
 compton
 dialog
+dunst
 gksu
 gnome-keyring
 htop
@@ -151,6 +151,7 @@ numlockx
 p7zip
 playerctl
 polkit
+polkit-gnome
 sudo
 python2-xdg
 scrot
@@ -169,7 +170,6 @@ gtk-engine-aurora
 # archlabs repo
 al-ckbcomp
 al-locale
-al-gtk3-nocsd
 archlabs-ob-autostart
 archlabs-common
 archlabs-homepage
@@ -186,9 +186,13 @@ archlabs-downgrade
 archlabs-neofetch
 archlabs-pacli
 archlabs-polybar
+archlabs-themes
+archlabs-icons
+archlabs-fonts
 archlabs-rofi
 archlabs-skippy-xd
 archlabs-yaourt
+
 
 # installation
 qt5ct
@@ -199,4 +203,5 @@ dmidecode
 mkinitcpio-openswap
 
 #vbox
-virtualbox-guest-modules-lts
+al-virtualbox-guest-modules-lts
+virtualbox-guest-utils

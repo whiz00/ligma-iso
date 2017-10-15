@@ -178,18 +178,14 @@ bindsym $mod+a focus parent
 exec_always --no-startup-id numlockx on
 exec_always --no-startup-id ksuperkey -e 'Super_L=Alt_L|F1'
 exec_always --no-startup-id $HOME/.config/i3/scripts/compositor.sh
-exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
+exec --no-startup-id al-tint2-session
+exec_always --no-startup-id sleep 1; $HOME/.config/polybar/scripts/launch.sh
 
 # run once at startup
 exec --no-startup-id xfsettingsd &
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id al-conky-session
-#exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
-#exec --no-startup-id xfce4-power-manager &
-
-# system tray
-#exec --no-startup-id nm-applet
-#exec --no-startup-id volumeicon
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 
 ####################################################################################################

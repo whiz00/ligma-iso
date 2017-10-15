@@ -6,10 +6,13 @@ nitrogen --restore &
 
 # panel
 al-tint2-session &
-$HOME/.config/polybar/scripts/launch.sh &
+sleep 1; $HOME/.config/polybar/scripts/launch.sh &
 
 # Openbox autostart
 ob-autostart -d &
+
+## GNOME PolicyKit authentication
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Required for xfce setting to work
 xfsettingsd &
@@ -20,3 +23,5 @@ sleep 2; al-conky-session &
 xdg-user-dirs-gtk-update &
 
 #al-hello
+
+sleep 2; $HOME/.config/panel-switch &

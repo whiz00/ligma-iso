@@ -33,7 +33,7 @@ def run_mkinitcpio():
 def run():
     """ Create kernel initramfs image """
     root_mount_point = libcalamares.globalstorage.value("rootMountPoint")
-    subprocess.check_call(["cp", "/run/archiso/bootmnt/arch/boot/x86_64/vmlinuz", root_mount_point + "/boot/vmlinuz-linux-lts"])
+    subprocess.check_call(["cp", "/run/archiso/bootmnt/arch/boot/x86_64/vmlinuz-linux-lts", root_mount_point + "/boot/vmlinuz-linux-lts"])
     run_mkinitcpio()
     target_env_call(["/usr/bin/cleanup.sh"])
 

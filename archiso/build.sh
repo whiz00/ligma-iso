@@ -3,8 +3,8 @@
 set -e -u
 
 iso_name=archlabs
-iso_label="archlabs-lts-$(date +%Y%m)-x86_64"
-iso_version="$(date +%Y.%m)-lts"
+iso_label="archlabs-lts-$(date +%Y-%m)-x86_64"
+iso_version="$(date +%Y-%m)-lts"
 install_dir=arch
 work_dir=work
 out_dir=out
@@ -107,7 +107,7 @@ make_customize_airootfs() {
 make_boot() {
     mkdir -p ${work_dir}/iso/${install_dir}/boot/${arch}
     cp ${work_dir}/${arch}/airootfs/boot/archiso.img ${work_dir}/iso/${install_dir}/boot/${arch}/archiso.img
-    cp ${work_dir}/${arch}/airootfs/boot/vmlinuz-linux-lts ${work_dir}/iso/${install_dir}/boot/${arch}/vmlinuz
+    cp ${work_dir}/${arch}/airootfs/boot/vmlinuz-linux-lts ${work_dir}/iso/${install_dir}/boot/${arch}/vmlinuz-linux-lts
 }
 
 # Add other aditional/extra files to ${install_dir}/boot/
@@ -125,13 +125,13 @@ make_syslinux() {
         sed "s|%ARCHISO_LABEL%|${iso_label}|g;
              s|%INSTALL_DIR%|${install_dir}|g" ${_cfg} > ${work_dir}/iso/${install_dir}/boot/syslinux/${_cfg##*/}
     done
-    #cp ${script_path}/syslinux/splash.png ${work_dir}/iso/${install_dir}/boot/syslinux
+    cp ${script_path}/syslinux/splash.png ${work_dir}/iso/${install_dir}/boot/syslinux
     cp ${work_dir}/${arch}/airootfs/usr/lib/syslinux/bios/*.c32 ${work_dir}/iso/${install_dir}/boot/syslinux
     cp ${work_dir}/${arch}/airootfs/usr/lib/syslinux/bios/lpxelinux.0 ${work_dir}/iso/${install_dir}/boot/syslinux
     cp ${work_dir}/${arch}/airootfs/usr/lib/syslinux/bios/memdisk ${work_dir}/iso/${install_dir}/boot/syslinux
     mkdir -p ${work_dir}/iso/${install_dir}/boot/syslinux/hdt
     gzip -c -9 ${work_dir}/${arch}/airootfs/usr/share/hwdata/pci.ids > ${work_dir}/iso/${install_dir}/boot/syslinux/hdt/pciids.gz
-    gzip -c -9 ${work_dir}/${arch}/airootfs/usr/lib/modules/4.9.54-1-lts/modules.alias > ${work_dir}/iso/${install_dir}/boot/syslinux/hdt/modalias.gz
+    gzip -c -9 ${work_dir}/${arch}/airootfs/usr/lib/modules/4.9.56-1-lts/modules.alias > ${work_dir}/iso/${install_dir}/boot/syslinux/hdt/modalias.gz
 }
 
 # Prepare /isolinux
@@ -176,7 +176,7 @@ make_efiboot() {
     mount ${work_dir}/iso/EFI/archiso/efiboot.img ${work_dir}/efiboot
 
     mkdir -p ${work_dir}/efiboot/EFI/archiso
-    cp ${work_dir}/iso/${install_dir}/boot/x86_64/vmlinuz ${work_dir}/efiboot/EFI/archiso/vmlinuz.efi
+    cp ${work_dir}/iso/${install_dir}/boot/x86_64/vmlinuz-linux-lts ${work_dir}/efiboot/EFI/archiso/vmlinuz-linux-lts.efi
     cp ${work_dir}/iso/${install_dir}/boot/x86_64/archiso.img ${work_dir}/efiboot/EFI/archiso/archiso.img
 
     cp ${work_dir}/iso/${install_dir}/boot/intel_ucode.img ${work_dir}/efiboot/EFI/archiso/intel_ucode.img
