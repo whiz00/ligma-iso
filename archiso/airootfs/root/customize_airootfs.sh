@@ -4,25 +4,25 @@ set -e -u
 
 # setup locale
 sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/#hi_IN UTF-8/hi_IN UTF-8/g' /etc/locale.gen
-sed -i 's/#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/#zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/#es_AR.UTF-8 UTF-8/es_AR.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/#hi_IN UTF-8/hi_IN UTF-8/g' /etc/locale.gen
+#sed -i 's/#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/#zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/#es_AR.UTF-8 UTF-8/es_AR.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/g' /etc/locale.gen
 
 locale-gen
 
 # reset locale
 sed -i 's/en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/hi_IN UTF-8/#hi_IN UTF-8/g' /etc/locale.gen
-sed -i 's/fr_FR.UTF-8 UTF-8/#fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/ru_RU.UTF-8 UTF-8/#ru_RU.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/zh_CN.UTF-8 UTF-8/#zh_CN.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/es_AR.UTF-8 UTF-8/#es_AR.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/pt_BR.UTF-8 UTF-8/#pt_BR.UTF-8 UTF-8/g' /etc/locale.gen
-sed -i 's/de_DE.UTF-8 UTF-8/#de_DE.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/hi_IN UTF-8/#hi_IN UTF-8/g' /etc/locale.gen
+#sed -i 's/fr_FR.UTF-8 UTF-8/#fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/ru_RU.UTF-8 UTF-8/#ru_RU.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/zh_CN.UTF-8 UTF-8/#zh_CN.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/es_AR.UTF-8 UTF-8/#es_AR.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/pt_BR.UTF-8 UTF-8/#pt_BR.UTF-8 UTF-8/g' /etc/locale.gen
+#sed -i 's/de_DE.UTF-8 UTF-8/#de_DE.UTF-8 UTF-8/g' /etc/locale.gen
 
 # timezone
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
@@ -45,6 +45,7 @@ gpasswd -a liveuser autologin
 systemctl enable lightdm.service
 systemctl set-default graphical.target
 systemctl enable pacman-init.service
+systemctl enable choose-mirror.service
 systemctl enable NetworkManager.service
 systemctl enable ntpd.service
 

@@ -95,13 +95,13 @@ gufw
 obconf
 oblogout
 openbox
-lxappearance
-lxappearance-obconf
+lxappearance-gtk3
+lxappearance-obconf-gtk3
 
 #lightdm
 lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
+clutter-gtk
+libgee
 
 #network
 networkmanager
@@ -151,7 +151,7 @@ numlockx
 p7zip
 playerctl
 polkit
-polkit-gnome
+lxsession-gtk3
 sudo
 python2-xdg
 scrot
@@ -172,6 +172,7 @@ al-ckbcomp
 al-locale
 archlabs-ob-autostart
 archlabs-common
+archlabs-greeter
 archlabs-homepage
 archlabs-kickshaw
 archlabs-keyring
@@ -192,7 +193,6 @@ archlabs-fonts
 archlabs-rofi
 archlabs-skippy-xd
 archlabs-yaourt
-
 
 # installation
 qt5ct

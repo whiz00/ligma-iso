@@ -397,7 +397,7 @@ def run_operations(pkgman, entry):
 
 
 def run():
-    """ Perform packages operation """
+    """ Remove installation packages """
     global mode_packages, total_packages, completed_packages, group_packages
 
     backend = libcalamares.job.configuration.get("backend")

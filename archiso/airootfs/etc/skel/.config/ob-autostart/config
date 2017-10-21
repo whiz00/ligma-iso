@@ -1,6 +1,5 @@
 # OB_Autostart config
 LAUNCH_LIST = [
-	 ("Enable super key to launch Rofi","ksuperkey -e 'Super_L=Alt_L|F1'","0","*"),
 	 ("Enable window snapping","opensnap --daemon -c /etc/opensnap","0","*"),
 	 ("Turn on numlock","numlockx","0","*"),
 	 ("Enable skippy-xd window switcher","skippy-xd --config $HOME/.config/skippy-xd/skippy-xd.rc --start-daemon","1","*"),

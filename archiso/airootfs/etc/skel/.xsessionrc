@@ -8,6 +8,8 @@
 
 # for qt5 apps
 export QT_STYLE_OVERRIDE=GTK+
+XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME
 
 # include sbin in PATH
 if [ -d "/sbin" ] ; then

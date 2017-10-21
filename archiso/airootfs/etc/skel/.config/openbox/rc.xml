@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <openbox_config xmlns="http://openbox.org/3.4/rc" xmlns:xi="http://www.w3.org/2001/XInclude">
   <resistance>
     <strength>10</strength>
@@ -181,6 +180,7 @@
     <!-- 'Left', 'Middle', 'Right' -->
   </dock>
   <keyboard>
+    <chainQuitKey/>
     <keybind key="W-1">
       <action name="GoToDesktop">
         <to>1</to>
@@ -208,27 +208,27 @@
     </keybind>
     <keybind key="S-W-1">
       <action name="SendToDesktop">
-        <to>1</to>
+        <desktop>1</desktop>
       </action>
     </keybind>
     <keybind key="S-W-2">
       <action name="SendToDesktop">
-        <to>2</to>
+        <desktop>1</desktop>
       </action>
     </keybind>
     <keybind key="S-W-3">
       <action name="SendToDesktop">
-        <to>3</to>
+        <desktop>1</desktop>
       </action>
     </keybind>
     <keybind key="S-W-4">
       <action name="SendToDesktop">
-        <to>4</to>
+        <desktop>1</desktop>
       </action>
     </keybind>
     <keybind key="S-W-5">
       <action name="SendToDesktop">
-        <to>5</to>
+        <desktop>1</desktop>
       </action>
     </keybind>
     <keybind key="A-Tab">
@@ -327,13 +327,11 @@
         <command>scrot -d 5 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f'</command>
       </action>
     </keybind>
-    <!-- Needed for super key to launch rofi  -->
     <keybind key="A-F1">
       <action name="Execute">
         <command>rofi-apps</command>
       </action>
     </keybind>
-    <!--   -->
     <keybind key="W-f">
       <action name="Execute">
         <command>exo-open --launch FileManager</command>
@@ -391,7 +389,7 @@
     </keybind>
     <keybind key="W-S-r">
       <action name="Execute">
-        <command>~/.config/polybar/scripts/launch.sh --reload</command>
+        <command>launch-polybar --reload</command>
       </action>
     </keybind>
     <keybind key="C-S-BackSpace">
@@ -431,9 +429,6 @@
         <command>xfce4-settings-manager</command>
       </action>
     </keybind>
-    <!--
-      Beginning of tile binds
-      -->
     <keybind key="W-KP_1">
       <action name="UnmaximizeFull"/>
       <action name="MoveResizeTo">
@@ -545,6 +540,11 @@
         <width>50%</width>
       </action>
     </keybind>
+    <keybind key="C-A-Delete">
+      <action name="Execute">
+        <command>exit-openbox</command>
+      </action>
+    </keybind>
     <keybind key="W-A-Right">
       <action name="UnmaximizeFull"/>
       <action name="MaximizeVert"/>
@@ -554,9 +554,6 @@
         <width>50%</width>
       </action>
     </keybind>
-    <!--
-    End of Tiling Binds
-    -->
   </keyboard>
   <mouse>
     <dragThreshold>4</dragThreshold>
@@ -592,7 +589,7 @@
         <action name="Focus"/>
         <action name="Raise"/>
       </mousebind>
-      <mousebind button="Left" action="Drag">
+      <mousebind action="Drag" button="Left">
         <action name="if">
           <maximizedvertical>yes</maximizedvertical>
           <then>
@@ -940,7 +937,7 @@
       <desktop>4</desktop>
       <focus>yes</focus>
     </application>
-    <application class="geany">
+    <application class="mousepad">
       <desktop>5</desktop>
       <focus>yes</focus>
     </application>

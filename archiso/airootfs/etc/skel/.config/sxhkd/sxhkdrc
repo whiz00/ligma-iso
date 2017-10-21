@@ -1,17 +1,22 @@
 # web browser
 super + w
-     exo-open --launch WebBrowser
+    exo-open --launch WebBrowser
+
 # terminal emulator
 super + t
-	exo-open --launch TerminalEmulator
+		exo-open --launch TerminalEmulator
 
 # file manager
 super + f
-	exo-open --launch FileManager
+		exo-open --launch FileManager
 
 # program launcher
 super + @space
-	rofi-apps
+		rofi-apps
+
+# program launcher
+alt + F1
+	  rofi-apps
 
 # make sxhkd reload its configuration files:
 super + shift + r
@@ -137,6 +142,7 @@ XF86AudioLowerVolume
 # Brightness goes up
 XF86MonBrightnessUp
     xbacklight +10
+
 # Brightness goes down
 XF86MonBrightnessDown
     xbacklight -10

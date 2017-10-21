@@ -128,6 +128,11 @@
       <menu execute="al-polybar-pipemenu" id="PolybarPipeMenu" label="Polybar"/>
       <menu execute="al-conky-pipemenu" id="ConkyPipeMenu" label="Conky"/>
       <menu execute="al-tint2-pipemenu" id="TintPipeMenu" label="Tint2"/>
+      <item label="Panel Chooser">
+        <action name="Execute">
+          <command>al-panel-chooser</command>
+        </action>
+      </item>
       <separator/>
       <item label="Appearance">
         <action name="Execute">
@@ -184,6 +189,12 @@
     <item label="Install Archlabs">
       <action name="Execute">
         <command>install-al</command>
+      </action>
+    </item>
+    <separator/>
+    <item label="Lock Screen">
+      <action name="Execute">
+        <command>i3lock-fancy -p</command>
       </action>
     </item>
     <item label="Exit Openbox">

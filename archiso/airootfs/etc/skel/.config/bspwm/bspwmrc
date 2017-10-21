@@ -1,11 +1,13 @@
 #! /bin/sh
 
-pkill slstatus &
-
-xrdb -l $HOME/.Xresources &
+# key bindings
+sxhkd &
 
 # wallpaper
 nitrogen --restore &
+
+# set super key to launch rofi
+ksuperkey -e 'Super_L=Alt_L|F1' &
 
 # launch compton
 al-compositor --start &
@@ -14,28 +16,14 @@ al-compositor --start &
 nitrogen --restore &
 
 # gnome polkit
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+lxpolkit &
 
 # panel
 al-tint2-session &
-sleep 1; $HOME/.config/polybar/scripts/launch.sh &
-
-# key bindings
-sxhkd &
-
+sleep 1; launch-polybar &
  
 
-# set monitors  
-if [[ $(hostname) == 'myhost' ]]; then
-    bspc monitor eDP1 -d I II III IV V VI VII VIII IX X
-elif [[ $(hostname) == 'otherhost' ]]; then
-    bspc monitor VGA-0 -d I II III IV V
-    bspc monitor VGA-1 -d VI VII VIII IX X
-elif [[ $(hostname) == 'yetanotherhost' ]]; then
-    bspc monitor DVI-I-3 -d VI VII VIII IX X
-    bspc monitor DVI-I-2 -d I II III IV V
-fi
-
+bspc monitor -d I II III IV V VI VII VIII IX X
 
 
 bspc config border_width    3
@@ -56,6 +44,9 @@ bspc configpointer_action1    move
 bspc config pointer_action2   resize_side
 bspc config pointer_action3   resize_corner
 
+bspc rule -a thunar desktop='^1' state=floating follow=on
+bspc rule -a firefox desktop='^2'
+bspc rule -a mplayer2 state=floating
 bspc rule -a Galculator state=floating
 bspc rule -a Void_Exit_Session state=floating layer=above
 bspc rule -a Exit_Session state=floating layer=above
