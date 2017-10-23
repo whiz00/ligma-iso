@@ -8,7 +8,7 @@ nitrogen --restore &
 
 # panel
 al-tint2-session &
-sleep 1; launch-polybar &
+sleep 1; $HOME/.config/polybar/scripts/launch-polybar &
 
 # Openbox autostart
 ob-autostart -d &

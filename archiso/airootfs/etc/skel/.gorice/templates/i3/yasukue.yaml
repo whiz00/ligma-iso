@@ -1,0 +1,35 @@
+# background and foreground MUST exist and MUST be hex color values
+# names cannot contain '-'
+terminal:
+    background: "#1d1f21"
+    foreground: "#c5c8c6"
+    bold: "#c5c8c6"
+    termbackground: "rgba(29,31,33,0.95)"
+    font: "Anonymice Nerd Font 10"
+    colors: ["#282A2E", "#A54242", "#8C9440", "#DE935F", "#5F819D", "#85678F", "#5E8D87", "#373B41", "#ECECEC"]
+    # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
+
+border:
+    pixels: 4
+    all: 0
+    top: 0
+    bottom: 0
+    color: "#00000000"
+
+
+gap:
+    inner: 20
+    outer: 0
+
+
+bar:
+    height: 24
+    width: "100%"
+    radius: 0
+    bottom: "false"
+    background: "#e11d1f21"
+    font0: "xos4 Terminus:size=12:antialias=false;2"
+
+
+wallpaper:
+    saved: "/usr/share/backgrounds/Anime-girl-3840x2160.jpg"

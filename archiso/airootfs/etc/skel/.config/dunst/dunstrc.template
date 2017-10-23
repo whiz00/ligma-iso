@@ -22,7 +22,7 @@
     separator_height = 2
     padding = 10
     horizontal_padding = 10
-    frame_color = "#bf616a"
+    frame_color = "{{index .Data.terminal_colors 1}}"
     separator_color = frame
     frame_width = 1
     startup_notification = false
@@ -34,17 +34,17 @@
 [shortcuts]
 
 [urgency_low]
-    background = "#2b303b"
-    foreground = "#c0c5ce"
+    background = "{{.Data.terminal_background}}"
+    foreground = "{{.Data.terminal_foreground}}"
     timeout = 3
 
 [urgency_normal]
-    background = "#2b303b"
-    foreground = "#c0c5ce"
+    background = "{{.Data.terminal_background}}"
+    foreground = "{{.Data.terminal_foreground}}"
     timeout = 3
 
 [urgency_critical]
-    background = "#65737e"
-    foreground = "#b48ead"
-    frame_color = "#b48ead"
+    background = "{{index .Data.terminal_colors 7}}"
+    foreground = "{{index .Data.terminal_colors 5}}"
+    frame_color = "{{index .Data.terminal_colors 5}}"
     timeout = 5

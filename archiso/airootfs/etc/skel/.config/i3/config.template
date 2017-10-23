@@ -16,12 +16,12 @@
 ####################################################################################################
 
 # Window colors
-set $border-color     #2b303b
-set $background-color #2b303b
-set $inactive-color   #65737e
-set $text-color       #8fa1b3
-set $urgent-color     #bf616a
-set $active-color     #b48ead
+set $border-color     {{index .Data.terminal_colors 0}}
+set $background-color {{index .Data.terminal_colors 0}}
+set $inactive-color   {{index .Data.terminal_colors 7}}
+set $text-color       {{index .Data.terminal_colors 4}}
+set $urgent-color     {{index .Data.terminal_colors 1}}
+set $active-color     {{index .Data.terminal_colors 5}}
 
 # class                  background         border             text               indicator
 client.focused           $text-color        $text-color        $text-color        $active-color
@@ -30,11 +30,11 @@ client.focused_inactive  $background-color  $border-color      $text-color      
 client.urgent            $border-color      $urgent-color      $background-color  $urgent-color
 
 # border
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel {{.Data.border_pixels}}
 
 # gaps
-gaps inner 12
-gaps outer 0
+gaps inner {{.Data.gap_inner}}
+gaps outer {{.Data.gap_outer}}
 
 ####################################################################################################
 #################                          Define variables                        #################
@@ -289,4 +289,3 @@ mode "$mode_gaps" {
   bindsym Return mode "default"
   bindsym Escape mode "default"
 }
-

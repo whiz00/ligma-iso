@@ -3,15 +3,15 @@
 ;=====================================================
 
 [colors]
-background = #2b303b
-foreground = #c0c5ce
-urgent     = #E7816B
-blue       = #6BA4E7
-pink       = #9181E7
-orange     = #FEBE8E
-purple     = #D7AFF9
-yellow     = #F9F1AF
-border     = #00000000
+background = {{.Data.bar_background}}
+foreground = {{.Data.terminal_foreground}}
+urgent     = {{index .Data.terminal_colors 1}}
+blue       = {{index .Data.terminal_colors 4}}
+pink       = {{index .Data.terminal_colors 1}}
+orange     = {{index .Data.terminal_colors 3}}
+purple     = {{index .Data.terminal_colors 5}}
+yellow     = {{index .Data.terminal_colors 3}}
+border     = {{.Data.border_color}}
 
 [settings]
 throttle-output        = 5
@@ -34,15 +34,15 @@ format-background = ${colors.background}
 ;=====================================================
 
 [bar/master]
-width              = 100%
-height             = 28
-border-size        = 0
-border-top-size    = 0
-border-bottom-size = 2
-radius             = 0
-bottom             = false
-line-size          = 2
-font-0             = "DejaVu Sans Mono:size=10:antialias=false;2"
+width              = {{.Data.bar_width}}
+height             = {{.Data.bar_height}}
+border-size        = {{.Data.border_all}}
+border-top-size    = {{.Data.border_top}}
+border-bottom-size = {{.Data.border_bottom}}
+radius             = {{.Data.bar_radius}}
+bottom             = {{.Data.bar_bottom}}
+line-size          = {{.Data.border_pixels}}
+font-0             = "{{.Data.bar_font0}}"
 
 
 offset-x = 0

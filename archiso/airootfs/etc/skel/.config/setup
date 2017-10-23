@@ -11,6 +11,9 @@ include-file = ${HOME}/.config/polybar/modules.conf" $HOME/.config/polybar/confi
 sed -i "s/liveuser/${USER}/g" $HOME/.mozilla/firefox/archlabs.default/prefs.js
 sed -i "s/liveuser/${USER}/g" $HOME/.mozilla/firefox/archlabs.default/sessionstore.js
 
+# setup gorice
+sed -i "s/liveuser/${USER}/g" $HOME/.gorice/templates/i3/data.json
+
 # set bookmarks in thunar
 sed -i "s/liveuser/${USER}/g" $HOME/.config/gtk-3.0/bookmarks
 

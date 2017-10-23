@@ -202,6 +202,11 @@ calamares
 dmidecode
 mkinitcpio-openswap
 
+# gorice
+python-yaml
+pango
+gdk-pixbuf2
+
 #vbox
 al-virtualbox-guest-modules-lts
 virtualbox-guest-utils
