@@ -5,7 +5,7 @@ terminal:
     foreground: "#baacc5"
     bold: "#4c5068"
     termbackground: "rgba(102,102,102,0.80)"
-    font: "Anonymice Nerd Font 10"
+    font: "Ubuntu Mono Nerd Font 10"
     colors: ["#323c51", "#a67070", "#88977c", "#de935f", "#6b96a7", "#553e62", "#5d817d", "#8e8e86", "#b3cbc9"]
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
@@ -32,4 +32,4 @@ bar:
 
 
 wallpaper:
-    saved: "/usr/share/backgrounds/Anime-girl2-1920x1200.jpg"
+    saved: "/usr/share/backgrounds/blue.jpg"

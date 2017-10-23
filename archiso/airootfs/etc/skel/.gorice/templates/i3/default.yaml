@@ -28,7 +28,7 @@ bar:
     radius: 0
     bottom: "false"
     background: ""
-    font0: "xos4 Terminus:size=12:antialias=false;2"
+    font0: "DejaVu Sans Mono:size=10:antialias=false;2"
 
 
 wallpaper:

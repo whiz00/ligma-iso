@@ -6,7 +6,7 @@ terminal:
     bold: "#A9A9A9"
     termbackground: "rgba(250,250,250,0.80)"
     font: "Ubuntu Mono Nerd Font 10"
-    colors: ["#000000", "#D64937", "#19BC9C", "#FFFE5D", "#4E88CF", "#AF86C8", "#5DD5FF", "#969896", "#F6F6F6"]
+    colors: ["#000000", "#D64937", "#19BC9C", "#919640", "#4E88CF", "#AF86C8", "#5DD5FF", "#969896", "#AFDCE4"]
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
 border:
@@ -14,7 +14,7 @@ border:
     all: 0
     top: 0
     bottom: 0
-    color: "#00000000"
+    color: "#1D1D1D"
 
 
 gap:
@@ -28,7 +28,7 @@ bar:
     radius: 0
     bottom: "false"
     background: "#F6F6F6"
-    font0: "DejaVu Sans Mono:size=11:antialias=false;2"
+    font0: "DejaVu Sans Mono:size=10:antialias=false;2"
 
 
 wallpaper:

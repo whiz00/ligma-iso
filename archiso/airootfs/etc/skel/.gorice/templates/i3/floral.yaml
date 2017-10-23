@@ -5,7 +5,7 @@ terminal:
     foreground: "#ccccce"
     bold: "#ccccce"
     termbackground: "rgba(13,13,27,0.95)"
-    font: "Anonymice Nerd Font 10"
+    font: "Ubuntu Mono Nerd Font 10"
     colors: ["#282828", "#ca1444", "#789aba", "#94469b", "#cb6fa1", "#fb6e93", "#cf98c1", "#98218e", "#ebdbb2"]
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
@@ -14,7 +14,7 @@ border:
     all: 0
     top: 0
     bottom: 0
-    color: "#00000000"
+    color: "#0d0d1b"
 
 
 gap:
@@ -32,4 +32,4 @@ bar:
 
 
 wallpaper:
-    saved: "/usr/share/backgrounds/girls-in-glasses.jpg"
+    saved: "/usr/share/backgrounds/red-forest.jpg"

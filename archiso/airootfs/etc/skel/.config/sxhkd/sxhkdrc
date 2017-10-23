@@ -16,7 +16,7 @@ super + @space
 
 # program launcher
 alt + F1
-	  rofi-apps
+	  $HOME/bin/rofi-gorice
 
 # make sxhkd reload its configuration files:
 super + shift + r

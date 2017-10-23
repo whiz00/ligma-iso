@@ -23,11 +23,11 @@ set $text-color       #8fa1b3
 set $urgent-color     #bf616a
 set $active-color     #b48ead
 
-# class                  background         border             text               indicator
-client.focused           $text-color        $text-color        $text-color        $active-color
-client.unfocused         $background-color  $border-color      $text-color        $border-color
-client.focused_inactive  $background-color  $border-color      $text-color        $border-color
-client.urgent            $border-color      $urgent-color      $background-color  $urgent-color
+# class                  background     border         text           indicator
+client.focused           $border-color  $active-color  $text-color    $inactive-color
+client.unfocused         $border-color  $border-color  $text-color    $border-color
+client.focused_inactive  $border-color  $border-color  $text-color    $border-color
+client.urgent            $border-color  $urgent-color  $urgent-color  $border-color
 
 # border
 for_window [class="^.*"] border pixel 3
@@ -143,10 +143,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # resizing
-bindsym mod1+Left   resize shrink width 10 px or 5 ppt
-bindsym mod1+Down   resize grow height 10 px or 5 ppt
-bindsym mod1+Up     resize shrink height 10 px or 5 ppt
-bindsym mod1+Right  resize grow width 10 px or 5 ppt
+bindsym mod1+Left   resize shrink width 10 px or 1 ppt
+bindsym mod1+Down   resize grow height 10 px or 1 ppt
+bindsym mod1+Up     resize shrink height 10 px or 1 ppt
+bindsym mod1+Right  resize grow width 10 px or 1 ppt
 
 # next/previous workspace
 bindsym Mod1+Tab workspace next
@@ -204,7 +204,7 @@ exec --no-startup-id /usr/bin/lxpolkit
 
 bindsym $mod+e exec --no-startup-id al-open -edit
 bindsym Control+space exec --no-startup-id rofi-apps
-bindsym mod1+F1 exec --no-startup-id rofi-apps
+bindsym mod1+F1 exec --no-startup-id $HOME/bin/rofi-gorice
 bindsym $mod+t exec --no-startup-id exo-open --launch TerminalEmulator
 bindsym $mod+w exec --no-startup-id exo-open --launch WebBrowser
 bindsym $mod+f exec --no-startup-id exo-open --launch FileManager

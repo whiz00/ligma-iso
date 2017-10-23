@@ -164,6 +164,7 @@ zenity
 # fonts and themes
 ttf-roboto
 ttf-ubuntu-font-family
+terminus-font
 gtk-engine-murrine
 gtk-engine-aurora
 

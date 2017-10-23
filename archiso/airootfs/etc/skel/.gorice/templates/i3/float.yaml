@@ -28,8 +28,8 @@ bar:
     radius: 6
     bottom: "true"
     background: "#61EFF0F1"
-    font0: "DejaVu Sans Mono:size=11:antialias=false;2"
+    font0: "DejaVu Sans Mono:size=10:antialias=false;2"
 
 
 wallpaper:
-    saved: "/usr/share/backgrounds/surfin.jpg"
+    saved: "/usr/share/backgrounds/pools.jpg"

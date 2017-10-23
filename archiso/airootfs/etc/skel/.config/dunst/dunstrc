@@ -22,13 +22,13 @@
     separator_height = 2
     padding = 10
     horizontal_padding = 10
-    frame_color = "#bf616a"
+    frame_color = "#c0c5ce"
     separator_color = frame
     frame_width = 1
     startup_notification = false
     dmenu = /usr/bin/dmenu -p dunst:
     browser = /usr/bin/firefox
-    icon_position = off
+    icon_position = left
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [shortcuts]
@@ -45,6 +45,6 @@
 
 [urgency_critical]
     background = "#65737e"
-    foreground = "#b48ead"
-    frame_color = "#b48ead"
+    foreground = "#bf616a"
+    frame_color = "#bf616a"
     timeout = 5

@@ -5,7 +5,7 @@ terminal:
     foreground: "#c5c8c6"
     bold: "#A9A9A9"
     termbackground: "rgba(64,69,82,0.80)"
-    font: "Anonymice Nerd Font 10"
+    font: "Ubuntu Mono Nerd Font 10"
     colors: ["#3f3f3f", "#705050", "#E4B928", "#F0DFAF", "#506070", "#DC8CC3", "#298FEA", "#DCDCCC", "#F6F6F6"]
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
@@ -27,9 +27,9 @@ bar:
     width: "100%"
     radius: 0
     bottom: "false"
-    background: "#404552"
+    background: "#ED404552"
     font0: "xos4 Terminus:size=12:antialias=false;2"
 
 
 wallpaper:
-    saved: "/usr/share/backgrounds/Wallpaper.jpg"
+    saved: "/usr/share/backgrounds/kraken.jpg"

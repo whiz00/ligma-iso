@@ -33,6 +33,9 @@ echo "WM is $cur_wm... Launching appropriate bars"
 if [[ $cur_wm == i3 ]]; then  # if i3 launch the i3-bar
   polybar -r --config=$CONF_PATH/config i3-bar &
 
+elif [[ $cur_wm == bspwm ]]; then  # if bspwm launch the bsp-bar
+	polybar -r --config=$CONF_PATH/config bsp-bar &
+	
 else  # otherwise we assume openbox
   polybar -r --config=$CONF_PATH/config openbox-bar &
 

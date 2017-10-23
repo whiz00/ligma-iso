@@ -5,7 +5,7 @@ terminal:
     foreground: "#F6F6F6"
     bold: "#A9A9A9"
     termbackground: "rgba(28,21,28,0.80)"
-    font: "Anonymice Nerd Font 10"
+    font: "Ubuntu Mono Nerd Font 10"
     colors: ["#1C151C", "#96B8D2", "#A4BDD2", "#9EC1D7", "#849AAB", "#B7D1E4", "#D2D9DD", "#666666", "#F6F6F6"]
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
@@ -14,7 +14,7 @@ border:
     all: 0
     top: 0
     bottom: 0
-    color: "#00000000"
+    color: "#1C151C"
 
 
 gap:
@@ -27,7 +27,7 @@ bar:
     width: "100%"
     radius: 0
     bottom: "false"
-    background: "#F6F6F6"
+    background: "#ED1C151C"
     font0: "xos4 Terminus:size=12:antialias=false;2"
 
 

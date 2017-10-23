@@ -22,13 +22,13 @@
     separator_height = 2
     padding = 10
     horizontal_padding = 10
-    frame_color = "{{index .Data.terminal_colors 1}}"
+    frame_color = "{{.Data.border_color}}"
     separator_color = frame
     frame_width = 1
     startup_notification = false
     dmenu = /usr/bin/dmenu -p dunst:
     browser = /usr/bin/firefox
-    icon_position = off
+    icon_position = left
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [shortcuts]
@@ -45,6 +45,6 @@
 
 [urgency_critical]
     background = "{{index .Data.terminal_colors 7}}"
-    foreground = "{{index .Data.terminal_colors 5}}"
-    frame_color = "{{index .Data.terminal_colors 5}}"
+    foreground = "{{index .Data.terminal_colors 1}}"
+    frame_color = "{{index .Data.terminal_colors 1}}"
     timeout = 5

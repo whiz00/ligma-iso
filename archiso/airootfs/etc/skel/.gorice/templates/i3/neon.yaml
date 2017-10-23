@@ -2,11 +2,11 @@
 # names cannot contain '-'
 terminal:
     background: "#231E35"
-    foreground: "#23EFDC"
+    foreground: "#27FCFD"
     bold: "#A9A9A9"
     termbackground: "rgba(35,30,53,0.80)"
-    font: "Anonymice Nerd Font 10"
-    colors: ["#231e35", "#FF5B6C", "#3AF278", "#FFFE5D", "#F203f0", "#8039A0", "#AFDCE4", "#969896", "#F6F6F6"]
+    font: "Ubuntu Mono Nerd Font 10"
+    colors: ["#231e35", "#F20390", "#1CE190", "#FDEE7B", "#27FCFD", "#8039A0", "#AFDCE4", "#969896", "#902049"]
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
 border:
@@ -14,7 +14,7 @@ border:
     all: 0
     top: 0
     bottom: 0
-    color: "#00000000"
+    color: "#27FCFD"
 
 
 gap:
@@ -23,7 +23,7 @@ gap:
 
 
 bar:
-    height: 20
+    height: 22
     width: "100%"
     radius: 0
     bottom: "false"

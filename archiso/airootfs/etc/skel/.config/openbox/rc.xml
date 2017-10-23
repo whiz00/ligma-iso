@@ -39,7 +39,7 @@
                     'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>ArchLabs-Dark</name>
+    <name>gorice</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -125,11 +125,6 @@
       <name>3</name>
       <name>4</name>
       <name>5</name>
-      <name>6</name>
-      <name>7</name>
-      <name>8</name>
-      <name>9</name>
-      <name>10</name>
     </names>
     <popupTime>800</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -233,6 +228,7 @@
     </keybind>
     <keybind key="A-Tab">
       <action name="NextWindow">
+				<allDesktops>yes</allDesktops>
         <raise>yes</raise>
         <finalactions>
           <action name="Focus"/>
@@ -329,7 +325,7 @@
     </keybind>
     <keybind key="A-F1">
       <action name="Execute">
-        <command>rofi-apps</command>
+        <command>~/bin/rofi-gorice</command>
       </action>
     </keybind>
     <keybind key="W-f">

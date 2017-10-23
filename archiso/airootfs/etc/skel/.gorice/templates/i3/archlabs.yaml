@@ -10,15 +10,15 @@ terminal:
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
 border:
-    pixels: 3
+    pixels: 2
     all: 0
     top: 0
-    bottom: 0
-    color: "#00000000"
+    bottom: 2
+    color: "#c0c5ce"
 
 
 gap:
-    inner: 12
+    inner: 15
     outer: 0
 
 
