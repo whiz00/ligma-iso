@@ -28,7 +28,7 @@ bar:
     radius: 12
     bottom: "false"
     background: "#e119043C"
-    font0: "Monospace:size=10:antialias=false;2"
+    font0: "xos4 Terminus:size=10:antialias=false;2"
 
 
 wallpaper:

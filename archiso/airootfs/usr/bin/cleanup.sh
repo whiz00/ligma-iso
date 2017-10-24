@@ -24,7 +24,7 @@ sed -i '189,194d' /etc/skel/.config/openbox/menu.xml
 # enable al-hello after install
 sed -i '/al-hello/ c\
 termite --geometry=650x450 --exec=/usr/bin/al-hello &' /etc/skel/.config/openbox/autostart
-sed -i '/al-panel-chooser/d' /etc/skel/.config/openbox/autostart
+#sed -i '/al-panel-chooser/d' /etc/skel/.config/openbox/autostart
 
 # fix boot messages
 sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/ c\
