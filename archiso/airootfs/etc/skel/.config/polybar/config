@@ -71,7 +71,7 @@ inherit = bar/master
 ; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
 monitor =
 
-modules-left = config bspwm menu
+modules-left = bspwm menu
 modules-center = clock
 modules-right = pkg memory temperature coreuse network volume
 
