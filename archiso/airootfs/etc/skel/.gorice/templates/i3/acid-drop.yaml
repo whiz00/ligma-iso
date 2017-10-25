@@ -4,15 +4,15 @@ terminal:
     background: "#444444"
     foreground: "#EFEFEC"
     bold: "#EFEFEC"
-    termbackground: "rgba(68,68,68,0.95)"
+    termbackground: "rgba(68,68,68,0.80)"
     font: "Ubuntu Mono Nerd Font 10"
     colors: ["#212121", "#D50000", "#00C853", "#00B8D4", "#C6FF00", "#1DE9B6", "#AA00FF", "#BDBDBD", "#EEEEEE"]
     # colors  0=black     1=red     2=green   3=yellow    4=blue    5=purple    6=cyan     7=grey     8=white
 
 border:
     pixels: 2
-    all: 8
-    top: 8
+    all: 0
+    top: 0
     bottom: 0
     color: "#444444"
 
