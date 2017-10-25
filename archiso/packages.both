@@ -209,5 +209,5 @@ pango
 gdk-pixbuf2
 
 #vbox
-al-virtualbox-guest-modules-lts
-virtualbox-guest-utils
+#virtualbox-guest-dkms
+#virtualbox-guest-utils
