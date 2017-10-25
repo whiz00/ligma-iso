@@ -1,36 +1,10 @@
 ;=====================================================
-;     Includes
+;     File Includes
 ;=====================================================
 
 [section/base]
 include-file = /home/liveuser/.config/polybar/master.conf
 include-file = /home/liveuser/.config/polybar/modules.conf
-
-
-;=====================================================
-;     i3 Bars
-;=====================================================
-
-[bar/i3-bar]
-inherit = bar/master
-
-; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
-monitor =
-
-modules-left = i3-workspaces menu
-modules-center = clock
-modules-right = pkg keyboard memory temperature coreuse network volume
-
-; All available modules (some require configuration in modules.conf)
-; redshift github filesystem mpd wired-network wireless-network battery menu volume-bar
-; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
-
-
-;;;;;; Tray is commented out ;;;;;;;;
-;tray-position = center
-;tray-padding = 10
-;tray-background = ${colors.background}
-;tray-offset-x = 20%
 
 
 ;=====================================================
@@ -43,12 +17,66 @@ inherit = bar/master
 ; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
 monitor =
 
-modules-left = window_switch workspaces menu
+modules-left = config window_switch workspaces menu
 modules-center = clock
 modules-right = pkg memory temperature coreuse network volume
 
 ; All available modules (some require configuration in modules.conf)
-; redshift github filesystem mpd wired-network wireless-network battery menu volume-bar
+; redshift github filesystem mpd wired-network wireless-network battery menu volume-bar bspwm
+; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
+
+
+;;;;;; Tray is commented out ;;;;;;;;
+;tray-position = center
+;tray-padding = 10
+;tray-background = ${colors.background}
+;tray-offset-x = 20%
+
+
+
+;=====================================================
+;     i3 Bars
+;=====================================================
+
+[bar/i3-bar]
+inherit = bar/master
+
+; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
+monitor =
+
+modules-left = config i3-workspaces menu
+modules-center = clock
+modules-right = pkg memory temperature coreuse network volume
+
+; All available modules (some require configuration in modules.conf)
+; redshift github filesystem mpd wired-network wireless-network battery menu volume-bar bspwm
+; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
+
+
+;;;;;; Tray is commented out ;;;;;;;;
+;tray-position = center
+;tray-padding = 10
+;tray-background = ${colors.background}
+;tray-offset-x = 20%
+
+
+
+;=====================================================
+;     Bspwm Bars
+;=====================================================
+
+[bar/bsp-bar]
+inherit = bar/master
+
+; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
+monitor =
+
+modules-left = config bspwm menu
+modules-center = clock
+modules-right = pkg memory temperature coreuse network volume
+
+; All available modules (some require configuration in modules.conf)
+; redshift github filesystem mpd wired-network wireless-network battery menu volume-bar bspwm
 ; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
 
 

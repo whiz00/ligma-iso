@@ -1,0 +1,2 @@
+#!/bin/bash
+rofi -show run -lines 3 -eh 2 -width 50 -padding 30  -color-enabled -color-window "{{.Data.terminal_background}}, {{.Data.border_inactive_color}}, {{.Data.terminal_background}}" -color-normal "{{.Data.terminal_background}}, {{index .Data.terminal_colors 7}}, {{.Data.terminal_background}}, {{.Data.bar_trim}}, {{.Data.terminal_background}}" -hide-scrollbar

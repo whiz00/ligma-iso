@@ -65,7 +65,7 @@ conky.config = {
 	own_window_argb_value = 50,
 	own_window_argb_visual = true,
 	own_window_class = 'Conky',
-	own_window_colour = '#000000',
+	own_window_colour = '#2B303B',
 	own_window_hints = 'undecorated,below,above,sticky,skip_taskbar,skip_pager',
 	own_window_transparent = false,
 	own_window_title = 'system_conky',
@@ -102,12 +102,13 @@ ${hr}
 [Ctrl] + Space${alignr}Launcher
 [S]${alignr}Launcher
 [S] + Space${alignr}Menu
-[S] + s${alignr}Skippy
 [S] + t${alignr}Terminal
 [S] + e${alignr}Text Editor
 [S] + f${alignr}File Manager
 [S] + m${alignr}Music Player
 [S] + w${alignr}Web Browser
 [S] + v${alignr}Audio Control
+[S] + s${alignr}Window Switcher
+[S] + Shift + r${alignr}Reload Configs
 [S] + x${alignr}Logout
 ]];

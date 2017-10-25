@@ -1,0 +1,24 @@
+terminal:
+    background: &bg "#232235"
+    colors: [&trim "#23EFDC", "#AFDCE4", "#27FCFD", "#3AF278", "#8039A0", "#F203F0", "#FF5B6C", &fg "#23EFDC"]
+    bold: ["#23EFDC", "#AFDCE4", "#27FCFD", "#3AF278", "#8039A0", "#FFFE5D", "#F203F0", "#FF5B6C"]
+
+
+border:
+    active_color: *fg
+    inactive_color: *bg
+    pixels: 2
+
+gaps:
+    inner: 25
+    outer: 0
+
+bar:
+    bottom: "false"
+    trim: *trim
+
+
+conky: *trim
+background: "/home/smoke/Pictures/neon-city.jpg"
+use_bar: "1"
+use_conky: ""

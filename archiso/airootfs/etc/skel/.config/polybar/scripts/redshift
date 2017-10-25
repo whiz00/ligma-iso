@@ -26,7 +26,7 @@ fi
 
 # OPTIONAL: Append ' ${temp}K' after $icon
 if [[ -z $temp ]]; then
-    echo "%{F#8FA1B3}   $icon   "       # Greyed out (not running)
+    echo "   $icon   "       # Greyed out (not running)
 elif [[ $temp -ge 5000 ]]; then
     echo "%{F#6BA4E7}   $icon   "       # Blue
 elif [[ $temp -ge 4000 ]]; then

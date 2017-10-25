@@ -1,16 +1,20 @@
 # launch compton
 al-compositor --start &
 
+~/.config/setup &
+
 # restore wallpaper
 nitrogen --restore &
 
 # panel
 al-tint2-session &
-$HOME/.config/polybar/scripts/launch.sh &
-
+sleep 1; $HOME/.config/polybar/scripts/launch-polybar &
 
 # Openbox autostart
 ob-autostart -d &
+
+# PolicyKit authentication
+lxpolkit &
 
 # Required for xfce setting to work
 xfsettingsd &
@@ -19,5 +23,5 @@ xfsettingsd &
 sleep 2; al-conky-session &
 
 xdg-user-dirs-gtk-update &
-xdg-autostart GNOME XFCE LXDE XFCE
-#al-hello
+
+#termite --exec=al-hello &

@@ -5,12 +5,7 @@ rm -f /etc/sudoers.d/g_wheel
 rm -f /etc/mkinitcpio-archiso.conf
 rm -f /root/{.automated_script.sh,.zlogin}
 rm -f /etc/polkit-1/rules.d/49-nopasswd_global.rules
-rm -rf /etc/systemd/system/{getty@tty1.service.d,default.target}
-rm -rf /etc/initcpio
-
-# unsure if these are needed
-#rm etc/systemd/system/{pacman-init.service,etc-pacman.d-gnupg.mount}
-#systemctl disable pacman-init.service
+rm -rf /etc/systemd/system/default.target
 
 # remove installers
 rm -rf /etc/calamares
@@ -24,16 +19,16 @@ rm /usr/bin/install-al
 
 # touch up
 sed -i 's/Name=File Manager/Name=Thunar Settings/g' /usr/share/applications/thunar-settings.desktop
-sed -i 's/Install Archlabs/Lock Screen/g' /etc/skel/.config/openbox/menu.xml
-sed -i 's/install-al/i3lock-fancy -p/g' /etc/skel/.config/openbox/menu.xml
+sed -i '189,194d' /etc/skel/.config/openbox/menu.xml
 
 # enable al-hello after install
-sed -i 's/#al-hello/ c\
-sleep 6; termite --geometry=650x450 --exec=/usr/bin/al-hello' /etc/skel/.config/openbox/autostart
+sed -i '/al-hello/ c\
+termite --geometry=650x450 --exec=/usr/bin/al-hello &' /etc/skel/.config/openbox/autostart
+#sed -i '/al-panel-chooser/d' /etc/skel/.config/openbox/autostart
 
 # fix boot messages
-#sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/ c\
-#GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nowatchdog systemd.legacy_systemd_cgroup_controller=true"' /etc/default/grub
+sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/ c\
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nowatchdog systemd.legacy_systemd_cgroup_controller=true"' /etc/default/grub
 
-# remove this script
+# remove script
 rm /usr/bin/cleanup.sh

@@ -8,20 +8,23 @@
 
 # for qt5 apps
 export QT_STYLE_OVERRIDE=GTK+
+XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME
 
 # include sbin in PATH
 if [ -d "/sbin" ] ; then
-    PATH="/sbin:$PATH"
+  PATH="/sbin:$PATH"
 fi
+
 if [ -d "/usr/sbin" ] ; then
-    PATH="/usr/sbin:$PATH"
+  PATH="/usr/sbin:$PATH"
 fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d ${HOME}/bin ] ; then
-    PATH="${HOME}"/bin:"${PATH}"
+  PATH="${HOME}"/bin:"${PATH}"
 fi
 
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-       eval `dbus-launch --sh-syntax --exit-with-session`
+  eval `dbus-launch --sh-syntax --exit-with-session`
 fi

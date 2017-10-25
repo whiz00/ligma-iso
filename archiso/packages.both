@@ -2,8 +2,7 @@
 ##     ARCHLabs      ##
 #######################
 
-# devel
-make
+# base-devel
 fakeroot
 
 # xorg
@@ -26,18 +25,18 @@ xf86-video-vmware
 xf86-input-vmmouse
 xf86-video-voodoo
 xf86-video-openchrome
-xf86-video-sisusb
 
-# Needed packages
+#archiso
 arch-install-scripts
 bash-completion
+btrfs-progs
+b43-fwcutter
 bluez-firmware
 clonezilla
 crda
 dosfstools
 exfat-utils
 f2fs-tools
-fish
 gpm
 gptfdisk
 grub
@@ -46,7 +45,9 @@ hdparm
 jsoncpp
 ipw2100-fw
 ipw2200-fw
+libisoburn
 mtools
+mlocate
 nfs-utils
 nilfs-utils
 ntfs-3g
@@ -56,18 +57,17 @@ parted
 partclone
 partimage
 ppp
+ranger
 refind-efi
 reflector
 rfkill
 rsync
 sdparm
 squashfs-tools
+usb_modeswitch
+vim
 wget
 zd1211-firmware
-
-#vbox
-virtualbox-guest-modules-arch
-virtualbox-guest-utils
 
 # audio & codecs
 alsa-firmware
@@ -84,6 +84,7 @@ pamixer
 pulseaudio
 pulseaudio-alsa
 pavucontrol
+volumeicon
 
 #xfce4
 xfce4-settings
@@ -93,24 +94,21 @@ gufw
 obconf
 oblogout
 openbox
-lxappearance
-lxappearance-obconf
+lxappearance-gtk3
+lxappearance-obconf-gtk3
 
 #lightdm
 lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
+clutter-gtk
+libgee
 
 #network
-wicd
-wicd-gtk
-ntp
-
-#networkmanager
-#networkmanager-dispatcher-ntpd
-#wireless-regdb
-#wireless_tools
-#wpa_supplicant
+networkmanager
+network-manager-applet
+networkmanager-dispatcher-ntpd
+wireless-regdb
+wireless_tools
+wpa_supplicant
 
 #file management
 file-roller
@@ -140,6 +138,7 @@ termite
 #utilities
 compton
 dialog
+dunst
 gksu
 gnome-keyring
 htop
@@ -151,6 +150,7 @@ numlockx
 p7zip
 playerctl
 polkit
+lxsession-gtk3
 sudo
 python2-xdg
 scrot
@@ -163,18 +163,20 @@ zenity
 # fonts and themes
 ttf-roboto
 ttf-ubuntu-font-family
+terminus-font
 gtk-engine-murrine
 gtk-engine-aurora
 
 # archlabs repo
 al-ckbcomp
 al-locale
-al-gtk3-nocsd
 archlabs-ob-autostart
 archlabs-common
+archlabs-greeter
 archlabs-homepage
 archlabs-kickshaw
 archlabs-keyring
+archlabs-networkmanager-dmenu
 archlabs-obkey
 archlabs-opensnap
 archlabs-paranoid
@@ -185,11 +187,26 @@ archlabs-downgrade
 archlabs-neofetch
 archlabs-pacli
 archlabs-polybar
+archlabs-themes
+archlabs-icons
+archlabs-fonts
 archlabs-rofi
 archlabs-skippy-xd
 archlabs-yaourt
 
 # installation
-archlabs-calamares
+qt5ct
+qt5-styleplugins
+os-prober
+calamares
 dmidecode
 mkinitcpio-openswap
+
+# gorice
+python-yaml
+pango
+gdk-pixbuf2
+
+#vbox
+virtualbox-guest-modules-arch
+virtualbox-guest-utils

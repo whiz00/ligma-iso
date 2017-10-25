@@ -1,2 +1,1 @@
-#include "/usr/share/rofi/themes//glue_pro_blue.theme"
-rofi.theme: /usr/share/rofi/themes//archlabsdark.rasi
+rofi.theme: /usr/share/rofi/themes//archlabs-shadow.rasi

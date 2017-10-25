@@ -8,3 +8,4 @@ X-XFCE-CommandsWithParameter=termite "%s"
 Icon=utilities-terminal
 Name=Termite
 X-XFCE-Commands=termite
+GenericName=Termite
