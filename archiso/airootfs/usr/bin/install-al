@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-sudo pkill calamares
-exo-open /usr/share/applications/calamares.desktop

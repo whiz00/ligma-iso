@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=ArchLabs Installer
+StartupNotify=true
+Comment=Installer for ArchLabs
+Categories=Utility;
+Exec=sudo termite --exec=/abif-master/abif
+Icon=/usr/share/icons/hicolor/256x256/apps/al-logo.png

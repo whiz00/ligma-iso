@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=ksuperkey
-Exec=ksuperkey -e 'Super_L=Alt_L|F1'
-Terminal=false
-StartupNotify=false

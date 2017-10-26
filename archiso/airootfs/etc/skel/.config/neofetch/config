@@ -534,7 +534,7 @@ disk_display="off"
 # Default:  'ascii'
 # Values:   'ascii', 'caca', 'catimg', 'jp2a', 'iterm2', 'off', 'tycat', 'w3m'
 # Flag:     --backend
-image_backend="w3m"
+image_backend="ascii"
 
 # Image Source
 #
@@ -547,7 +547,7 @@ image_backend="w3m"
 # NOTE: 'auto' will pick the best image source for whatever image backend is used.
 #       In ascii mode, distro ascii art will be used and in an image mode, your
 #       wallpaper will be used.
-image_source="$HOME/.config/neofetch/archlabs.png"
+#image_source="$HOME/.config/neofetch/archlabs.png"
 
 
 # Ascii Options
@@ -566,7 +566,7 @@ image_source="$HOME/.config/neofetch/archlabs.png"
 #       Change this to 'Lubuntu', 'Xubuntu', 'Ubuntu-GNOME' or 'Ubuntu-Budgie' to use the flavors.
 # NOTE: Arch, Crux and Gentoo have a smaller logo variant.
 #       Change this to 'arch_small', 'crux_small' or 'gentoo_small' to use the small logos.
-#ascii_distro="arch_old"
+ascii_distro="archlabs"
 
 # Ascii Colors
 #

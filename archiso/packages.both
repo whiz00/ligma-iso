@@ -2,12 +2,8 @@
 ##     ARCHLabs      ##
 #######################
 
-# base-devel
-fakeroot
-
 # xorg
 mesa
-xorg-apps
 xorg-server
 xorg-xinit
 xf86-video-amdgpu
@@ -21,17 +17,11 @@ xf86-input-libinput
 xf86-input-mouse
 xf86-video-nouveau
 xf86-video-vesa
-xf86-video-vmware
-xf86-input-vmmouse
-xf86-video-voodoo
 xf86-video-openchrome
 
 #archiso
 arch-install-scripts
-bash-completion
 btrfs-progs
-b43-fwcutter
-bluez-firmware
 clonezilla
 crda
 dosfstools
@@ -42,10 +32,8 @@ gptfdisk
 grub
 grml-zsh-config
 hdparm
-jsoncpp
 ipw2100-fw
 ipw2200-fw
-libisoburn
 mtools
 mlocate
 nfs-utils
@@ -57,15 +45,12 @@ parted
 partclone
 partimage
 ppp
-ranger
 refind-efi
 reflector
 rfkill
 rsync
-sdparm
 squashfs-tools
 usb_modeswitch
-vim
 wget
 zd1211-firmware
 
@@ -73,11 +58,6 @@ zd1211-firmware
 alsa-firmware
 alsa-plugins
 alsa-lib
-ffmpeg2.8
-gst-libav
-gst-plugins-base
-gst-plugins-good
-gstreamer
 libmad
 libmatroska
 pamixer
@@ -86,51 +66,26 @@ pulseaudio-alsa
 pavucontrol
 volumeicon
 
-#xfce4
-xfce4-settings
-gufw
-
 #openbox
 obconf
 oblogout
 openbox
-lxappearance-gtk3
-lxappearance-obconf-gtk3
 
 #lightdm
 lightdm
-clutter-gtk
-libgee
+lightdm-gtk-greeter
 
 #network
 networkmanager
 network-manager-applet
 networkmanager-dispatcher-ntpd
 wireless-regdb
-wireless_tools
 wpa_supplicant
 
-#file management
-file-roller
-gvfs
-gvfs-mtp
-gvfs-nfs
-gvfs-afc
-thunar
-tumbler
-xdg-user-dirs-gtk
-
 #applications
-audacious
-audacious-plugins
-arandr
-conky
-firefox
-mpv
-galculator
+thunar
 geany
 gparted
-gpicview
 gsimplecal
 nitrogen
 termite
@@ -138,75 +93,35 @@ termite
 #utilities
 compton
 dialog
-dunst
 gksu
 gnome-keyring
 htop
-imagemagick
-libmpdclient
 lm_sensors
 lsb-release
 numlockx
 p7zip
 playerctl
 polkit
-lxsession-gtk3
-sudo
 python2-xdg
+sudo
 scrot
 tint2
 unrar
 wmctrl
-w3m
-zenity
-
-# fonts and themes
-ttf-roboto
+xfce4-settings
 ttf-ubuntu-font-family
-terminus-font
-gtk-engine-murrine
-gtk-engine-aurora
+xdg-user-dirs-gtk
 
 # archlabs repo
-al-ckbcomp
-al-locale
-archlabs-ob-autostart
 archlabs-common
-archlabs-greeter
-archlabs-homepage
 archlabs-kickshaw
-archlabs-keyring
 archlabs-networkmanager-dmenu
-archlabs-obkey
-archlabs-opensnap
-archlabs-paranoid
-archlabs-pipemenus
-archlabs-screenlock
-archlabs-wallpapers
-archlabs-downgrade
+archlabs-keyring
 archlabs-neofetch
-archlabs-pacli
-archlabs-polybar
-archlabs-themes
-archlabs-icons
-archlabs-fonts
 archlabs-rofi
-archlabs-skippy-xd
 archlabs-yaourt
 
 # installation
-qt5ct
-qt5-styleplugins
 os-prober
-calamares
-dmidecode
 mkinitcpio-openswap
 
-# gorice
-python-yaml
-pango
-gdk-pixbuf2
-
-#vbox
-virtualbox-guest-modules-arch
-virtualbox-guest-utils

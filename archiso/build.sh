@@ -3,8 +3,8 @@
 set -e -u
 
 iso_name=archlabs
-iso_label="archlabs-$(date +%Y%m)-x86_64"
-iso_version="$(date +%Y-%m)"
+iso_label="archlabs-minimal-x86_64"
+iso_version="minimal"
 install_dir=arch
 work_dir=work
 out_dir=out
@@ -54,7 +54,7 @@ make_pacman_conf() {
 # Base installation, plus needed packages (airootfs)
 make_basefs() {
     setarch ${arch} mkarchiso ${verbose} -w "${work_dir}/${arch}" -C "${work_dir}/pacman.conf" -D "${install_dir}" init
-    setarch ${arch} mkarchiso ${verbose} -w "${work_dir}/${arch}" -C "${work_dir}/pacman.conf" -D "${install_dir}" -p "haveged intel-ucode memtest86+ mkinitcpio-nfs-utils nbd zsh" install
+    setarch ${arch} mkarchiso ${verbose} -w "${work_dir}/${arch}" -C "${work_dir}/pacman.conf" -D "${install_dir}" -p "haveged intel-ucode memtest86+ mkinitcpio-nfs-utils nbd" install
 }
 
 # Additional packages (airootfs)

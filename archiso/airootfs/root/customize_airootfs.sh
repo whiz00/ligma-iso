@@ -4,25 +4,11 @@ set -e -u
 
 # setup locale
 sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/#hi_IN UTF-8/hi_IN UTF-8/g' /etc/locale.gen
-#sed -i 's/#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/#zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/#es_AR.UTF-8 UTF-8/es_AR.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/g' /etc/locale.gen
 
 locale-gen
 
 # reset locale
 sed -i 's/en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/hi_IN UTF-8/#hi_IN UTF-8/g' /etc/locale.gen
-#sed -i 's/fr_FR.UTF-8 UTF-8/#fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/ru_RU.UTF-8 UTF-8/#ru_RU.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/zh_CN.UTF-8 UTF-8/#zh_CN.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/es_AR.UTF-8 UTF-8/#es_AR.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/pt_BR.UTF-8 UTF-8/#pt_BR.UTF-8 UTF-8/g' /etc/locale.gen
-#sed -i 's/de_DE.UTF-8 UTF-8/#de_DE.UTF-8 UTF-8/g' /etc/locale.gen
 
 # timezone
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
@@ -31,12 +17,12 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
 
 # setup root HOME folder
-usermod -s /usr/bin/zsh root
+usermod -s /usr/bin/bash root
 cp -aT /etc/skel/ /root/
 chmod 700 /root
 
 # create liveuser & enable passwordless autologin
-useradd -m -u 500 -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /bin/zsh liveuser
+useradd -m -u 500 -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /bin/bash liveuser
 passwd -d liveuser
 groupadd -r autologin
 gpasswd -a liveuser autologin

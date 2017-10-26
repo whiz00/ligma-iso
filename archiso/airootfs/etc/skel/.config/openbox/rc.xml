@@ -39,7 +39,7 @@
                     'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>gorice</name>
+    <name>ArchLabs</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -54,7 +54,7 @@
     <keepBorder>yes</keepBorder>
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
-      <name>Roboto</name>
+      <name>Ubuntu</name>
       <size>11</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -63,7 +63,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="InactiveWindow">
-      <name>Roboto</name>
+      <name>Ubuntu</name>
       <size>11</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -72,7 +72,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuHeader">
-      <name>Roboto</name>
+      <name>Ubuntu</name>
       <size>11</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -81,7 +81,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuItem">
-      <name>Roboto</name>
+      <name>Ubuntu</name>
       <size>10</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -90,7 +90,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="ActiveOnScreenDisplay">
-      <name>Roboto</name>
+      <name>Ubuntu</name>
       <size>10</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -99,7 +99,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="InactiveOnScreenDisplay">
-      <name>Roboto</name>
+      <name>Ubuntu</name>
       <size>10</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -117,14 +117,10 @@
 
        use obconf if you want to change these without having to log out
        and back in -->
-    <number>5</number>
+    <number>1</number>
     <firstdesk>0</firstdesk>
     <names>
       <name>1</name>
-      <name>2</name>
-      <name>3</name>
-      <name>4</name>
-      <name>5</name>
     </names>
     <popupTime>800</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -323,11 +319,6 @@
         <command>scrot -d 5 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f'</command>
       </action>
     </keybind>
-    <keybind key="A-F1">
-      <action name="Execute">
-        <command>~/bin/rofi-gorice</command>
-      </action>
-    </keybind>
     <keybind key="W-f">
       <action name="Execute">
         <command>exo-open --launch FileManager</command>
@@ -340,17 +331,12 @@
     </keybind>
     <keybind key="W-w">
       <action name="Execute">
-        <command>al-open -web</command>
+        <command>exo-open --launch WebBrowser</command>
       </action>
     </keybind>
     <keybind key="W-e">
       <action name="Execute">
-        <command>al-open -edit</command>
-      </action>
-    </keybind>
-    <keybind key="W-m">
-      <action name="Execute">
-        <command>audacious</command>
+        <command>geany</command>
       </action>
     </keybind>
     <keybind key="W-v">
@@ -368,24 +354,14 @@
         <command>xkill</command>
       </action>
     </keybind>
-    <keybind key="W-s">
-      <action name="Execute">
-        <command>skippy-xd</command>
-      </action>
-    </keybind>
-    <keybind key="C-space">
-      <action name="Execute">
-        <command>rofi-apps</command>
-      </action>
-    </keybind>
     <keybind key="W-space">
       <action name="ShowMenu">
         <menu>root-menu</menu>
       </action>
     </keybind>
-    <keybind key="W-S-r">
+    <keybind key="C-space">
       <action name="Execute">
-        <command>launch-polybar --reload</command>
+        <menu>rofi-apps</menu>
       </action>
     </keybind>
     <keybind key="C-S-BackSpace">
@@ -419,11 +395,6 @@
     </keybind>
     <keybind key="S-W-q">
       <action name="Close"/>
-    </keybind>
-    <keybind key="C-A-m">
-      <action name="Execute">
-        <command>xfce4-settings-manager</command>
-      </action>
     </keybind>
     <keybind key="W-KP_1">
       <action name="UnmaximizeFull"/>
@@ -830,128 +801,6 @@
         <monitor>1</monitor>
       </position>
       <fullscreen>yes</fullscreen>
-    </application>
-    <!--  Set applications to open on a specific desktop  -->
-    <application class="obconf">
-      <focus>yes</focus>
-      <position force="no">
-        <x>center</x>
-        <y>center</y>
-      </position>
-    </application>
-    <application class="tint2conf">
-      <focus>yes</focus>
-      <position force="no">
-        <x>center</x>
-        <y>center</y>
-      </position>
-    </application>
-    <application class="nitrogen">
-      <focus>yes</focus>
-      <position force="no">
-        <x>center</x>
-        <y>center</y>
-      </position>
-    </application>
-    <application class="lollypop">
-      <desktop>1</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="spotify">
-      <desktop>1</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="rythmbox">
-      <desktop>1</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="vlc*">
-      <desktop>1</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="mpv*">
-      <desktop>1</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="audacious">
-      <desktop>1</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="chromium">
-      <desktop>2</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="google-chrome">
-      <desktop>2</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="opera">
-      <desktop>2</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="Firefox">
-      <desktop>2</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="Navigator">
-      <desktop>2</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="pcmanfm">
-      <desktop>3</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="dolphin*">
-      <desktop>3</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="nautilus">
-      <desktop>3</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="Thunar">
-      <desktop>3</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="gimp*">
-      <desktop>4</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="inkscape">
-      <desktop>4</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="pinta">
-      <desktop>4</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="gpick">
-      <desktop>4</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="gcolor2">
-      <desktop>4</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="mousepad">
-      <desktop>5</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="Geany">
-      <desktop>5</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="subl3">
-      <desktop>5</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="atom">
-      <desktop>5</desktop>
-      <focus>yes</focus>
-    </application>
-    <application class="mousepad">
-      <desktop>5</desktop>
-      <focus>yes</focus>
     </application>
   </applications>
 </openbox_config>

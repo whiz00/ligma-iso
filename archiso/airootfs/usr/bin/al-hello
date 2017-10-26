@@ -1,0 +1,1022 @@
+#!/usr/bin/env bash
+
+## written by Nathaniel Maia for ArchLabs  <natemaia10@gmail.com>
+##
+## any enquiries https://sourceforge.net/projects/archlabs-linux-minimo/
+
+
+# set box size
+R=2      # Row
+C=6      # Column
+H=12     # Height
+W=81     # Width
+col=1    # Color (red)
+
+# set some paths
+BIN="/usr/bin"
+MENU="$HOME/.config/openbox/menu.xml"
+RC_PATH="$HOME/.config/openbox/rc.xml"
+AUTOSTART="$HOME/.config/openbox/autostart"
+HELPERS="$HOME/.config/xfce4/helpers.rc"
+MIMEAPP="$HOME/.config/mimeapps.list"
+CONF_PATH="$HOME/.config"
+
+# determine if using nvidia graphics
+NV=$(lspci | grep -i "nvidia")
+
+# determine whether virtual environment
+VM=$(dmesg | grep -i "hypervisor")
+
+# string comparison case insesitive matching
+yes="y"
+no="n"
+
+# colours
+b='\E[1;34m'
+red='\E[1;31m'
+g='\E[1;32m'
+y='\E[1;33m'
+reg='\E[0m'
+
+# declare arrays for installation
+pacPackages+=(base-devel)
+
+# Remove itself from autostart
+if [ -e $HOME/.config/openbox/autostart ]; then
+  sed -i '/al-hello/d' $HOME/.config/openbox/autostart
+  sed -i '/al-panel-chooser/d' $HOME/.config/openbox/autostart
+fi
+
+
+
+###
+###  Functions
+###
+
+
+draw_box(){
+
+    #=============#
+    HORZ="-"
+    VERT="|"
+    CORNER_CHAR="+"
+
+    MINARGS=4
+    E_BADARGS=65
+    #=============#
+
+    if [ $# -lt "$MINARGS" ]; then  # If args are less than 4, exit.
+        exit $E_BADARGS
+    fi
+    # Looking for non digit chars in arguments.
+    if echo $@ | tr -d [:blank:] | tr -d [:digit:] | grep . &> /dev/null; then
+       exit $E_BADARGS
+    fi
+
+    BOX_HEIGHT=`expr $3 - 1`   #  -1 correction needed because angle char "+"
+    BOX_WIDTH=`expr $4 - 1`    #+ is a part of both box height and width.
+    T_ROWS=`tput lines`        #  Define current terminal dimension
+    T_COLS=`tput cols`         #+ in rows and columns.
+
+
+    if [ $1 -lt 1 ] || [ $1 -gt $T_ROWS ]; then    #  Start checking if arguments
+       exit $E_BADARGS                             #+ are correct.
+    fi
+    if [ $2 -lt 1 ] || [ $2 -gt $T_COLS ]; then
+       exit $E_BADARGS
+    fi
+    if [ `expr $1 + $BOX_HEIGHT + 1` -gt $T_ROWS ]; then
+       exit $E_BADARGS
+    fi
+    if [ `expr $2 + $BOX_WIDTH + 1` -gt $T_COLS ]; then
+       exit $E_BADARGS
+    fi
+    if [ $3 -lt 1 ] || [ $4 -lt 1 ]; then
+       exit $E_BADARGS
+    fi
+
+
+    plot_char() {
+       echo -e "\E[${1};${2}H"$3
+
+    }
+
+    echo -ne "\E[3${5}m"               # Set box frame color, if defined.
+
+    # draw the box
+    count=1                                         #  Draw vertical lines
+    for (( r=$1; count<=$BOX_HEIGHT; r++)); do
+      plot_char $r $2 $VERT
+      let count=count+1
+    done
+
+    count=1
+    c=`expr $2 + $BOX_WIDTH`
+    for (( r=$1; count<=$BOX_HEIGHT; r++)); do
+      plot_char $r $c $VERT
+      let count=count+1
+    done
+
+    count=1                                        #  Draw horizontal lines
+    for (( c=$2; count<=$BOX_WIDTH; c++)); do
+      plot_char $1 $c $HORZ
+      let count=count+1
+    done
+
+    count=1
+    r=`expr $1 + $BOX_HEIGHT`
+    for (( c=$2; count<=$BOX_WIDTH; c++)); do
+      plot_char $r $c $HORZ
+      let count=count+1
+    done
+
+    plot_char $1 $2 $CORNER_CHAR                   # Draw box angles.
+    plot_char $1 `expr $2 + $BOX_WIDTH` $CORNER_CHAR
+    plot_char `expr $1 + $BOX_HEIGHT` $2 $CORNER_CHAR
+    plot_char `expr $1 + $BOX_HEIGHT` `expr $2 + $BOX_WIDTH` $CORNER_CHAR
+
+    tput sgr0 # restore colours
+
+}
+
+
+
+
+setQuestion() {
+
+    # From values passed setQuestion creates dialog in a decent structure
+    #
+    # If the array only has one value it will be a true or false option
+    #
+    # $1 first arg: should be the user input name
+    #
+    # $2 second arg: The visible name to the user this will only be seen here and has no other effect
+
+    clear
+    if [[ ${#get[@]} -eq 6 ]]; then
+      printf "\n  $2
+      \n  1${red})${reg}${get[0]}  2${red})${reg}${get[1]}  3${red})${reg}${get[2]}  4${red})${reg}${get[3]}  5${red})${reg}${get[4]}  6${red})${reg}${get[5]}\n\n\n: "
+    elif [[ ${#get[@]} -eq 5 ]]; then
+      printf "\n  $2
+      \n  1${red})${reg}${get[0]}  2${red})${reg}${get[1]}  3${red})${reg}${get[2]}  4${red})${reg}${get[3]}  5${red})${reg}${get[4]}\n\n\n: "
+    elif [[ ${#get[@]} -eq 4 ]]; then
+      printf "\n  $2
+      \n  1${red})${reg}${get[0]}  2${red})${reg}${get[1]}  3${red})${reg}${get[2]}  4${red})${reg}${get[3]}\n\n\n: "
+    elif [[ ${#get[@]} -eq 3 ]]; then
+      printf "\n  $2
+      \n  1${red})${reg}${get[0]}  2${red})${reg}${get[1]}  3${red})${reg}${get[2]}\n\n\n: "
+    elif [[ ${#get[@]} -eq 2 ]]; then
+      printf "\n  $2
+      \n  1${red})${reg}${get[0]}  2${red})${reg}${get[1]}\n\n\n: "
+    else
+      printf "\n  $2?  [y/N]: "
+    fi
+
+    read -r $1  # read input as the name of choice
+    unset get
+
+}
+
+
+
+###
+###  End Functions
+###
+
+
+# my thanks to the bunsenlabs guys for this nice little hello art
+clear; echo -e "\n\n\n${b}                               _   _ _____ _     _     ___
+                              | | | | ____| |   | |   / _ \\
+                              | |_| |  _| | |   | |  | | | |
+                              |  _  | |___| |___| |__| |_| |
+                              |_| |_|_____|_____|_____\___/ \n${reg}"
+echo -e "                          Hi${b} ${USER} ${reg}, Welcome to ArchLabs Linux! ${b}:)${reg}\n"
+draw_box $R $C $H $W $col; sleep 1; read -n1 -rsp $'\n      Press Any Key to Continue...'
+clear
+
+
+
+# Loop until network connection is solid
+while ! [[ $net >/dev/null ]]; do
+  net=$(ping -c1 8.8.8.8 2>&1)
+  echo -e "${r}Please Connect to a Network Before Continuing${reg}"
+  clear; sleep 1
+done
+
+
+
+setQuestion upd "Would you like to update the system & mirrorlist (recommended)"
+if ! [ "${upd,,}" = "${no,,}" ]; then
+  clear; echo -e "\nMirrorlist backed up to /etc/pacman.d/mirrorlist.backup"
+  sleep 1; sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+  sudo reflector --score 120 --fastest 50 --sort rate --save /etc/pacman.d/mirrorlist --verbose
+  clear; sudo pacman -Syyu --noconfirm
+  clear; echo -e "\n  You can refresh the mirrorlist anytime with the alias ${red}upmirrors${reg}\n"
+  sleep 1; read -n1 -rsp $'\n  Press Any Key to Continue...'
+fi
+
+
+
+# if not a vm remove virtual utils
+if [ -z "${VM}" ]; then
+  clear; echo -e "${g}Not running in a virtual environment.${reg}\nRemoving Virtualbox Guest Modules & Utils"
+  sleep 1
+  if [ -e /etc/xdg/autostart/vboxclient.desktop ]; then
+    sudo rm -f /etc/xdg/autostart/vboxclient.desktop
+  fi
+
+  if (pacman -Q al-virtualbox-guest-modules-lts > /dev/null 2>&1) ; then
+    removePackages+=(al-virtualbox-guest-modules-lts virtualbox-guest-utils)
+  elif (pacman -Q virtualbox-guest-modules-arch > /dev/null 2>&1) ; then
+    removePackages+=(virtualbox-guest-utils virtualbox-guest-modules-arch)
+  elif (pacman -Q virtualbox-guest-dkms > /dev/null 2>&1) ; then
+    removePackages+=(virtualbox-guest-utils virtualbox-guest-dkms)
+  else
+    clear; echo -e "\nNo virtualbox modules installed"
+  fi
+fi
+
+
+# Swapfile
+if free | awk '/^Swap:/ {exit !$2}'; then
+  clear; echo -e "\n${g}Swap space found on disk... No setup needed${reg}"
+  sleep 1.5
+else
+  setQuestion swp "Would you like to setup a swapfile? (required for suspend or sleep)"
+  if [ "${swp,,}" = "${yes,,}" ]; then
+    setQuestion cswp "Set a custom size? (defaults to size of system RAM)"
+    if [ "${cswp,,}" = "${yes,,}" ]; then
+      setQuestion size "Enter the size of swap wanted eg. [8192M] or [8G] for an 8gb system\n
+      \n  M = Mebibytes, G = Gibibytes (size of system RAM or greater required for sleep/suspend)"
+    fi
+  fi
+fi
+
+
+# Nvidia Drivers
+if ! [ -z "${NV}" ]; then
+  setQuestion nvd "${g}Nvidia Graphics Detected.${reg}\n\n  Install drivers"
+fi
+
+
+# window manager and session
+setQuestion desktop "Choose Additional Window Managers or Desktop Environments"
+if [ "${desktop,,}" = "${yes,,}" ]; then
+  get=(XFCE i3-gaps Bspwm Awesome)
+  setQuestion wm "Available Window Managers & Desktop Environments"
+  if [[ $wm == *1* ]] || [[ $wm == *2* ]] || [[ $wm == *3* ]] || [[ $wm == *4* ]]; then
+    if [[ $wm == *1* ]]; then
+      setQuestion xfses "Want XFCE to be your login session"
+    fi
+    if [[ $wm == *2* ]]; then
+      if ! [ "${xfses,,}" = "${yes,,}" ]; then
+        setQuestion i3ses "Want i3 to be your login session"
+      fi
+    fi
+    if [[ $wm == *3* ]]; then
+      if ! [ "${xfses,,}" = "${yes,,}" ] || [ "${i3ses,,}" = "${yes,,}" ]; then
+        setQuestion bspses "Want Bspwm to be your login session"
+      fi
+    fi
+  fi
+fi
+
+get=(Plank Docky Cairo-dock)
+setQuestion dock Docks
+
+setQuestion defaults "Select Applications to Install"
+if ! [ "${defaults,,}" = "${no,,}" ]; then
+
+  clear; echo -e "\n  During the following you will be asked to pick applications you like,
+  just enter the corresponding number of the application(s) you want installed
+  (${red}any combination of available apps can be picked${reg})"
+  sleep 2
+  read -n1 -rsp $'\n\n  Press Any Key to Continue...'
+
+
+  get=(Chrome Chromium Opera)
+  setQuestion bwsr "Web Browsers (Firefox is default)"
+  if [[ $bwsr == *1* ]] || [[ $bwsr == *2* ]] || [[ $bwsr == *3* ]]; then
+    if [[ $bwsr == *1* ]] || [[ $bwsr == *2* ]]; then
+      setQuestion tlk "Install google talk plugin"
+    fi
+    setQuestion remove_firefox "Uninstall Firefox"
+    if ! [[ $bwsr == "1" ]] || [ "${remove_firefox,,}" = "${no,,}" ]; then
+      setQuestion flsh "Install flash plugin"
+    fi
+    clear; echo -e "\n  ArchLabs provides a local homepage ${b}~/.ArchLabs-homepage/index.html${reg}
+    \n  This can be opened with any browser and set as the homepage if you like\n\n\n"
+    read -n1 -rsp $'  Press Any Key to continue...\n'
+  else
+    setQuestion flsh "Install flash plugin"
+  fi
+
+
+  if ! [[ $wm == *1* ]]; then
+    get=(Atom Sublime Mousepad)
+    setQuestion edit "Text Editors (Geany is default)"
+  else
+    get=(Atom Sublime)
+    setQuestion edit "Text Editors (Geany & Mousepad are default for XFCE)"
+  fi
+  if [[ $edit == *1* ]] || [[ $edit == *2* ]] || [[ $edit == *3* ]]; then
+    setQuestion redit "Uninstall Geany"
+  fi
+
+
+
+  if ! [[ $wm == *1* ]]; then
+    get=(Tilix Terminator Urxvt Tilda XFCE4-terminal)
+    setQuestion term "Terminal Emulators (Termite is default)"
+  else
+    get=(Tilix Terminator Urxvt Tilda)
+    setQuestion term "Terminal Emulators (Termite & XFCE4 Terminal are default)"
+  fi
+  if [[ $term == *3* ]]; then
+    clear; echo -e "\n  You can copy paste in urxvt with ${b}[Alt + c] [Alt + v]${reg}\n\n\n"
+    read -n1 -rsp $'  Press Any Key to continue...\n'
+  fi
+
+
+  get=(Spotify Nicotine+ Lollypop Rythmbox Clementine)
+  setQuestion musc "Music Players (Audacious is the default)"
+  if [[ $musc == *3* ]] || [[ $musc == *4* ]] || [[ $musc == *5* ]]; then
+    setQuestion rmusc "Uninstall Audacious"
+  fi
+
+
+  setQuestion vlc "MPV is ArchLabs Default Video Player, install VLC instead? (120M)"
+
+
+  get=(PCmanFM Nautilus Nemo)
+  setQuestion file "File Managers (Thunar is default)"
+  if ! [[ $wm == *1* ]]; then
+    if [[ $file == *1* ]] || [[ $file == *2* ]] || [[ $file == *3* ]]; then
+      setQuestion rmfile "Uninstall Thunar"
+    fi
+  fi
+
+  get=(SSR OBS Guvcview Peek)
+  setQuestion cap "Screen Capture"
+
+  get=(Kdenlive Openshot Lightworks)
+  setQuestion vid "Video Editors"
+
+  get=(Gimp Inkscape Krita Pinta)
+  setQuestion img "Image Editors"
+
+  get=(Libre-Office Abiword Caligra)
+  setQuestion off "Office Suites"
+
+  get=(Etcher Mintstick Unetbootin Etcher-cli)
+  setQuestion usb "USB Burners"
+
+  get=(Thunderbird Geary Evolution Mutt)
+  setQuestion mail "Mail Clients"
+
+  get=(Hexchat Pidgin Weechat Irssi)
+  setQuestion irc "Chat and IRC"
+
+  get=(Deluge Transmission qBittorrent)
+  setQuestion tor "Torrent Clients"
+
+  get=(Gpick Gcolor2)
+  setQuestion pick "Color Tools"
+
+  get=(MPD Cava S-Tui)
+  setQuestion ter "Additional Terminal Apps"
+
+  # if not using xfce
+  if ! [[ $wm == *1* ]]; then
+    get=(XFburn Simpleburn K3B)
+    setQuestion brn "Disc Burners"
+    setQuestion notify "XFCE notification daemon"
+    setQuestion pwr "XFCE Power Manager"
+    setQuestion pac "Pamac Package Manager (Default is Pacli)"
+  fi
+
+  setQuestion gnm "Gnome Disks & System Monitor"
+  setQuestion sch "Catfish File Search"
+  setQuestion steam "Steam"
+  setQuestion dbox "DropBox"
+  setQuestion fnt "Additional Favorite Font Families"
+  setQuestion nfnt "NerdFonts Complete (260M)"
+  setQuestion omox "Oomox for making GTK themes"
+
+
+fi
+# end of default app selection
+
+
+  clear; echo -e "${g}#######################################################################################
+#######               Setting up Menu Switcher & Obmenu Generator               #######
+#######################################################################################${reg}"
+sleep 1
+  # Setup menu generator and switcher scripts
+if ! (pacman -Q obmenu-generator perl-data-dump gtk2-perl perl-linux-desktopfiles) > /dev/null 2>&1; then
+  aurPackages+=(obmenu-generator perl-data-dump gtk2-perl perl-linux-desktopfiles)
+fi
+if ! (grep "switchmenu" $MENU) > /dev/null 2>&1; then
+  sed -i '/al-kb-pipemenu/ a\
+    <item label="Switch Menu">\
+      <action name="Execute">\
+        <command>switchmenu -dynamic</command>\
+      </action>\
+    </item>' $MENU
+fi
+
+
+clear; echo -e "${g}#######################################################################################
+#######                    Starting Application Installation                    #######
+#######################################################################################${reg}"
+sleep 1; clear
+## Start default app install
+if ! [ "${defaults,,}" = "${no,,}" ]; then
+
+  # Chat and IRC
+  if [[ $irc == *1* ]] || [[ $irc == *2* ]] || [[ $irc == *3* ]] || [[ $irc == *4* ]]; then
+    if [[ $irc == *1* ]]; then
+      pacPackages+=(hexchat)
+    fi
+    if [[ $irc == *2* ]]; then
+      pacPackages+=(pidgin)
+    fi
+    if [[ $irc == *3* ]]; then
+      pacPackages+=(weechat)
+    fi
+    if [[ $irc == *4* ]]; then
+      pacPackages+=(irssi)
+    fi
+  fi
+
+
+  ## Browser
+  if [[ $bwsr == *1* ]] || [[ $bwsr == *2* ]] || [[ $bwsr == *3* ]]; then
+    if [[ $bwsr == *1* ]]; then
+      echo -e '[Desktop Entry]\nNoDisplay=true\nVersion=1.0\nEncoding=UTF-8\nType=X-XFCE-Helper\nX-XFCE-Category=WebBrowser\nX-XFCE-CommandsWithParameter=google-chrome-stable "%s"\nIcon=google-chrome\nName=Google Chrome\nX-XFCE-Commands=google-chrome-stable' > $HOME/.local/share/xfce4/helpers/custom-WebBrowser.desktop
+      if [ -e "$HELPERS $CONF_PATH/xfce4/al-xfce-configs/helpers.rc" ]; then
+        sed -i 's/firefox/custom-WebBrowser/g' $HELPERS $CONF_PATH/xfce4/al-xfce-configs/helpers.rc
+      fi
+      if [ "${tlk,,}" = "${yes,,}" ]; then
+        aurPackages+=(google-chrome google-talkplugin)
+      else
+        aurPackages+=(google-chrome)
+      fi
+    fi
+    if [[ $bwsr == *2* ]]; then
+      pacPackages+=(chromium)
+      if [ -e "$HELPERS $CONF_PATH/xfce4/al-xfce-configs/helpers.rc" ]; then
+        sed -i 's/firefox/chromium/g' $HELPERS $CONF_PATH/xfce4/al-xfce-configs/helpers.rc
+      fi
+    fi
+    if [[ $bwsr == *3* ]]; then
+      pacPackages+=(opera)
+      if [ -e "$HELPERS $CONF_PATH/xfce4/al-xfce-configs/helpers.rc" ]; then
+        sed -i 's/firefox/opera/g' $HELPERS $CONF_PATH/xfce4/al-xfce-configs/helpers.rc
+      fi
+    fi
+    if [ "${remove_firefox,,}" = "${yes,,}" ]; then
+      removePackages+=(firefox)
+      rm -rf $HOME/.mozilla
+    fi
+  fi
+  # flash
+  if [ "${flsh,,}" = "${yes,,}" ]; then
+    pacPackages+=(flashplugin)
+  fi
+
+
+
+  # text editors
+  if [[ $edit == *1* ]] || [[ $edit == *2* ]] || [[ $edit == *3* ]]; then
+    if [[ $edit == *1* ]]; then
+      pacPackages+=(atom)
+      sed -i 's/geany/atom/g' $MIMEAPP $MENU $RC_PATH
+      sudo sed -i 's/TEXT_EDITOR="geany"/TEXT_EDITOR="atom"/g' /usr/bin/al-open
+    fi
+    if [[ $edit == *2* ]]; then
+      aurPackages+=(sublime-text-dev)
+      sed -i 's/geany/sublime_text_3/g' $MIMEAPP
+      sed -i 's/geany/subl3/g' $RC_PATH $MENU
+      sudo sed -i 's/TEXT_EDITOR="geany"/TEXT_EDITOR="subl3"/g' /usr/bin/al-open
+    fi
+    if [[ $edit == *3* ]]; then
+      if ! [[ $wm == *1* ]]; then
+        pacPackages+=(mousepad)
+        sed -i 's/geany/mousepad/g' $MIMEAPP $MENU $RC_PATH
+        sudo sed -i 's/TEXT_EDITOR="geany"/TEXT_EDITOR="mousepad"/g' /usr/bin/al-open
+      fi
+    fi
+    if [ "${redit,,}" = "${yes,,}" ]; then
+      removePackages+=(geany)
+      rm -rf $CONF_PATH/geany
+    fi
+  fi
+
+
+
+  # terminal emulators
+  if [[ $term == *1* ]] || [[ $term == *2* ]] || [[ $term == *3* ]] || [[ $term == *4* ]] || [[ $term == *5* ]]; then
+    if [[ $term == *1* ]]; then
+      aurPackages+=(tilix)
+      sed -i 's/Termite/Tilix/g' $HOME/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
+      sed -i 's/termite/tilix/g' $HOME/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
+    fi
+    if [[ $term == *2* ]]; then
+      pacPackages+=(terminator)
+      sed -i 's/custom-TerminalEmulator/terminator/g' $HELPERS
+    fi
+    if [[ $term == *3* ]]; then
+      pacPackages+=(rxvt-unicode urxvt-perls xclip)
+      sed -i 's/custom-TerminalEmulator/urxvt/g' $HELPERS
+      if ! (grep "xclip" $AUTOSTART) > /dev/null 2>&1; then
+        echo 'sleep 3; xclip &' >> $AUTOSTART
+      fi
+    fi
+    if [[ $term == *4* ]]; then
+      pacPackages+=(tilda)
+      sed -i 's/Termite/Tilda/g' $HOME/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
+      sed -i 's/termite/tilda/g' $HOME/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop
+    fi
+    if ! [[ $wm == *1* ]] && [[ $term == *5* ]]; then
+      pacPackages+=(xfce4-terminal)
+      sed -i 's/custom-TerminalEmulator/xfce4-terminal/g' $HELPERS
+    fi
+  fi
+
+
+
+  # file manager
+  if [[ $file == *1* ]] || [[ $file == *2* ]] || [[ $file == *3* ]]; then
+    if [[ $file == *1* ]]; then
+      pacPackages+=(pcmanfm)
+      sed -i 's/Thunar-folder-handler/pcmanfm/g' $MIMEAPP
+      sed -i 's/Thunar/pcmanfm/g' $HELPERS
+    fi
+    if [[ $file == *2* ]]; then
+      pacPackages+=(nautilus nautilus-open-terminal)
+      sed -i 's/Thunar-folder-handler/org.gnome.Nautilus/g' $MIMEAPP
+      sed -i 's/Thunar/nautilus/g' $HELPERS
+    fi
+    if [[ $file == *3* ]]; then
+      pacPackages+=(nemo nemo-fileroller nemo-preview nemo-share)
+      gsettings set org.nemo.desktop show-desktop-icons false
+      gsettings set org.cinnamon.desktop.default-applications.terminal exec termite
+      sed -i 's/Thunar-folder-handler/org.gnome.Nautilus/g' $MIMEAPP
+      sed -i 's/Thunar/nemo/g' $HELPERS
+    fi
+    if ! [[ $wm == *1* ]]; then
+      if [ "${rmfile,,}" = "${yes,,}" ]; then
+        removePackages+=(thunar)
+        rm -rf $CONF_PATH/Thunar
+        sed -i '/thunar/d' $AUTOSTART
+      fi
+    fi
+  fi
+
+
+
+
+  if ! [[ $wm == *1* ]]; then
+
+    if [[ $brn == *1* ]] || [[ $brn == *2* ]] || [[ $brn == *3* ]]; then
+      if [[ $brn == *1* ]]; then
+        pacPackages+=(xfburn)
+      fi
+      if [[ $brn == *2* ]]; then
+        aurPackages+=(simpleburn)
+      fi
+      if [[ $brn == *3* ]]; then
+        pacPackages+=(k3b)
+      fi
+    fi
+
+
+    # power manager
+    if [ "${pwr,,}" = "${yes,,}" ]; then
+      pacPackages+=(xfce4-power-manager)
+      if ! (grep "power-manager" $AUTOSTART) > /dev/null 2>&1; then
+        echo "xfce4-power-manager &" >> $AUTOSTART
+      fi
+    fi
+
+
+    # notifications
+    if [ "${notify,,}" = "${yes,,}" ]; then
+      pacPackages+=(xfce4-notifyd)
+      if ! (grep "notifyd" $AUTOSTART) > /dev/null 2>&1; then
+        echo "xfce4-notifyd &" >> $AUTOSTART
+      fi
+    fi
+
+
+    # pamac & polkit
+    if [ "${pac,,}" = "${yes,,}" ]; then
+      aurPackages+=(pamac-aur)
+      if (grep "pacli" $MENU) > /dev/null 2>&1; then
+        sed -i 's/termite --exec=pacli/pamac-manager/g' $MENU
+      fi
+      if ! (grep "pamac-tray" $AUTOSTART) > /dev/null 2>&1; then
+        echo  "sleep 2; pamac-tray &" >> $AUTOSTART
+      fi
+    fi
+
+  fi
+
+
+
+  # usb image writers
+  if [[ $usb == *1* ]] || [[ $usb == *2* ]] || [[ $usb == *3* ]] || [[ $usb == *4* ]]; then
+    if [[ $usb == *1* ]]; then
+      aurPackages+=(etcher)
+    fi
+    if [[ $usb == *2* ]]; then
+      aurPackages+=(mintstick-git)
+    fi
+    if [[ $usb == *3* ]]; then
+      pacPackages+=(unetbootin)
+    fi
+    if [[ $usb = *4* ]]; then
+      aurPackages+=(etcher-cli)
+    fi
+  fi
+
+
+
+  # music
+  if [[ $musc == *1* ]] || [[ $musc == *2* ]] || [[ $musc == *3* ]] || [[ $musc == *4* ]] || [[ $musc == *5* ]]; then
+    if [[ $musc == *1* ]]; then
+      aurPackages+=(spotify)
+    fi
+    if [[ $musc == *2* ]]; then
+      aurPackages+=(nicotine+)
+    fi
+    if [[ $musc == *3* ]]; then
+      aurPackages+=(lollypop)
+      sed -i 's/audacious/lollypop/g' $MENU $RC_PATH
+      sudo sed -i 's/MUSIC_PLAYER="audacious"/MUSIC_PLAYER="lollypop"/g' /usr/bin/al-open
+    fi
+    if [[ $musc == *4* ]]; then
+      aurPackages+=(rythmbox)
+      sed -i 's/audacious/rythmbox/g' $MENU $RC_PATH
+      sudo sed -i 's/MUSIC_PLAYER="audacious"/MUSIC_PLAYER="rythmbox"/g' /usr/bin/al-open
+    fi
+    if [[ $musc == *5* ]]; then
+      pacPackages+=(clementine qt5ct qt5-styleplugins)
+      sed -i 's/audacious/clementine/g' $MENU $RC_PATH
+      sudo sed -i 's/MUSIC_PLAYER="audacious"/MUSIC_PLAYER="clementine"/g' /usr/bin/al-open
+    fi
+    if [ "${rmusc,,}" = "${yes,,}" ]; then
+      removePackages+=(audacious audacious-plugins)
+    fi
+  fi
+
+
+  # vlc
+  if [ "${vlc,,}" = "${yes,,}" ]; then
+    pacPackages+=(qt4 vlc)
+    removePackages+=(mpv)
+    sed -i 's/mpv --player-operation-mode=pseudo-gui/vlc/g' $MENU
+  else
+    pacPackages+=(a52dec autofs faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis libxv wavpack x264 libdvdcss dvd+rw-tools dvdauthor dvgrab)
+  fi
+
+
+  # image editor
+  if [[ $img == *1* ]] || [[ $img == *2* ]] || [[ $img == *3* ]] || [[ $img == *4* ]]; then
+    if [[ $img == *1* ]]; then
+      pacPackages+=(gimp)
+    fi
+    if [[ $img == *2* ]]; then
+      pacPackages+=(gimp)
+      sudo pacman -S inkscape --noconfirm --needed
+    fi
+    if [[ $img == *3* ]]; then
+      pacPackages+=(krita)
+    fi
+    if [[ $img == *4* ]]; then
+      pacPackages+=(pinta)
+    fi
+  fi
+
+
+  # screen capture
+  if [[ $cap == *1* ]] || [[ $cap == *2* ]] || [[ $cap == *3* ]]; then
+    if [[ $cap == *1* ]]; then
+      pacPackages+=(simplescreenrecorder)
+    fi
+    if [[ $cap == *2* ]]; then
+      pacPackages+=(obs-studio)
+    fi
+    if [[ $cap == *3* ]]; then
+      pacPackages+=(guvcview)
+    fi
+    if [[ $cap == *4* ]]; then
+      aurPackages+=(peek)
+    fi
+  fi
+
+
+  # video editor
+  if [[ $vid == *1* ]] || [[ $vid == *2* ]] || [[ $vid == *3* ]]; then
+    if [[ $vid == *1* ]]; then
+      pacPackages+=(kdenlive kdebase-runtime dvdauthor frei0r-plugins breeze breeze-icons)
+    fi
+    if [[ $vid == *2* ]]; then
+      pacPackages+=(openshot)
+    fi
+    if [[ $vid == *3* ]]; then
+      aurPackages+=(lwks)
+    fi
+  fi
+
+
+  # office
+  if [[ $off == *1* ]] || [[ $off == *2* ]] || [[ $off == *3* ]]; then
+    if [[ $off == *1* ]]; then
+      pacPackages+=(libreoffice-fresh)
+    fi
+    if [[ $off == *2* ]]; then
+      pacPackages+=(abiword)
+    fi
+    if [[ $off == *3* ]]; then
+      pacPackages+=(calligra)
+    fi
+  fi
+
+
+  # mail client
+  if [[ $mail == *1* ]] || [[ $mail == *2* ]] || [[ $mail == *3* ]] || [[ $mail == *4* ]]; then
+    if [[ $mail == *1* ]]; then
+      pacPackages+=(thunderbird)
+      if ! (grep "MailReader" $HELPERS) > /dev/null 2>&1; then
+        echo "MailReader=thunderbird" >> $HELPERS
+      fi
+    fi
+    if [[ $mail == *2* ]]; then
+      pacPackages+=(geary)
+      if ! (grep "MailReader" $HELPERS) > /dev/null 2>&1; then
+        echo "MailReader=geary" >> $HELPERS
+      fi
+    fi
+    if [[ $mail == *3* ]]; then
+      pacPackages+=(evolution)
+      if ! (grep "MailReader" $HELPERS) > /dev/null 2>&1; then
+        echo "MailReader=evolution" >> $HELPERS
+      fi
+    fi
+    if [[ $mail == *4* ]]; then
+      pacPackages+=(mutt)
+    fi
+  fi
+
+
+  # torrent client
+  if [[ $tor == *1* ]] || [[ $tor == *2* ]] || [[ $tor == *3* ]]; then
+    if [[ $tor == *1* ]]; then
+      pacPackages+=(deluge)
+    fi
+    if [[ $tor == *2* ]]; then
+      pacPackages+=(transmission-gtk)
+    fi
+    if [[ $tor == *3* ]]; then
+      pacPackages+=(qbittorrent)
+    fi
+  fi
+
+
+  # color picker
+  if [[ $pick == *1* ]] || [[ $pick == *2* ]]; then
+    if [[ $pick == *1* ]]; then
+      pacPackages+=(gpick)
+    fi
+    if [[ $pick == *2* ]]; then
+      pacPackages+=(gcolor2)
+    fi
+  fi
+
+
+  # dropbox
+  if [ "${dbox,,}" = "${yes,,}" ]; then
+    aurPackages+=(dropbox)
+  fi
+
+
+  # steam
+  if [ "${steam,,}" = "${yes,,}" ]; then
+    pacPackages+=(steam steam-native-runtime)
+    aurPackages+=(ttf-ms-fonts)
+    if ! (grep "steam" $AUTOSTART) > /dev/null 2>&1; then
+      echo "sleep 2; steam -silent &" >> $AUTOSTART
+    fi
+  fi
+
+
+  # terminal apps
+  if [[ $ter == *1* ]] || [[ $ter == *2* ]] || [[ $ter == *3* ]]; then
+    if [[ $ter == *1* ]]; then
+      pacPackages+=(mpd ncmpcpp)
+    fi
+    if [[ $ter == *2* ]]; then
+      aurPackages+=(cava)
+    fi
+    if [[ $ter == *3* ]]; then
+      aurPackages+=(s-tui python2-psutil)
+    fi
+  fi
+
+
+  # oomox
+  if [ "${omox,,}" = "${yes,,}" ]; then
+    aurPackages+=(oomox)
+  fi
+
+  # fonts
+  if [ "${fnt,,}" = "${yes,,}" ]; then
+    aurPackages+=(ttf-hack ttf-anonymous-pro ttf-font-awesome ttf-fira-code)
+  fi
+
+  # nerd fonts
+  if [ "${nfnt,,}" = "${yes,,}" ]; then
+    aurPackages+=(nerd-fonts-complete)
+  fi
+
+  # catfish
+  if [ "${sch,,}" = "${yes,,}" ]; then
+    pacPackages+=(catfish)
+  fi
+
+  # gnome disk utility and system monitor
+  if [ "${gnm,,}" = "${yes,,}" ]; then
+    pacPackages+=(gnome-disk-utility gnome-system-monitor)
+  fi
+
+
+  # end default application install
+fi
+
+
+
+# dock
+if [[ $dock == *1* ]] || [[ $dock == *2* ]] || [[ $dock == *3* ]]; then
+  if [[ $dock == *1* ]]; then
+    pacPackages+=(plank)
+  fi
+  if [[ $dock == *2* ]]; then
+    pacPackages+=(docky)
+  fi
+  if [[ $dock == *3* ]]; then
+    pacPackages+=(cairo-dock cairo-dock-plug-ins)
+  fi
+fi
+
+
+
+
+# Window Manager Setup
+if [[ $wm == *1* ]] || [[ $wm == *2* ]] || [[ $wm == *3* ]] || [[ $wm == *4* ]]; then
+  clear; echo -e "${g}#######################################################################################
+#######                        Installing Selected WM/DE                        #######
+#######################################################################################${reg}"
+  sleep 1
+  # XFCE
+  if [[ $wm == *1* ]]; then
+    pacPackages+=(xfce4 xfce4-goodies xfce4-pulseaudio-plugin)
+    aurPackages+=(pamac-aur)
+    # copy configs
+    if [ -d $CONF_PATH/xfce4/al-xfce-configs ]; then # copy configs
+      mv -f $CONF_PATH/xfce4/al-xfce-configs/.gtkrc-2.0 $HOME/.gtkrc-2.0
+      cp -r $CONF_PATH/xfce4/al-xfce-configs/* $CONF_PATH/xfce4/
+      rm -rf $CONF_PATH/xfce4/al-xfce-configs
+    fi
+    # fix desktop icons
+    xfconf-query -c xfce4-desktop -v --create -p /desktop-icons/style -t int -s 0
+    # ensure pamac is setup properly for openbox
+    if ! (grep "pamac-tray" $AUTOSTART) > /dev/null 2>&1; then
+      echo  "sleep 2; pamac-tray &" >> $AUTOSTART
+    fi
+  else
+    if [ -d $CONF_PATH/xfce4/al-xfce-configs ]; then
+      rm -rf $CONF_PATH/xfce4/al-xfce-configs
+    fi
+  fi
+
+  # I3 Gaps
+  if [[ $wm == *2* ]]; then
+    aurPackages+=(i3-gaps i3status)
+  else
+    rm -rf $CONF_PATH/i3
+  fi
+
+  # BSPWM
+  if [[ $wm == *3* ]]; then
+    pacPackages+=(bspwm sxhkd)
+  else
+    rm -rf $CONF_PATH/{bspwm,sxhkd}
+  fi
+
+  # Awesome WM
+  if [[ $wm == *4* ]]; then
+    pacPackages+=(awesome)
+    mkdir -p $CONF_PATH/awesome/
+    cp /etc/xdg/awesome/rc.lua $CONF_PATH/awesome/
+  fi
+
+  # set session
+  if [ "${xfses,,}" = "${yes,,}" ]; then
+    sed -i 's/custom-TerminalEmulator/xfce4-terminal/g' $HELPERS
+    sudo sed -i '/user-session=/ c user-session=xfce' /etc/lightdm/lightdm.conf
+    sudo sed -i '/autologin-session=/ c autologin-session=xfce' /etc/lightdm/lightdm.conf
+  elif [ "${i3ses,,}" = "${yes,,}" ]; then
+    sudo sed -i '/user-session=/ c user-session=i3' /etc/lightdm/lightdm.conf
+    sudo sed -i '/autologin-session=/ c autologin-session=i3' /etc/lightdm/lightdm.conf
+  elif [ "${bspses,,}" = "${yes,,}" ]; then
+    sudo sed -i '/user-session=/ c user-session=bspwm' /etc/lightdm/lightdm.conf
+    sudo sed -i '/autologin-session=/ c autologin-session=bspwm' /etc/lightdm/lightdm.conf
+  else
+    echo -e "Session not changed"
+  fi
+
+else
+  echo -e "\nNo WMs or DEs Chosen"
+fi
+
+
+
+
+
+# Swapfile setup
+if [ "${swp,,}" = "${yes,,}" ]; then
+  clear; echo -e "${g}#######################################################################################
+#######                           Setting up Swapfile                           #######
+#######################################################################################${reg}"
+  sleep 1
+  if [ "${cswp,,}" = "${yes,,}" ]; then # set custom size
+    if [ -n "$size" ]; then
+      if [[ $size == *G ]] || [[ $size == *M ]]; then # ensure the $size ends with G or M
+        sudo fallocate -l $size /swapfile
+        sudo chmod 600 /swapfile
+        sudo mkswap /swapfile
+        sudo swapon /swapfile
+        echo -e "\n  Appending to /ect/fstab\n"
+        echo "/swapfile                                 none           swap    defaults 0 0" | sudo tee -a /etc/fstab
+      else
+        clear; echo -e "\n  Wrong formatting"
+      fi
+    else
+      clear; echo -e "\n  No size entered"
+    fi
+  else
+    # Create a string of the users total M + 50M
+    totalM="${$(($(free --mega | awk '/^Mem:/{print $2}')+50))}M"
+    sudo fallocate -l $totalM /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+    echo -e "\n  Appending to /ect/fstab\n"
+    echo "/swapfile                                 none           swap    defaults 0 0" | sudo tee -a /etc/fstab
+    sleep 1
+  fi
+fi
+
+
+
+##
+## Package install
+##
+
+sudo pacman -Rns "${removePackages[@]}" --noconfirm
+sudo pacman -S "${pacPackages[@]}" --needed --noconfirm
+yaourt -S "${aurPackages[@]}" --needed --noconfirm
+
+##
+##
+##
+
+
+
+# nvidia drivers
+if [ "${nvd,,}" = "${yes,,}" ]; then
+  if [[ $wm == *2* ]] && [ "${i3ses,,}" = "${yes,,}" ]; then # if we are logging in to i3 we need to set it up is autostart
+    if ! (grep "nvidia-easy-install" $CONF_PATH/i3/config) > /dev/null 2>&1; then
+      echo 'exec --no-startup-id sleep 5; termite --exec=/usr/bin/nvidia-easy-install' >> $CONF_PATH/i3/config
+    fi
+  else
+    if ! [ -e /etc/xdg/autostart/nvidia-easy-install.desktop ]; then
+      echo -e '[Desktop Entry]\nVersion=1.0\nName=Nvidia Installer\nExec=termite "--exec=/usr/bin/nvidia-easy-install"\nTerminal=false\nType=Application\nCategories=Utility;\nStartupNotify=true\nX-GNOME-Autostart-enabled=true' | sudo tee -a /etc/xdg/autostart/nvidia-easy-install.desktop
+    fi
+  fi
+  clear; echo -e "\n${g}  Next boot you will be promted with Nvidia Driver Installation${reg}"
+else
+  if [ -e /etc/xdg/autostart/nvidia-easy-install.desktop ]; then
+    sudo rm -f /etc/xdg/autostart/nvidia-easy-install.desktop
+  fi
+fi
+
+
+
+
+read -n1 -rsp $'\n\n  Setup Complete!!\n\n\n  Press Any Key to Reboot or Ctrl + c to exit...'
+systemctl reboot
+
+exit 0
