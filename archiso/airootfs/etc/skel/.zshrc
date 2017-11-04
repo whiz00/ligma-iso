@@ -1,4 +1,6 @@
 # If not running interactively, don't do anything
+
+export PATH=$HOME/bin:$PATH
 [[ $- != *i* ]] && return
 
 setopt AUTO_CD # No cd needed to change directories

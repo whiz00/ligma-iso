@@ -20,4 +20,3 @@ sed -i "s/liveuser/${USER}/g" $HOME/.config/gtk-3.0/bookmarks
 # remove itself
 sed -i '/setup/d' $HOME/.config/openbox/autostart
 rm -f $HOME/.config/setup
-

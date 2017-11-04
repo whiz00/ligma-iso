@@ -1,7 +1,7 @@
 # launch compton
 al-compositor --start &
 
-~/.config/setup &
+$HOME/.config/setup &
 
 # restore wallpaper
 nitrogen --restore &
@@ -24,4 +24,4 @@ sleep 2; al-conky-session &
 
 xdg-user-dirs-gtk-update &
 
-#termite --exec=al-hello &
+termite --geometry=650x450 --exec=al-hello &

@@ -1,6 +1,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+export PATH=$HOME/bin:$PATH
 export HISTCONTROL=ignoreboth:erasedups
 
 PS1='[\u@\h \W]\$ '
