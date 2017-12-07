@@ -13,6 +13,9 @@ rm -rf /usr/lib/calamares
 rm -rf /abif-master
 
 # remove unwanted scripts & .desktop files
+rm etc/systemd/system/{pacman-init.service,etc-pacman.d-gnupg.mount}
+rm -r /etc/initcpio
+systemctl disable pacman-init.service
 rm /usr/share/applications/qv412.desktop
 rm /usr/share/applications/calamares.desktop
 rm /usr/bin/install-al
@@ -20,11 +23,12 @@ rm /usr/bin/install-al
 # touch up
 sed -i 's/Name=File Manager/Name=Thunar Settings/g' /usr/share/applications/thunar-settings.desktop
 sed -i '189,194d' /etc/skel/.config/openbox/menu.xml
+rm -f /etc/skel/.config/keypack
+sed -i '/keypack/d' /etc/skel/.config/openbox/autostart
 
 # enable al-hello after install
 sed -i '/al-hello/ c\
-termite --geometry=650x450 --exec=/usr/bin/al-hello &' /etc/skel/.config/openbox/autostart
-#sed -i '/al-panel-chooser/d' /etc/skel/.config/openbox/autostart
+sleep 10; termite --geometry=650x450 --exec=/usr/bin/al-hello &' /etc/skel/.config/openbox/autostart
 
 # fix boot messages
 sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/ c\
