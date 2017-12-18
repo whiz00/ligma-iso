@@ -14,8 +14,7 @@ arch=$(uname -m)
 verbose=""
 script_path=$(readlink -f ${0%/*})
 
-_usage ()
-{
+_usage() {
     echo "usage ${0} [options]"
     echo
     echo " General options:"

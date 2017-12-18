@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=ArchLabs Installer
-StartupNotify=true
+StartupNotify=false
 Comment=Installer for ArchLabs
 Categories=Utility;
-Exec=sudo calamares
+Exec=install-al
 Icon=/usr/share/icons/hicolor/256x256/apps/al-calamares-logo.png

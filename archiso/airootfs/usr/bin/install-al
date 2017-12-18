@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
 
-sudo pkill calamares
-exo-open /usr/share/applications/calamares.desktop
+# kill any running installers
+while read -r p n c; do
+    sudo kill $p
+done <<< "$(pgrep -a 'sudo' | grep 'archlabs-installer')"
+
+# remove any residual leftovers from previous runs
+if [[ -e /mnt/etc ]]; then
+    sudo rm -rf /mnt/*
+fi
+
+# launch a new installer instance as root
+termite --class="archlabs-installer" --title="ArchLabs Installer" --exec="sudo /archlabs-installer/archlabs-installer" &

@@ -2,31 +2,17 @@
 ##     ARCHLabs      ##
 #######################
 
-# base-devel
-fakeroot
+# devel, for installing from aur
+#base-devel
 
-# xorg
+#xorg
 mesa
 xorg-apps
 xorg-server
 xorg-xinit
-xf86-video-amdgpu
-xf86-video-ati
-xf86-video-dummy
-xf86-input-evdev
-xf86-video-fbdev
-xf86-video-intel
-xf86-input-keyboard
-xf86-input-libinput
-xf86-input-mouse
-xf86-video-nouveau
-xf86-video-vesa
-xf86-video-vmware
-xf86-input-vmmouse
-xf86-video-voodoo
-xf86-video-openchrome
+xorg-drivers
 
-#archiso
+#base packages
 arch-install-scripts
 bash-completion
 btrfs-progs
@@ -35,12 +21,13 @@ bluez-firmware
 clonezilla
 crda
 dosfstools
+ethtool
 exfat-utils
 f2fs-tools
 gpm
+grml-zsh-config
 gptfdisk
 grub
-grml-zsh-config
 hdparm
 jsoncpp
 ipw2100-fw
@@ -57,7 +44,6 @@ parted
 partclone
 partimage
 ppp
-ranger
 refind-efi
 reflector
 rfkill
@@ -65,9 +51,15 @@ rsync
 sdparm
 squashfs-tools
 usb_modeswitch
-vim
 wget
 zd1211-firmware
+
+# installation
+dialog
+dmidecode
+mkinitcpio-openswap
+os-prober
+wipe
 
 # audio & codecs
 alsa-firmware
@@ -80,13 +72,10 @@ gst-plugins-good
 gstreamer
 libmad
 libmatroska
-pamixer
 pulseaudio
 pulseaudio-alsa
-pavucontrol
-volumeicon
 
-#xfce4
+#xfce4 stuff
 xfce4-settings
 gufw
 
@@ -94,29 +83,27 @@ gufw
 obconf
 oblogout
 openbox
-lxappearance-gtk3
-lxappearance-obconf-gtk3
+lxappearance
+lxappearance-obconf
 
-#lightdm
+#lightdm panthein greeter
 lightdm
 clutter-gtk
 libgee
 
 #network
 networkmanager
-network-manager-applet
 networkmanager-dispatcher-ntpd
+#network-manager-applet
 wireless-regdb
 wireless_tools
 wpa_supplicant
 
 #file management
-file-roller
 gvfs
 gvfs-mtp
 gvfs-nfs
 gvfs-afc
-thunar
 tumbler
 xdg-user-dirs-gtk
 
@@ -124,7 +111,7 @@ xdg-user-dirs-gtk
 audacious
 audacious-plugins
 arandr
-conky
+file-roller
 firefox
 mpv
 galculator
@@ -133,11 +120,17 @@ gparted
 gpicview
 gsimplecal
 nitrogen
+pavucontrol
+ranger
 termite
+thunar
+tint2
+trayer
+vim
 
 #utilities
 compton
-dialog
+conky
 dunst
 gksu
 gnome-keyring
@@ -150,12 +143,13 @@ numlockx
 p7zip
 playerctl
 polkit
-lxsession-gtk3
+lxsession
 sudo
+pamixer
 python2-xdg
 scrot
-tint2
 unrar
+volumeicon
 wmctrl
 w3m
 xdotool
@@ -163,8 +157,10 @@ zenity
 
 # fonts and themes
 ttf-roboto
+ttf-droid
 ttf-ubuntu-font-family
 terminus-font
+gtk-engines
 gtk-engine-murrine
 gtk-engine-aurora
 
@@ -173,6 +169,8 @@ al-ckbcomp
 al-locale
 archlabs-ob-autostart
 archlabs-common
+archlabs-jgmenu
+archlabs-user-skel
 archlabs-greeter
 archlabs-homepage
 archlabs-kickshaw
@@ -194,14 +192,6 @@ archlabs-fonts
 archlabs-rofi
 archlabs-skippy-xd
 archlabs-yaourt
-
-# installation
-qt5ct
-qt5-styleplugins
-os-prober
-calamares
-dmidecode
-mkinitcpio-openswap
 
 # gorice
 python-yaml
