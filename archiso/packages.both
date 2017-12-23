@@ -81,7 +81,6 @@ gufw
 
 #openbox
 obconf
-oblogout
 openbox
 lxappearance
 lxappearance-obconf
@@ -177,6 +176,7 @@ archlabs-kickshaw
 archlabs-keyring
 archlabs-networkmanager-dmenu
 archlabs-obkey
+archlabs-oblogout
 archlabs-opensnap
 archlabs-paranoid
 archlabs-pipemenus

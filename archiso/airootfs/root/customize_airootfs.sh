@@ -74,6 +74,7 @@ for i in ${langs[@]}; do
 done
 
 # shell stuff must happen before liveuser is created
+sed -i 's/al-polybar-session/start-polybar/g' /etc/skel/.config/openbox/autostart
 echo -e "$brc" > /etc/skel/.bashrc
 echo -e "$zrc" > /etc/skel/.zshrc
 for i in ${files[@]}; do
@@ -122,7 +123,6 @@ ln -s /usr/bin/rofi /usr/bin/dmenu
 ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
 ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
 sed -i 's/#export/export/g' /etc/profile.d/freetype2.sh
-
 # set installer rules to be fullscreen
 sed -i '/<\/applications>/ i\
     <application class="archlabs-installer">\
