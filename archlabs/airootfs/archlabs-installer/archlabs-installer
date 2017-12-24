@@ -270,6 +270,7 @@ set_locale() {
     sed -i "s/en_US.UTF-8/${LOCALE}/g" ${MOUNTPOINT}/etc/default/locale 2>>/tmp/.errlog
     sed -i "s/en_US.UTF-8/${LOCALE}/g" ${MOUNTPOINT}/etc/locale.conf 2>>/tmp/.errlog
     sed -i "s/#${LOCALE}/${LOCALE}/g" ${MOUNTPOINT}/etc/locale.gen 2>>/tmp/.errlog
+    cp -f ${MOUNTPOINT}/etc/locale.conf ${MOUNTPOINT}/etc/default/locale
     arch_chroot "locale-gen" >/dev/null 2>>/tmp/.errlog
     check_for_error
 }
@@ -280,8 +281,8 @@ set_timezone() {
     for i in $(cat /usr/share/zoneinfo/zone.tab | awk '{print $3}' | grep "/" | sed "s/\/.*//g" | sort -ud); do
         ZONE="$ZONE ${i} -"
     done
-    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_ConfBseTimeHC "
-    --menu "$_TimeZBody" 0 0 10 ${ZONE} 2>${ANSWER} || config_base_menu
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_ConfBseTimeHC " \
+           --menu "$_TimeZBody" 0 0 10 ${ZONE} 2>${ANSWER} || config_base_menu
     ZONE=$(cat ${ANSWER})
 
     SUBZONE=""
@@ -421,7 +422,11 @@ create_new_user() {
         sed -i "s/${ISO_USER}/${USER}/g" ${MOUNTPOINT}/etc/lightdm/lightdm.conf 2>>/tmp/.errlog
         sed -i '/al-hello/ c sleep 10; termite --exec=/usr/bin/al-hello &' \
             ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
+        sed -i "/liveuser/ c sleep 1; polybar --config=/home/${USER}/.config/polybar/config openbox-bar &" \
+            ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
         sed -i '188,193d' ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/menu.xml 2>>/tmp/.errlog
+        sed -i "/${ISO_USER}/${USER}/g" ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
+        sed -i 's/#$HOME/$HOME/g' ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
         sed -i '/keypack/d' ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
         rm -f  ${MOUNTPOINT}/home/${ISO_USER}/.config/keypack 2>>/tmp/.errlog
 
@@ -1441,6 +1446,7 @@ install_root() {
     sed -i '/al-hello/ c sleep 10; termite --exec=/usr/bin/al-hello &' \
         ${MOUNTPOINT}/etc/skel/.config/openbox/autostart 2>>/tmp/.errlog
     sed -i '188,193d' ${MOUNTPOINT}/etc/skel/.config/openbox/menu.xml 2>>/tmp/.errlog
+    sed -i 's/#$HOME\/.config\/setup &/$HOME\/.config\/setup &/g' ${MOUNTPOINT}/etc/skel/.config/openbox/autostart 2>>/tmp/.errlog
 
     # clean out archiso files from install
     find ${MOUNTPOINT}/usr/lib/initcpio -name archiso* -type f -exec rm '{}' \;

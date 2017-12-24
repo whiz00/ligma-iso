@@ -74,7 +74,7 @@ for i in ${langs[@]}; do
 done
 
 # shell stuff must happen before liveuser is created
-sed -i 's/al-polybar-session/start-polybar/g' /etc/skel/.config/openbox/autostart
+#sed -i 's/al-polybar-session/start-polybar/g' /etc/skel/.config/openbox/autostart
 echo -e "$brc" > /etc/skel/.bashrc
 echo -e "$zrc" > /etc/skel/.zshrc
 for i in ${files[@]}; do
