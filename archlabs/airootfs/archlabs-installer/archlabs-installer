@@ -188,9 +188,9 @@ arch_chroot() {
 
 # If there is an error, display it, clear the log and then go back to the main menu (no point in continuing).
 check_for_error() {
-    if [[ $? -eq 1 ]] && [[ $(cat /tmp/.errlog | grep -i "error") != "" ]]; then
+    if [[ $? -eq 1 ]] && [[ $(grep -i "error" < /tmp/.errlog) != "" ]]; then
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_ErrTitle " --msgbox "$(cat /tmp/.errlog)" 0 0
-        rm -rf ${MOUNTPOINT}/* 
+        rm -rf ${MOUNTPOINT:?}/*
         echo "" > /tmp/.errlog
         main_menu
     fi
@@ -241,10 +241,11 @@ set_keymap() {
 # Set keymap for X11
 set_xkbmap() {
     XKBMAP_LIST=""
-    keymaps_xkb=("af al am at az ba bd be bg br bt bw by ca cd ch cm cn cz de dk ee es et eu fi fo fr gb ge
-                     gh gn gr hr hu ie il in iq ir is it jp ke kg kh kr kz la lk lt lv ma md me mk ml mm mn mt
-                     mv ng nl no np pc ph pk pl pt ro rs ru se si sk sn sy tg th tj tm tr tw tz ua us uz vn za")
-    for i in ${keymaps_xkb}; do
+    keymaps_xkb=(af al am at az ba bd be bg br bt bw by ca cd ch cm cn cz de dk ee es et eu 'fi' fo fr gb ge
+                 gh gn gr hr hu ie il in iq ir is it jp ke kg kh kr kz la lk lt lv ma md me mk ml mm mn mt
+                 mv ng nl no np pc ph pk pl pt ro rs ru se si sk sn sy tg th tj tm tr tw tz ua us uz vn za
+                 )
+    for i in "${keymaps_xkb[@]}"; do
         XKBMAP_LIST="${XKBMAP_LIST} ${i} -"
     done
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_PrepKBLayout " \
@@ -253,7 +254,7 @@ set_xkbmap() {
     echo -e "Section "\"InputClass"\"
     \tIdentifier "\"system-keyboard"\"\n\tMatchIsKeyboard "\"on"\"\n\tOption "\"XkbLayout"\" "\"${XKBMAP}"\"\nEndSection" \
         > /tmp/01-keyboard-layout.conf
-    setxkbmap $XKBMAP 2>>/tmp/.errlog
+    setxkbmap "$XKBMAP" 2>>/tmp/.errlog
     check_for_error
 }
 
@@ -264,13 +265,14 @@ set_locale() {
         LOCALES="${LOCALES} ${i} -"
     done
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_ConfBseSysLoc " \
-           --menu "$_localeBody" 0 0 12 ${LOCALES} 2>${ANSWER} || config_base_menu
+           --menu "$_localeBody" 0 0 12 "${LOCALES}" 2>${ANSWER} || config_base_menu
     LOCALE=$(cat ${ANSWER})
     #echo "LANG=\"${LOCALE}\"" > ${MOUNTPOINT}/etc/locale.conf
-    sed -i "s/en_US.UTF-8/${LOCALE}/g" ${MOUNTPOINT}/etc/default/locale 2>>/tmp/.errlog
     sed -i "s/en_US.UTF-8/${LOCALE}/g" ${MOUNTPOINT}/etc/locale.conf 2>>/tmp/.errlog
     sed -i "s/#${LOCALE}/${LOCALE}/g" ${MOUNTPOINT}/etc/locale.gen 2>>/tmp/.errlog
     cp -f ${MOUNTPOINT}/etc/locale.conf ${MOUNTPOINT}/etc/default/locale
+
+    sed -i "s/en_US.UTF-8/${LOCALE}/g" ${MOUNTPOINT}/etc/default/locale 2>>/tmp/.errlog
     arch_chroot "locale-gen" >/dev/null 2>>/tmp/.errlog
     check_for_error
 }
@@ -425,13 +427,13 @@ create_new_user() {
         sed -i "/liveuser/ c sleep 1; polybar --config=/home/${USER}/.config/polybar/config openbox-bar &" \
             ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
         sed -i '188,193d' ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/menu.xml 2>>/tmp/.errlog
-        sed -i "/${ISO_USER}/${USER}/g" ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
+        sed -i "s/${ISO_USER}/${USER}/g" ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
         sed -i 's/#$HOME/$HOME/g' ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
         sed -i '/keypack/d' ${MOUNTPOINT}/home/${ISO_USER}/.config/openbox/autostart 2>>/tmp/.errlog
         rm -f  ${MOUNTPOINT}/home/${ISO_USER}/.config/keypack 2>>/tmp/.errlog
 
         mv ${MOUNTPOINT}/home/$ISO_USER ${MOUNTPOINT}/home/$USER 2>>/tmp/.errlog
-        chown -R $USER:users ${MOUNTPOINT}/home/$USER 2>>/tmp/.errlog
+        arch_chroot "chown -R $USER:users /home/$USER" 2>>/tmp/.errlog
         arch_chroot "usermod -aG rfkill,wheel,autologin,network,lp,storage,power,video,audio,lp $USER" 2>>/tmp/.errlog
 
         # Change sudoers file to require passwords for sudo commands
@@ -456,6 +458,7 @@ create_new_user() {
 run_mkinitcpio() {
     clear
     KERNEL=""
+
     # If LVM and/or LUKS used, add the relevant hook(s)
     ([[ $LVM -eq 1 ]] && [[ $LUKS -eq 0 ]]) && sed -i 's/block filesystems/block lvm2 filesystems/g' \
                                                    ${MOUNTPOINT}/etc/mkinitcpio.conf 2>>/tmp/.errlog
@@ -463,9 +466,19 @@ run_mkinitcpio() {
                                                    ${MOUNTPOINT}/etc/mkinitcpio.conf 2>>/tmp/.errlog
     ([[ $LVM -eq 0 ]] && [[ $LUKS -eq 1 ]]) && sed -i 's/block filesystems/block encrypt filesystems/g' \
                                                    ${MOUNTPOINT}/etc/mkinitcpio.conf 2>>/tmp/.errlog
+
+    # Fix for mounting /usr on seperate partition
+    [[ $MNTHOOKS != "" ]] && sed -i "s/fsck/fsck ${MNTHOOKS}/g" ${MOUNTPOINT}/etc/mkinitcpio.conf 2>>/tmp/.errlog
+
     check_for_error
-    arch_chroot "mkinitcpio -p linux" 2>>/tmp/.errlog
+    # Run Mkinitcpio command depending on kernel(s) installed
+    KERNEL=$(ls ${MOUNTPOINT}/boot/*.img | grep -v "fallback" | sed "s~${MOUNTPOINT}/boot/initramfs-~~g" | sed s/\.img//g | uniq | grep 'linux')
+    for i in ${KERNEL}; do
+        arch_chroot "mkinitcpio -p ${i}" 2>>/tmp/.errlog
+    done
     check_for_error
+    # arch_chroot "mkinitcpio -p linux" 2>>/tmp/.errlog
+    # check_for_error
 }
 
 ######################################################################
@@ -488,8 +501,7 @@ confirm_mount() {
     if [[ $(mount | grep $1) ]]; then
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_MntStatusTitle " --infobox "$_MntStatusSucc" 0 0
         sleep 2
-        PARTITIONS=$(echo $PARTITIONS | sed "s~${PARTITION} [0-9]*[G-M]~~" | \
-                         sed "s~${PARTITION} [0-9]*\.[0-9]*[G-M]~~" | sed s~${PARTITION}$' -'~~)
+        PARTITIONS=$(echo $PARTITIONS | sed "s~${PARTITION} [0-9]*[G-M]~~" | sed "s~${PARTITION} [0-9]*\.[0-9]*[G-M]~~" | sed s~${PARTITION}$' -'~~)
         NUMBER_PARTITIONS=$((NUMBER_PARTITIONS - 1))
     else
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_MntStatusTitle " --infobox "$_MntStatusFail" 0 0
@@ -518,8 +530,7 @@ select_device() {
 find_partitions() {
     PARTITIONS=""
     NUMBER_PARTITIONS=0
-    partition_list=$(lsblk -lno NAME,SIZE,TYPE | grep $INCLUDE_PART | sed 's/part$/\/dev\//g' | \
-                         sed 's/lvm$\|crypt$/\/dev\/mapper\//g' | awk '{print $3$1 " " $2}' | sort -u)
+    partition_list=$(lsblk -lno NAME,SIZE,TYPE | grep $INCLUDE_PART | sed 's/part$/\/dev\//g' | sed 's/lvm$\|crypt$/\/dev\/mapper\//g' | awk '{print $3$1 " " $2}' | sort -u)
 
     for i in ${partition_list}; do
         PARTITIONS="${PARTITIONS} ${i}"
@@ -974,6 +985,11 @@ mount_partitions() {
                 MOUNT=$(cat ${ANSWER})
             done
 
+            # Set hook for mounting /usr on seperate partition
+            if [[ $MOUNT == "/usr" ]]; then
+                MNTHOOKS="usr shutdown"
+            fi
+
             # Create directory and mount.
             mount_current_partition
 
@@ -1156,13 +1172,14 @@ lvm_show_vg(){
 
     # If no VGs, no point in continuing
     if [[ $VG_LIST == "" ]]; then
-        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_ErrTitle " --msgbox "$_LvmVGErr" 0 0
+        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_ErrTitle " \
+            --msgbox "$_LvmVGErr" 0 0
         lvm_menu
     fi
 
     # Select VG
-    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_PrepLVM " --menu "$_LvmSelVGBody" 0 0 5 \
-           ${VG_LIST} 2>${ANSWER} || lvm_menu
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_PrepLVM " \
+        --menu "$_LvmSelVGBody" 0 0 5 ${VG_LIST} 2>${ANSWER} || lvm_menu
 }
 
 # Create Volume Group and Logical Volumes
@@ -1180,13 +1197,13 @@ lvm_create() {
         if [[ $LV_SIZE_INVALID -eq 0 ]]; then
             while [[ $chars -lt $(( ${#LVM_LV_SIZE} - 1 )) ]]; do
                 [[ ${LVM_LV_SIZE:chars:1} != [0-9] ]] && LV_SIZE_INVALID=1 && break;
-                chars=$(( chars + 1 ))
+                chars=$((chars + 1))
             done
         fi
 
         # If not invalid so far, check that last character is a M/m or G/g
         if [[ $LV_SIZE_INVALID -eq 0 ]]; then
-            LV_SIZE_TYPE=$(echo ${LVM_LV_SIZE:$(( ${#LVM_LV_SIZE} - 1 )):1})
+            LV_SIZE_TYPE=$(echo ${LVM_LV_SIZE:$((${#LVM_LV_SIZE} - 1)):1})
             case $LV_SIZE_TYPE in
                 "m"|"M"|"g"|"G")
                     LV_SIZE_INVALID=0
@@ -1202,17 +1219,17 @@ lvm_create() {
         if [[ ${LV_SIZE_INVALID} -eq 0 ]]; then
             case ${LV_SIZE_TYPE} in
                 "G"|"g")
-                    if [[ $(( $(echo ${LVM_LV_SIZE:0:$(( ${#LVM_LV_SIZE}-1))}) * 1000 )) -ge ${LVM_VG_MB} ]]; then
+                    if [[ $(($(echo ${LVM_LV_SIZE:0:$((${#LVM_LV_SIZE} - 1))}) * 1000)) -ge ${LVM_VG_MB} ]]; then
                         LV_SIZE_INVALID=1
                     else
-                        LVM_VG_MB=$(( LVM_VG_MB - $(( $(echo ${LVM_LV_SIZE:0:$(( ${#LVM_LV_SIZE}-1))}) * 1000 )) ))
+                        LVM_VG_MB=$((LVM_VG_MB - $(($(echo ${LVM_LV_SIZE:0:$((${#LVM_LV_SIZE} - 1))}) * 1000))))
                     fi
                     ;;
                 "M"|"m")
-                    if [[ $(echo ${LVM_LV_SIZE:0:$(( ${#LVM_LV_SIZE}-1))}) -ge ${LVM_VG_MB} ]]; then
+                    if [[ $(echo ${LVM_LV_SIZE:0:$((${#LVM_LV_SIZE} - 1))}) -ge ${LVM_VG_MB} ]]; then
                         LV_SIZE_INVALID=1
                     else
-                        LVM_VG_MB=$(( LVM_VG_MB - $(echo ${LVM_LV_SIZE:0:$(( ${#LVM_LV_SIZE}-1))}) ))
+                        LVM_VG_MB=$((LVM_VG_MB - $(echo ${LVM_LV_SIZE:0:$((${#LVM_LV_SIZE} - 1))})))
                     fi
                     ;;
                 *)
@@ -1222,9 +1239,9 @@ lvm_create() {
         fi
     }
 
-    #							#
-    # LVM Create Starts Here	#
-    #							#
+    #                        #
+    # LVM Create Starts Here #
+    #                        #
 
     # Prep Variables
     LVM_VG=""
@@ -1443,9 +1460,8 @@ install_root() {
     rm -f ${MOUNTPOINT}/usr/bin/install-al 2>>/tmp/.errlog
 
     # touch up autostart & menu in /etc/skel
-    sed -i '/al-hello/ c sleep 10; termite --exec=/usr/bin/al-hello &' \
-        ${MOUNTPOINT}/etc/skel/.config/openbox/autostart 2>>/tmp/.errlog
     sed -i '188,193d' ${MOUNTPOINT}/etc/skel/.config/openbox/menu.xml 2>>/tmp/.errlog
+    sed -i '/al-hello/ c sleep 10; termite --exec=/usr/bin/al-hello &' ${MOUNTPOINT}/etc/skel/.config/openbox/autostart 2>>/tmp/.errlog
     sed -i 's/#$HOME\/.config\/setup &/$HOME\/.config\/setup &/g' ${MOUNTPOINT}/etc/skel/.config/openbox/autostart 2>>/tmp/.errlog
 
     # clean out archiso files from install
@@ -1481,12 +1497,11 @@ install_root() {
     # Keyboard config for vc and x11
     [[ -e /tmp/vconsole.conf ]] && cp /tmp/vconsole.conf ${MOUNTPOINT}/etc/vconsole.conf 2>>/tmp/.errlog
     if [[ -e /tmp/01-keyboard-layout.conf ]]; then
-        cp -f /tmp/01-keyboard-layout.conf \
-            ${MOUNTPOINT}/etc/X11/xorg.conf.d/$(ls ${MOUNTPOINT}/etc/X11/xorg.conf.d/ | grep "keyboard") 2>>/tmp/.errlog
+        cp -f /tmp/01-keyboard-layout.conf ${MOUNTPOINT}/etc/X11/xorg.conf.d/$(ls ${MOUNTPOINT}/etc/X11/xorg.conf.d/ | grep "keyboard") 2>>/tmp/.errlog
     fi
 
     # Display Manager & NetworkManager
-    cp -rf /etc/NetwokManager/system-connections/* ${MOUNTPOINT}/etc/NetworkManager/system-connections/ 2>>/tmp/.errlog
+    cp -rf /etc/NetwokManager/system-connections ${MOUNTPOINT}/etc/NetworkManager/system-connections 2>>/tmp/.errlog
     cp -f /etc/resolv.conf ${MOUNTPOINT}/etc/resolv.conf 2>>/tmp/.errlog
     arch_chroot "systemctl enable ntpd.service -f" 2>>/tmp/.errlog
     arch_chroot "systemctl enable NetworkManager.service -f" 2>>/tmp/.errlog
@@ -1507,14 +1522,14 @@ install_bootloader() {
 
         # if /boot is LVM (whether using a seperate /boot mount or not), amend grub
         if ( [[ $LVM -eq 1 ]] && [[ $LVM_SEP_BOOT -eq 0 ]] ) || [[ $LVM_SEP_BOOT -eq 2 ]]; then
-            sed -i "s/GRUB_PRELOAD_MODULES=\"\"/GRUB_PRELOAD_MODULES=\"lvm\"/g" ${MOUNTPOINT}/etc/default/grub
+            sed -i 's/GRUB_PRELOAD_MODULES=""/GRUB_PRELOAD_MODULES="lvm"/g' ${MOUNTPOINT}/etc/default/grub
         fi
 
         # fix bootloader name
-        sed -i "s/GRUB_DISTRIBUTOR=\"Arch\"/GRUB_DISTRIBUTOR=\"ArchLabs\"/g" ${MOUNTPOINT}/etc/default/grub
+        sed -i 's/GRUB_DISTRIBUTOR="Arch"/GRUB_DISTRIBUTOR="ArchLabs"/g' ${MOUNTPOINT}/etc/default/grub
 
         # If encryption used amend grub
-        [[ $LUKS_DEV != "" ]] && sed -i "s~GRUB_CMDLINE_LINUX=.*~GRUB_CMDLINE_LINUX=\"$LUKS_DEV\"~g" ${MOUNTPOINT}/etc/default/grub
+        [[ $LUKS_DEV != "" ]] && sed -i "s~GRUB_CMDLINE_LINUX=.*~GRUB_CMDLINE_LINUX=\"${LUKS_DEV}\"~g" ${MOUNTPOINT}/etc/default/grub
 
         arch_chroot "grub-mkconfig -o /boot/grub/grub.cfg" 2>>/tmp/.errlog
         check_for_error
@@ -1528,10 +1543,10 @@ install_bootloader() {
         arch_chroot "grub-install --target=x86_64-efi --efi-directory=${UEFI_MOUNT} --bootloader-id=archlabs --recheck" 2>>/tmp/.errlog
 
         # If encryption used amend grub
-        [[ $LUKS_DEV != "" ]] && sed -i "s~GRUB_CMDLINE_LINUX=.*~GRUB_CMDLINE_LINUX=\"$LUKS_DEV\"~g" ${MOUNTPOINT}/etc/default/grub
+        [[ $LUKS_DEV != "" ]] && sed -i "s~GRUB_CMDLINE_LINUX=.*~GRUB_CMDLINE_LINUX=\"${LUKS_DEV}\"~g" ${MOUNTPOINT}/etc/default/grub
 
         # fix bootloader name
-        sed -i "s/GRUB_DISTRIBUTOR=\"Arch\"/GRUB_DISTRIBUTOR=\"ArchLabs\"/g" ${MOUNTPOINT}/etc/default/grub
+        sed -i 's/GRUB_DISTRIBUTOR="Arch"/GRUB_DISTRIBUTOR="ArchLabs"/g' ${MOUNTPOINT}/etc/default/grub
 
         # Generate config file
         arch_chroot "grub-mkconfig -o /boot/grub/grub.cfg" 2>>/tmp/.errlog
