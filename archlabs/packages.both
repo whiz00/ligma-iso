@@ -1,18 +1,11 @@
-#######################
-##     ARCHLabs      ##
-#######################
-
-# devel, for installing from aur
-#base-devel
-
-#xorg
+# xorg
 mesa
 xorg-apps
 xorg-server
 xorg-xinit
 xorg-drivers
 
-#base packages
+# base
 arch-install-scripts
 bash-completion
 btrfs-progs
@@ -25,8 +18,8 @@ ethtool
 exfat-utils
 f2fs-tools
 gpm
-grml-zsh-config
 gptfdisk
+grml-zsh-config
 grub
 hdparm
 jsoncpp
@@ -34,7 +27,6 @@ ipw2100-fw
 ipw2200-fw
 libisoburn
 mtools
-mlocate
 nfs-utils
 nilfs-utils
 ntfs-3g
@@ -54,7 +46,7 @@ usb_modeswitch
 wget
 zd1211-firmware
 
-# installation
+# installer
 dialog
 dmidecode
 mkinitcpio-openswap
@@ -75,30 +67,28 @@ libmatroska
 pulseaudio
 pulseaudio-alsa
 
-#xfce4 stuff
+# xfce
 xfce4-settings
-gufw
 
-#openbox
+# openbox
 obconf
 openbox
 lxappearance
 lxappearance-obconf
 
-#lightdm panthein greeter
+# lightdm
 lightdm
 clutter-gtk
 libgee
 
-#network
+# network
 networkmanager
 networkmanager-dispatcher-ntpd
-#network-manager-applet
 wireless-regdb
 wireless_tools
 wpa_supplicant
 
-#file management
+# filesystem
 gvfs
 gvfs-mtp
 gvfs-nfs
@@ -106,9 +96,8 @@ gvfs-afc
 tumbler
 xdg-user-dirs-gtk
 
-#applications
+# applications
 audacious
-audacious-plugins
 arandr
 file-roller
 firefox
@@ -126,8 +115,9 @@ thunar
 tint2
 trayer
 vim
+w3m
 
-#utilities
+# utilities
 compton
 conky
 dunst
@@ -150,22 +140,19 @@ scrot
 unrar
 volumeicon
 wmctrl
-w3m
 xdotool
 zenity
 
 # fonts and themes
 ttf-roboto
-ttf-droid
+ttf-liberation
+ttf-freefont
 ttf-ubuntu-font-family
 terminus-font
 gtk-engines
 gtk-engine-murrine
-gtk-engine-aurora
 
 # archlabs repo
-al-ckbcomp
-al-locale
 archlabs-ob-autostart
 archlabs-common
 archlabs-jgmenu
@@ -198,6 +185,6 @@ python-yaml
 pango
 gdk-pixbuf2
 
-#vbox
+# vbox
 virtualbox-guest-modules-arch
 virtualbox-guest-utils

@@ -156,9 +156,6 @@ _MntUefiBody="\nSelect EFI Mountpoint.\nGrub will work with either"
 
 
 
-
-
-
 # Generic
 _UseSpaceBar="Use [Spacebar] to de/select options listed."
 _AlreadyInst="Already installed:"
