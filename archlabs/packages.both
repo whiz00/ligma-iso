@@ -16,6 +16,7 @@ crda
 dosfstools
 ethtool
 exfat-utils
+fakeroot
 f2fs-tools
 gpm
 gptfdisk
@@ -179,11 +180,6 @@ archlabs-fonts
 archlabs-rofi
 archlabs-skippy-xd
 archlabs-yaourt
-
-# gorice
-python-yaml
-pango
-gdk-pixbuf2
 
 # vbox
 virtualbox-guest-modules-arch
