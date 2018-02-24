@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # kill any running installers
-while read -r p n c; do
-    sudo kill "$p"
-done <<< "$(pgrep -a 'sudo' | grep 'archlabs-installer')"
+while read -r pid; do
+    sudo kill "$pid"
+done <<< "$(awk '{print $1}' <<< "$(grep 'archlabs-installer' <<< "$(pgrep -a 'sudo')")")"
 
 # remove any residual leftovers from previous runs
 if [[ -e /mnt/etc ]]; then
@@ -11,4 +11,5 @@ if [[ -e /mnt/etc ]]; then
 fi
 
 # launch a new installer instance as root
-termite --class="archlabs-installer" --title="ArchLabs Installer" --exec="sudo /archlabs-installer/archlabs-installer" &
+termite --class="archlabs-installer" --title="ArchLabs Installer" \
+    --exec="sudo /archlabs-installer/archlabs-installer" &

@@ -3,7 +3,6 @@
 # If not running interactively return
 [[ $- != *i* ]] && return
 
-export EDITOR=nano
 export PATH=$HOME/bin:$PATH
 
 setopt AUTO_CD BANG_HIST EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST
@@ -16,10 +15,10 @@ alias l='ls'
 alias la='ls -A'
 alias ll='ls -lA'
 alias ls='ls --color=auto'
-alias update='sudo pacman -Syu'
+alias update='sudo pacman -Syyu'
 alias pacman='sudo pacman --color auto'
-alias pmsyu='sudo pacman -Syu --color=auto'
 alias merge='xrdb -merge ~/.Xresources'
+alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias mirrors='sudo reflector --score 100 --fastest 25 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
 
 neofetch

@@ -7,44 +7,68 @@ xorg-drivers
 
 # base
 arch-install-scripts
-bash-completion
-btrfs-progs
 b43-fwcutter
-bluez-firmware
+btrfs-progs
 clonezilla
 crda
+darkhttpd
+ddrescue
+dhclient
+dialog
+dmraid
+dnsmasq
+dnsutils
 dosfstools
+elinks
 ethtool
 exfat-utils
 fakeroot
 f2fs-tools
+fsarchiver
+gnu-netcat
 gpm
 gptfdisk
 grml-zsh-config
 grub
 hdparm
-jsoncpp
 ipw2100-fw
 ipw2200-fw
-libisoburn
+irssi
+lftp
+linux-atm
+lsscsi
 mtools
+ndisc6
 nfs-utils
 nilfs-utils
+nmap
 ntfs-3g
 ntp
+openconnect
 openssh
-parted
+openvpn
 partclone
+parted
 partimage
 ppp
+pptpclient
 refind-efi
-reflector
-rfkill
+rp-pppoe
 rsync
 sdparm
-squashfs-tools
+sg3_utils
+smartmontools
+speedtouch
+sudo
+tcpdump
+testdisk
 usb_modeswitch
+vim-minimal
+vpnc
 wget
+wpa_actiond
+wvdial
+xl2tpd
 zd1211-firmware
 
 # installer
@@ -115,7 +139,6 @@ termite
 thunar
 tint2
 trayer
-vim
 w3m
 
 # utilities
@@ -126,6 +149,7 @@ gksu
 gnome-keyring
 htop
 imagemagick
+jsoncpp
 libmpdclient
 lm_sensors
 lsb-release
@@ -137,6 +161,7 @@ lxsession
 sudo
 pamixer
 python2-xdg
+reflector
 scrot
 unrar
 volumeicon
@@ -149,7 +174,6 @@ ttf-roboto
 ttf-liberation
 ttf-freefont
 ttf-ubuntu-font-family
-terminus-font
 gtk-engines
 gtk-engine-murrine
 
