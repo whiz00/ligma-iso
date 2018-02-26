@@ -14,7 +14,6 @@ crda
 darkhttpd
 ddrescue
 dhclient
-dialog
 dmraid
 dnsmasq
 dnsutils
@@ -63,7 +62,7 @@ sudo
 tcpdump
 testdisk
 usb_modeswitch
-vim-minimal
+vim
 vpnc
 wget
 wpa_actiond
