@@ -1,30 +1,27 @@
-# Bashrc
+# ~/.bashrc
 
-# If not running interactively return
+# not running interactively then bail
 [[ $- != *i* ]] && return
 
-export PATH=$HOME/bin:$PATH
-export HISTCONTROL=ignoreboth:erasedups
+# shell opts
+shopt -s autocd
+shopt -s cdspell
+shopt -s cmdhist
+shopt -s histappend
+shopt -s expand_aliases
 
-# Shell options
-shopt -s autocd         # change to named directory
-shopt -s cdspell        # autocorrects cd misspellings
-shopt -s cmdhist        # save multi-line commands in history as single line
-shopt -s histappend     # do not overwrite history
-shopt -s expand_aliases # expand aliases
-
-# Prompt
+# prompt
 PS1='\u@\h \W \$ '
 
-# Alias
+# alias
 alias l='ls'
 alias la='ls -A'
 alias ll='ls -lA'
 alias ls='ls --color=auto'
-alias update='sudo pacman -Syyu'
-alias pacman='sudo pacman --color auto'
+alias upd='sudo pacman -Syyu'
+alias pac='sudo pacman --color auto'
 alias merge='xrdb -merge ~/.Xresources'
-alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias grubup='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias mirrors='sudo reflector --score 100 --fastest 25 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
 
 neofetch

@@ -1,10 +1,3 @@
-# xorg
-mesa
-xorg-apps
-xorg-server
-xorg-xinit
-xorg-drivers
-
 # base
 arch-install-scripts
 b43-fwcutter
@@ -18,18 +11,19 @@ dmraid
 dnsmasq
 dnsutils
 dosfstools
-elinks
 ethtool
 exfat-utils
-fakeroot
 f2fs-tools
+fakeroot
 fsarchiver
 gnu-netcat
 gpm
 gptfdisk
 grml-zsh-config
 grub
+gvim
 hdparm
+iputils
 ipw2100-fw
 ipw2200-fw
 irssi
@@ -62,25 +56,30 @@ sudo
 tcpdump
 testdisk
 usb_modeswitch
-vim
 vpnc
+vte3
 wget
-wpa_actiond
 wvdial
 xl2tpd
 zd1211-firmware
 
+# xorg
+mesa
+xorg-apps
+xorg-drivers
+xorg-server
+xorg-xinit
+
 # installer
 dialog
 dmidecode
-mkinitcpio-openswap
 os-prober
 wipe
 
 # audio & codecs
 alsa-firmware
-alsa-plugins
 alsa-lib
+alsa-plugins
 ffmpeg2.8
 gst-libav
 gst-plugins-base
@@ -97,43 +96,38 @@ xfce4-settings
 # openbox
 obconf
 openbox
-lxappearance
-lxappearance-obconf
-
-# lightdm
-lightdm
-clutter-gtk
-libgee
 
 # network
 networkmanager
 networkmanager-dispatcher-ntpd
 wireless-regdb
 wireless_tools
+wpa_actiond
 wpa_supplicant
 
 # filesystem
 gvfs
+gvfs-afc
 gvfs-mtp
 gvfs-nfs
-gvfs-afc
 tumbler
 xdg-user-dirs-gtk
 
 # applications
-audacious
 arandr
+audacious
 file-roller
 firefox
-mpv
 galculator
 geany
 gparted
 gpicview
 gsimplecal
+mpv
 nitrogen
 pavucontrol
 ranger
+rofi
 termite
 thunar
 tint2
@@ -144,7 +138,6 @@ w3m
 compton
 conky
 dunst
-gksu
 gnome-keyring
 htop
 imagemagick
@@ -152,16 +145,17 @@ jsoncpp
 libmpdclient
 lm_sensors
 lsb-release
+neofetch
 numlockx
 p7zip
+pamixer
 playerctl
 polkit
-lxsession
-sudo
-pamixer
+polkit-gnome
 python2-xdg
 reflector
 scrot
+sudo
 unrar
 volumeicon
 wmctrl
@@ -169,39 +163,36 @@ xdotool
 zenity
 
 # fonts and themes
-ttf-roboto
-ttf-liberation
-ttf-freefont
-ttf-ubuntu-font-family
-gtk-engines
 gtk-engine-murrine
+gtk-engines
+ttf-freefont
+ttf-liberation
+ttf-roboto
+ttf-ubuntu-font-family
 
 # archlabs repo
-archlabs-ob-autostart
 archlabs-common
-archlabs-jgmenu
-archlabs-user-skel
-archlabs-greeter
+archlabs-downgrade
+archlabs-fonts
 archlabs-homepage
-archlabs-kickshaw
+archlabs-icons
+archlabs-jgmenu
 archlabs-keyring
+archlabs-kickshaw
 archlabs-networkmanager-dmenu
+archlabs-ob-autostart
 archlabs-obkey
 archlabs-oblogout
 archlabs-opensnap
+archlabs-pacli
 archlabs-paranoid
 archlabs-pipemenus
-archlabs-screenlock
-archlabs-wallpapers
-archlabs-downgrade
-archlabs-neofetch
-archlabs-pacli
 archlabs-polybar
-archlabs-themes
-archlabs-icons
-archlabs-fonts
-archlabs-rofi
+archlabs-screenlock
 archlabs-skippy-xd
+archlabs-themes
+archlabs-user-skel
+archlabs-wallpapers
 archlabs-yaourt
 
 # vbox

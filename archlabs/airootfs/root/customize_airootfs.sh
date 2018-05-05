@@ -3,10 +3,10 @@
 set -e
 
 ISO_USER="liveuser"
-SERVS=('lightdm' 'NetworkManager' 'ntpd')
+# 'lightdm'
+SERVS=('NetworkManager' 'ntpd')
 GRP="audio,autologin,floppy,log,network,rfkill,scanner,storage,optical,power,wheel"
-KEYS=(
-'AEFB411B072836CD48FF0381AE252C284B5DBA5D'
+KEYS=('AEFB411B072836CD48FF0381AE252C284B5DBA5D'
 '9E4F11C6A072942A7B3FD3B0B81EB14A09A25EB0'
 '35F52A02854DCCAEC9DD5CC410443C7F54B00041'
 )
@@ -28,7 +28,7 @@ or enter the super (meta or windows) key or Ctrl+Space to open a launcher
 The live session username is '<b>liveuser</b>' and the password is '<b>archlabs</b>'.
 For obvious reasons the live account has been given full sudo permissions.
 
-To install the system to your hard-disk, select the 'Install ArchLabs' entry.
+To install the system, select 'Install ArchLabs' in the openbox menu.
 
 
 
@@ -60,11 +60,14 @@ useradd -m -u 1000 -g users -G "$GRP" -s /bin/zsh $ISO_USER
 passwd $ISO_USER </tmp/.passwd >/dev/null
 rm -f /tmp/.passwd
 
+# auto login via startx
+rm -f /etc/systemd/system/getty.target.wants/getty@tty1.service
+ln -s /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
+sed -i "/ExecStart/ c ExecStart=-/sbin/agetty -a ${ISO_USER} %I \$TERM" /etc/systemd/system/autologin@.service
+
 # system services
 systemctl set-default graphical.target
-for i in "${SERVS[@]}"; do
-    systemctl enable "$i.service"
-done
+for i in "${SERVS[@]}"; do systemctl enable "$i.service"; done
 
 # Link rofi to dmenu
 ln -s /usr/bin/rofi /usr/bin/dmenu
@@ -101,14 +104,12 @@ sed -i '/al-kb-pipemenu/ a\
       <\/action>\
     <\/item>' /home/$ISO_USER/.config/openbox/menu.xml
 
+
 # Setup keyring & pacman
 dirmngr </dev/null
 gpg --receive-keys C1A60EACE707FDA5
 pacman-key --init
 pacman-key --populate archlinux
-for i in "${KEYS[@]}"; do
-    gpg --receive-keys "$i"
-    pacman-key -r "$i"
-done
+for i in "${KEYS[@]}"; do gpg --receive-keys "$i" ; pacman-key -r "$i"; done
 pacman-key --populate archlabs
-pacman -Syy --noconfirm
+pacman -Syyu --noconfirm
