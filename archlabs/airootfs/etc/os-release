@@ -5,5 +5,5 @@ VERSION_ID=x86_64
 PRETTY_NAME="ArchLabs Linux"
 ANSI_COLOR="0;36"
 HOME_URL="https://archlabsblog.wordpress.com"
-SUPPORT_URL="http://archlabs.prophpbb.com"
+SUPPORT_URL="https://forum.archlabslinux.com/"
 BUG_REPORT_URL="https://github.com/ARCHLabs"

@@ -1,5 +1,6 @@
 # base
 arch-install-scripts
+b43-firmware
 b43-fwcutter
 btrfs-progs
 clonezilla
@@ -92,6 +93,8 @@ pulseaudio-alsa
 
 # xfce
 xfce4-settings
+gtk-engine-murrine
+gtk-engines
 
 # openbox
 obconf
@@ -113,27 +116,6 @@ gvfs-nfs
 tumbler
 xdg-user-dirs-gtk
 
-# applications
-arandr
-audacious
-file-roller
-firefox
-galculator
-geany
-gparted
-gpicview
-gsimplecal
-mpv
-nitrogen
-pavucontrol
-ranger
-rofi
-termite
-thunar
-tint2
-trayer
-w3m
-
 # utilities
 compton
 conky
@@ -145,7 +127,6 @@ jsoncpp
 libmpdclient
 lm_sensors
 lsb-release
-neofetch
 numlockx
 p7zip
 pamixer
@@ -162,15 +143,32 @@ wmctrl
 xdotool
 zenity
 
-# fonts and themes
-gtk-engine-murrine
-gtk-engines
-ttf-freefont
-ttf-liberation
+# applications
+arandr
+audacious
+file-roller
+firefox
+geany
+gparted
+gpicview
+gsimplecal
+mpv
+nitrogen
+pavucontrol
+ranger
+rofi
+termite
+thunar
+tint2
+trayer
+w3m
+
+# fonts
+terminus-font
 ttf-roboto
 ttf-ubuntu-font-family
 
-# archlabs repo
+# archlabs packages
 archlabs-common
 archlabs-downgrade
 archlabs-fonts
@@ -183,7 +181,6 @@ archlabs-networkmanager-dmenu
 archlabs-ob-autostart
 archlabs-obkey
 archlabs-oblogout
-archlabs-opensnap
 archlabs-pacli
 archlabs-paranoid
 archlabs-pipemenus

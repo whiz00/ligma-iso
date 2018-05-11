@@ -7,4 +7,4 @@ while read -r pid; do
 done <<< "$(awk '{print $1}' <<< "$RUNNING")"
 
 termite --class="archlabs-installer" --title="ArchLabs Installer" \
-    --exec="sudo /archlabs-installer/archlabs-installer" &
+    --exec="sudo /archlabs-installer/archlabs-installer $@" &
