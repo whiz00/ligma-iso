@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+
+[[ -e /run/archiso/bootmnt && $TERM == "linux" ]] && setfont ter-116n
+
+while ! ping -c 1 www.github.com &>/dev/null; do
+    bt=" Archlabs Installer "
+    ttl=" Network Check "
+    msg="\nNo network connection detected!"
+    if [[ $(systemctl is-active NetworkManager) == "active" ]]; then
+        msg="$msg\n\nOpen Connection Dialog?\n\n"
+        dialog --backtitle "$bt" --title "$ttl" --yesno "$msg" 0 0 && nmtui || break
+    else
+        dialog --backtitle "$bt" --title "$ttl" --infobox "$msg\n\nExiting...\n\n" 0 0
+        sleep 2
+        break
+    fi
+done
+
+if ! pacman -Qq "archlabs-installer" &>/dev/null; then
+    clear
+    echo -e "\nUpdating the installer... Please Wait\n"
+    sudo pacman -Sy archlabs-installer --noconfirm 2>/dev/null
+fi
+
+clear
+echo -e "\nLaunching the installer...\n"
+sleep 1
+sudo /installer/installer

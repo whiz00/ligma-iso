@@ -2,23 +2,22 @@
 arch-install-scripts
 b43-firmware
 b43-fwcutter
+broadcom-wl
 btrfs-progs
 clonezilla
 crda
 darkhttpd
 ddrescue
 dhclient
+dhcpcd
 dmraid
 dnsmasq
 dnsutils
-dosfstools
 ethtool
 exfat-utils
 f2fs-tools
 fakeroot
 fsarchiver
-gnu-netcat
-gpm
 gptfdisk
 grml-zsh-config
 grub
@@ -27,24 +26,20 @@ hdparm
 iputils
 ipw2100-fw
 ipw2200-fw
-irssi
 lftp
-linux-atm
 lsscsi
 mtools
 ndisc6
 nfs-utils
 nilfs-utils
-nmap
 ntfs-3g
 ntp
-openconnect
 openssh
 openvpn
+pacman-contrib
 partclone
 parted
 partimage
-ppp
 pptpclient
 refind-efi
 rp-pppoe
@@ -52,28 +47,43 @@ rsync
 sdparm
 sg3_utils
 smartmontools
-speedtouch
 sudo
 tcpdump
-testdisk
 usb_modeswitch
-vpnc
-vte3
 wget
 wvdial
 xl2tpd
 zd1211-firmware
 
 # xorg
-mesa
 xorg-apps
+xorg-bdftopcf
+xorg-luit
+xorg-mkfontdir
+xorg-mkfontscale
+xorg-setxkbmap
+xorg-xauth
+xorg-xbacklight
+xorg-xdpyinfo
+xorg-xdriinfo
+xorg-xev
+xorg-xinput
+xorg-xkbcomp
+xorg-xkbevd
+xorg-xkill
+xorg-xmodmap
+xorg-xprop
+xorg-xrandr
+xorg-xrdb
+xorg-xset
+xorg-xsetroot
+xorg-xkbutils
+xorg-xwininfo
 xorg-drivers
-xorg-server
 xorg-xinit
 
 # installer
 dialog
-dmidecode
 os-prober
 wipe
 
@@ -81,7 +91,7 @@ wipe
 alsa-firmware
 alsa-lib
 alsa-plugins
-ffmpeg2.8
+ffmpeg
 gst-libav
 gst-plugins-base
 gst-plugins-good
@@ -131,12 +141,9 @@ numlockx
 p7zip
 pamixer
 playerctl
-polkit
 polkit-gnome
-python2-xdg
 reflector
 scrot
-sudo
 unrar
 volumeicon
 wmctrl
@@ -150,7 +157,6 @@ file-roller
 firefox
 geany
 gparted
-gpicview
 gsimplecal
 mpv
 nitrogen
@@ -160,13 +166,13 @@ rofi
 termite
 thunar
 tint2
-trayer
 w3m
 
 # fonts
-terminus-font
 ttf-roboto
+noto-fonts-emoji
 ttf-ubuntu-font-family
+wqy-zenhei
 
 # archlabs packages
 archlabs-common

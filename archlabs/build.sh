@@ -4,7 +4,8 @@ set -eu
 
 iso_name=archlabs
 iso_label="AL-X86_64"
-iso_version="$(date +%Y-%m)"
+iso_version="$(date +%Y.%m)"
+sub_version=""
 install_dir=arch
 work_dir=work
 out_dir=out
@@ -50,17 +51,14 @@ run_once() {
 make_pacman_conf() {
     local _cache_dirs
     _cache_dirs=($(pacman -v 2>&1 | grep '^Cache Dirs:' | sed 's/Cache Dirs:\s*//g'))
-    sed -r "s|^#?\\s*CacheDir.+|CacheDir = $(echo -n "${_cache_dirs[@]}")|g" \
-        "$script_path/pacman.conf" > $work_dir/pacman.conf
+    sed -r "s|^#?\\s*CacheDir.+|CacheDir = $(echo -n "${_cache_dirs[@]}")|g" "$script_path/pacman.conf" > $work_dir/pacman.conf
 }
 
 # Base installation, plus needed packages (airootfs)
 make_basefs() {
     PKGS="haveged intel-ucode memtest86+ mkinitcpio-nfs-utils nbd zsh"
-    setarch "$arch" mkarchiso "$verbose" -w "$work_dir/$arch" \
-        -C "$work_dir/pacman.conf" -D "$install_dir" init
-    setarch "$arch" mkarchiso "$verbose" -w "$work_dir/$arch" \
-        -C "$work_dir/pacman.conf" -D "$install_dir" -p "$PKGS" install
+    setarch "$arch" mkarchiso "$verbose" -w "$work_dir/$arch" -C "$work_dir/pacman.conf" -D "$install_dir" init
+    setarch "$arch" mkarchiso "$verbose" -w "$work_dir/$arch" -C "$work_dir/pacman.conf" -D "$install_dir" -p "$PKGS" install
 }
 
 # Additional packages (airootfs)
@@ -71,8 +69,7 @@ make_packages() {
 
 # Needed packages for x86_64 EFI boot
 make_packages_efi() {
-    setarch "$arch" mkarchiso "$verbose" -w "$work_dir/$arch" \
-        -C "$work_dir/pacman.conf" -D "$install_dir" -p "efitools" install
+    setarch "$arch" mkarchiso "$verbose" -w "$work_dir/$arch" -C "$work_dir/pacman.conf" -D "$install_dir" -p "efitools" install
 }
 
 # Copy mkinitcpio archiso hooks and build initramfs (airootfs)
@@ -106,10 +103,7 @@ make_customize_airootfs() {
     cp -af "$script_path/airootfs" "$work_dir/$arch"
     curl -o "$work_dir/$arch/airootfs/etc/pacman.d/mirrorlist" \
         'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&use_mirror_status=on'
-    lynx -dump -nolist 'https://wiki.archlinux.org/index.php/Installation_Guide?action=render' \
-        >> "$work_dir/$arch/airootfs/root/install.txt"
-    setarch "$arch" mkarchiso $verbose -w "$work_dir/$arch" -C "$work_dir/pacman.conf" \
-        -D "$install_dir" -r '/root/customize_airootfs.sh' run
+    setarch "$arch" mkarchiso $verbose -w "$work_dir/$arch" -C "$work_dir/pacman.conf" -D "$install_dir" -r '/root/customize_airootfs.sh' run
     rm "${work_dir}/${arch}/airootfs/root/customize_airootfs.sh"
 }
 
@@ -159,20 +153,15 @@ make_efi() {
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/PreLoader.efi $work_dir/iso/EFI/boot/bootx64.efi
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/HashTool.efi $work_dir/iso/EFI/boot/
     cp $work_dir/x86_64/airootfs/usr/lib/systemd/boot/efi/systemd-bootx64.efi $work_dir/iso/EFI/boot/loader.efi
-
     mkdir -p $work_dir/iso/loader/entries
     cp "$script_path/efiboot/loader/loader.conf" $work_dir/iso/loader/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf" $work_dir/iso/loader/entries/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf" $work_dir/iso/loader/entries/
-
     sed "s|%ARCHISO_LABEL%|${iso_label}|g;
          s|%INSTALL_DIR%|${install_dir}|g" \
         "$script_path/efiboot/loader/entries/archiso-x86_64-usb.conf" > $work_dir/iso/loader/entries/archiso-x86_64.conf
-
     URL="https://raw.githubusercontent.com/tianocore/edk2/master"
-    # EFI Shell 2.0 for UEFI 2.3+
     curl -o $work_dir/iso/EFI/shellx64_v2.efi $URL/ShellBinPkg/UefiShell/X64/Shell.efi
-    # EFI Shell 1.0 for non UEFI 2.3+
     curl -o $work_dir/iso/EFI/shellx64_v1.efi $URL/EdkShellBinPkg/FullShell/X64/Shell_Full.efi
 }
 
@@ -181,32 +170,25 @@ make_efiboot() {
     mkdir -p $work_dir/iso/EFI/archiso
     truncate -s 64M $work_dir/iso/EFI/archiso/efiboot.img
     mkfs.fat -n ARCHISO_EFI $work_dir/iso/EFI/archiso/efiboot.img
-
     mkdir -p $work_dir/efiboot
     mount $work_dir/iso/EFI/archiso/efiboot.img $work_dir/efiboot
-
     mkdir -p $work_dir/efiboot/EFI/archiso
     cp $work_dir/iso/$install_dir/boot/x86_64/vmlinuz $work_dir/efiboot/EFI/archiso/vmlinuz.efi
     cp $work_dir/iso/$install_dir/boot/x86_64/archiso.img $work_dir/efiboot/EFI/archiso/archiso.img
     cp $work_dir/iso/$install_dir/boot/intel_ucode.img $work_dir/efiboot/EFI/archiso/intel_ucode.img
-
     mkdir -p $work_dir/efiboot/EFI/boot
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/PreLoader.efi $work_dir/efiboot/EFI/boot/bootx64.efi
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/HashTool.efi $work_dir/efiboot/EFI/boot/
     cp $work_dir/x86_64/airootfs/usr/lib/systemd/boot/efi/systemd-bootx64.efi $work_dir/efiboot/EFI/boot/loader.efi
-
     mkdir -p $work_dir/efiboot/loader/entries
     cp "$script_path/efiboot/loader/loader.conf" $work_dir/efiboot/loader/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf" $work_dir/efiboot/loader/entries/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf" $work_dir/efiboot/loader/entries/
-
     sed "s|%ARCHISO_LABEL%|${iso_label}|g;
          s|%INSTALL_DIR%|${install_dir}|g" \
         "$script_path/efiboot/loader/entries/archiso-x86_64-cd.conf" > $work_dir/efiboot/loader/entries/archiso-x86_64.conf
-
     cp $work_dir/iso/EFI/shellx64_v2.efi $work_dir/efiboot/EFI/
     cp $work_dir/iso/EFI/shellx64_v1.efi $work_dir/efiboot/EFI/
-
     umount -d $work_dir/efiboot
 }
 
@@ -221,7 +203,7 @@ make_prepare() {
 
 # Build ISO
 make_iso() {
-    mkarchiso $verbose -w "$work_dir" -D "$install_dir" -L "$iso_label" -o "$out_dir" iso "$iso_name-$iso_version.iso"
+    mkarchiso $verbose -w "$work_dir" -D "$install_dir" -L "$iso_label" -o "$out_dir" iso "$iso_name-${iso_version}$sub_version.iso"
 }
 
 if [[ $EUID -ne 0 ]]; then
@@ -234,10 +216,11 @@ if [[ $arch != x86_64 ]]; then
     _usage 1
 fi
 
-while getopts 'N:V:L:D:w:o:g:vh' arg; do
+while getopts 'N:V:S:L:D:w:o:g:vh' arg; do
     case "$arg" in
         N) iso_name="$OPTARG" ;;
         V) iso_version="$OPTARG" ;;
+        S) sub_version="$OPTARG" ;;
         L) iso_label="$OPTARG" ;;
         D) install_dir="$OPTARG" ;;
         w) work_dir="$OPTARG" ;;

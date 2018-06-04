@@ -4,13 +4,14 @@
 [[ $- != *i* ]] && return
 
 # shell opts
-setopt AUTO_CD
-setopt BANG_HIST
-setopt EXTENDED_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_FIND_NO_DUPS
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
+setopt auto_cd
+setopt bang_hist
+setopt completealiases
+setopt extended_history
+setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt inc_append_history
+setopt share_history
 
 # alias
 alias l='ls'
