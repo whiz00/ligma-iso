@@ -1,6 +1,6 @@
-Building the iso
+### Building the iso
 
-Make sure that you have the package `archiso` installed on your system. You must build from an Arch, x86_64 system.
+Make sure that you have the package `archiso` installed and it must build on an `Arch x86_64` system.
 
 Clone the Archlabs-Iso repo onto your system.
 
@@ -12,10 +12,10 @@ I usually just make a directory called 'build' in my home folder.
 
 
 You need to move the entire 'archlabs' folder into the new directory that you made,
-but it is very important that you do it as root. Every file needs to be owned by "root".
+but it is very important that you do it as root. Every file needs to be owned by `root`.
 You can do this by opening a file manager as root. Or from the command line.
 
-If you cloned the repo in your Downloads folder, and then made a working directory called build, the command would look like this
+If you cloned the repo to `~/Downloads` and made a working directory called 'build'
 
     sudo cp -r ~/Downloads/Archlabs-Iso/archlabs ~/build/
 
