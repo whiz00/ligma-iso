@@ -5,6 +5,8 @@ set -eu
 iso_name=archlabs
 iso_label="AL-X86_64"
 iso_version="$(date +%Y.%m)"
+publisher="ArchLabs Linux <https://archlabslinux.com>"
+application="ArchLabs Linux Live/Rescue"
 sub_version=""
 install_dir=arch
 work_dir=work
@@ -17,23 +19,40 @@ script_path=$(readlink -f ${0%/*})
 _usage() {
     cat <<EOF
 
-    usage $0 [options]
+USAGE: $0 [OPTIONS]
 
-     General options:
-        -N <iso_name>       Set an iso filename (prefix)
-                            Default: $iso_name
-        -V <iso_version>    Set an iso version (in filename)
-                            Default: $iso_version
-        -L <iso_label>      Set an iso label (disk label)
-                            Default: $iso_label
-        -D <install_dir>    Set an install_dir (directory inside iso)
-                            Default: $install_dir
-        -w <work_dir>       Set the working directory
-                            Default: $work_dir
-        -o <out_dir>        Set the output directory
-                            Default: $out_dir
-        -v                  Enable verbose output
-        -h                  This help message
+OPTIONS:
+
+   -N <iso_name>       Set an iso filename (prefix)
+                       Default: $iso_name
+
+   -V <iso_version>    Set an iso version (in filename)
+                       Default: $iso_version
+
+   -S <sub_version>    Set an iso subversion (version suffix)
+                       Default: $sub_version
+
+   -L <iso_label>      Set an iso label (disk label)
+                       Default: $iso_label
+
+   -D <install_dir>    Set an install_dir (directory inside iso)
+                       Default: $install_dir
+
+   -P <publisher>      Set the iso publisher
+                       Default: $publisher
+
+   -A <application>    Set the iso application
+                       Default: $application
+
+   -w <work_dir>       Set the working directory
+                       Default: $work_dir
+
+   -o <out_dir>        Set the output directory
+                       Default: $out_dir
+
+   -v                  Enable verbose output
+
+   -h                  This help message
 
 EOF
 exit "$1"
@@ -50,8 +69,8 @@ run_once() {
 # Setup custom pacman.conf with current cache directories.
 make_pacman_conf() {
     local _cache_dirs
-    _cache_dirs=($(pacman -v 2>&1 | grep '^Cache Dirs:' | sed 's/Cache Dirs:\s*//g'))
-    sed -r "s|^#?\\s*CacheDir.+|CacheDir = $(echo -n "${_cache_dirs[@]}")|g" "$script_path/pacman.conf" > $work_dir/pacman.conf
+    _cache_dirs="$(pacman -v 2>&1 | grep '^Cache Dirs:' | sed 's/Cache Dirs:\s*//g')"
+    sed -r "s|^#?\\s*CacheDir.+|CacheDir = ${_cache_dirs}|g" "$script_path/pacman.conf" > $work_dir/pacman.conf
 }
 
 # Base installation, plus needed packages (airootfs)
@@ -203,7 +222,8 @@ make_prepare() {
 
 # Build ISO
 make_iso() {
-    mkarchiso $verbose -w "$work_dir" -D "$install_dir" -L "$iso_label" -o "$out_dir" iso "$iso_name-${iso_version}$sub_version.iso"
+    mkarchiso $verbose -w "$work_dir" -D "$install_dir" -L "$iso_label" -P "$publisher" -A "$application" \
+        -o "$out_dir" iso "$iso_name-${iso_version}$sub_version.iso"
 }
 
 if [[ $EUID -ne 0 ]]; then
@@ -216,13 +236,15 @@ if [[ $arch != x86_64 ]]; then
     _usage 1
 fi
 
-while getopts 'N:V:S:L:D:w:o:g:vh' arg; do
+while getopts 'N:V:S:L:D:P:A:w:o:g:vh' arg; do
     case "$arg" in
         N) iso_name="$OPTARG" ;;
         V) iso_version="$OPTARG" ;;
         S) sub_version="$OPTARG" ;;
         L) iso_label="$OPTARG" ;;
         D) install_dir="$OPTARG" ;;
+        P) publisher="$OPTARG" ;;
+        A) application="$OPTARG" ;;
         w) work_dir="$OPTARG" ;;
         o) out_dir="$OPTARG" ;;
         g) gpg_key="$OPTARG" ;;

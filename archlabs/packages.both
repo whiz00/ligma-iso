@@ -2,6 +2,7 @@
 arch-install-scripts
 b43-firmware
 b43-fwcutter
+bridge-utils
 broadcom-wl
 btrfs-progs
 clonezilla
@@ -57,28 +58,6 @@ zd1211-firmware
 
 # xorg
 xorg-apps
-xorg-bdftopcf
-xorg-luit
-xorg-mkfontdir
-xorg-mkfontscale
-xorg-setxkbmap
-xorg-xauth
-xorg-xbacklight
-xorg-xdpyinfo
-xorg-xdriinfo
-xorg-xev
-xorg-xinput
-xorg-xkbcomp
-xorg-xkbevd
-xorg-xkill
-xorg-xmodmap
-xorg-xprop
-xorg-xrandr
-xorg-xrdb
-xorg-xset
-xorg-xsetroot
-xorg-xkbutils
-xorg-xwininfo
 xorg-drivers
 xorg-xinit
 
@@ -163,23 +142,22 @@ nitrogen
 pavucontrol
 ranger
 rofi
-termite
 thunar
 tint2
 w3m
 
 # fonts
 ttf-roboto
-noto-fonts-emoji
 ttf-ubuntu-font-family
 wqy-zenhei
 
 # archlabs packages
+archlabs-aurman
 archlabs-common
-archlabs-downgrade
 archlabs-fonts
 archlabs-homepage
 archlabs-icons
+archlabs-installer
 archlabs-jgmenu
 archlabs-keyring
 archlabs-kickshaw
@@ -187,16 +165,15 @@ archlabs-networkmanager-dmenu
 archlabs-ob-autostart
 archlabs-obkey
 archlabs-oblogout
-archlabs-pacli
 archlabs-paranoid
 archlabs-pipemenus
 archlabs-polybar
 archlabs-screenlock
 archlabs-skippy-xd
+archlabs-st
 archlabs-themes
 archlabs-user-skel
 archlabs-wallpapers
-archlabs-yaourt
 
 # vbox
 virtualbox-guest-modules-arch

@@ -1,13 +1,3 @@
 #!/usr/bin/env bash
 
-
-cfg="/home/liveuser/.config/termite/config"
-sed -i 's/rgba(43,48,59,0.80)/#2b303b/g' $cfg
-sed -i 's/DejaVu Sans Mono 10/DejaVu Sans Mono 12/g' $cfg
-
-sleep 0.5
-termite --class="installer" --title="ArchLabs Installer" --exec="al-installer" &
-sleep 0.5
-
-sed -i 's/background = #2b303b/background = rgba(43,48,59,0.80)/g' $cfg
-sed -i 's/DejaVu Sans Mono 12/DejaVu Sans Mono 10/g' $cfg
+TERM='xterm-256color' st -c installer -t "ArchLabs Installer" -f "Hack:size=12" -e "al-installer" &
