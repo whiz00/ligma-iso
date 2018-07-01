@@ -41,7 +41,7 @@ When it's finished, there will be a directory called `out`, the iso will be in t
 
 ### Customization
 
-In the archlabs folder, there is a file called `packages.both`
+In the archlabs folder, there is a file called `packages`
 This file is a list of packages that will be included in the iso.
 You can add or remove items from this list for them to be included or removed.
 
