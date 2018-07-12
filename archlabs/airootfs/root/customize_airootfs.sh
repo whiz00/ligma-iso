@@ -87,4 +87,4 @@ gpg --receive-keys C1A60EACE707FDA5
 pacman-key --init
 pacman-key --populate archlinux
 pacman-key --populate archlabs
-pacman -Syu --noconfirm
+pacman -Syyu --noconfirm

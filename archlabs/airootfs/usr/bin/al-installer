@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 
+# simple wrapper script to update and launch the installer
+# located at /installer/installer
 
 [[ -e /run/archiso/bootmnt && $TERM == "linux" ]] && setfont ter-116n
 
-while ! (ping -c 1 archlabslinux.com &>/dev/null || ping -c 1 bitbucket.org &>/dev/null || ping -c 1 github.com &>/dev/null); do
-    bt=" Archlabs Installer "
-    ttl=" Network Check "
-    msg="\nNo network connection detected!"
+if ! (ping -c 1 archlabslinux.com || ping -c 1 google.com || ping -c 1 bitbucket.org) &>/dev/null; then
+    if ! (ping -c 1 github.com || ping -c 1 sourceforge.net) &>/dev/null; then
+        bt=" Archlabs Installer "
+        msg="\nNo network connection detected!"
+        if [[ $(systemctl is-active NetworkManager) == "active" ]]; then
+            hash nmtui &>/dev/null && nmtui
+        else
+            dialog --backtitle "$bt" --title " Network Check " --infobox \
+                "$msg\n\nYou may experience issues without a network connection...\n\n" 0 0
+            sleep 2
+        fi
 
-    if [[ $(systemctl is-active NetworkManager) == "active" ]]; then
-        msg="$msg\n\nOpen a connection dialog?\n\n"
-        dialog --backtitle "$bt" --title "$ttl" --yesno "$msg" 0 0 && nmtui
         clear
-        break
-    else
-        dialog --backtitle "$bt" --title "$ttl" --infobox "$msg\n\nYou may experience issues without a network connection...\n\n" 0 0
-        sleep 2
-        clear
-        break
     fi
-done
+fi
 
 # check if any updates for installer are available
 if sudo pacman -Syy && pacman -Qqu "archlabs-installer" &>/dev/null; then
@@ -30,4 +30,4 @@ fi
 clear
 echo -e "\nLaunching installer...\n"
 
-TERM='xterm-256color' sudo /installer/installer
+sudo /installer/installer $@
