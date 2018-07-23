@@ -1,9 +1,7 @@
-# Zshrc
+# ~/.zshrc
 
 # not running interactively then bail
 [[ $- != *i* ]] && return
-
-export ZDOTDIR="$HOME"
 
 # shell opts
 setopt autocd
@@ -13,7 +11,7 @@ setopt histfindnodups
 setopt incappendhistory
 setopt sharehistory
 
-# colors in less
+# colors in less (default PAGER in Arch)
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -22,27 +20,19 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-# reload zshrc
+# reload ~/.zshrc and compile to .zwc ...  ZDOTDIR see:
+# https://wiki.archlinux.org/index.php/zsh#Making_Zsh_your_default_shell
 function zsrc() {
     local cache=""
-    if [[ -n $ZSH_CACHE_DIR ]]; then
-        cache=$ZSH_CACHE_DIR
-    else
-        cache="$HOME/.cache"
-    fi
-
+    [[ -n $ZSH_CACHE_DIR ]] && cache=$ZSH_CACHE_DIR || cache="${ZDOTDIR:-$HOME}/.cache"
     autoload -U compinit zrecompile
     compinit -d "$cache/zcomp-$HOST"
-
-    for f in $ZDOTDIR/.zshrc "$cache/zcomp-$HOST"; do
+    for f in ${ZDOTDIR:-$HOME}/.zshrc "$cache/zcomp-$HOST"; do
         zrecompile -p $f && command rm -f $f.zwc.old
     done
-
-    source $ZDOTDIR/.zshrc
+    source ${ZDOTDIR:-$HOME}/.zshrc
 }
-
-# if .zwc compiled shell is missing recompile and source
-[[ ! -e $ZDOTDIR/.zshrc.zwc ]] && zsrc &>/dev/null
+[[ ! -e ${ZDOTDIR:-$HOME}/.zshrc.zwc ]] && zsrc &>/dev/null
 
 # aliases
 alias l='ls'

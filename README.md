@@ -9,7 +9,7 @@ The package `archiso` must be installed and it needs to be built on an `Arch x86
 
 First clone the repo to your system.
 
-    git clone --depth 1 https://github.com/ARCHLabs/Archlabs-Iso ~/Downloads/Archlabs-Iso
+    git clone --depth 1 https://bitbucket.org/archlabslinux/iso ~/Downloads/iso
 
 
 Next make a directory to build the iso in. It can be anywhere you like, it's just a place to work.
@@ -23,7 +23,7 @@ This can be done by opening a file manager as root, or from a terminal.
 
 If you cloned the repo and made a directory as shown above, then you can run
 
-    sudo cp -r ~/Downloads/Archlabs-Iso/archlabs ~/build/
+    sudo cp -r ~/Downloads/iso/archlabs ~/build/
 
 Before building, you will need to clean your pacman cache.
 I know, nobody likes to do that, but it avoids problems.
@@ -54,6 +54,7 @@ the `efiboot` folder alone, as well as the `isolinux` folder.
 
 The `pacman.conf` file that is in the archlabs directory is the `pacman.conf` that is used when
 building the iso. If you open the file, at the bottom there is the entry to the `archlabs_repo`
+and the `archlabs_unstable` repo.
 
 
 In the `airootfs` folder is the file system.

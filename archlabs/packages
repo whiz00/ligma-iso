@@ -1,4 +1,5 @@
 # base
+acpid
 arch-install-scripts
 b43-firmware
 b43-fwcutter
@@ -38,7 +39,6 @@ nfs-utils
 nilfs-utils
 nmap
 ntfs-3g
-ntp
 openconnect
 openssh
 openvpn
@@ -92,6 +92,7 @@ pulseaudio-alsa
 
 # xfce
 xfce4-settings
+xfce4-power-manager
 gtk-engines
 gtk-engine-murrine
 
@@ -101,7 +102,6 @@ openbox
 
 # network
 networkmanager
-networkmanager-dispatcher-ntpd
 wireless-regdb
 wpa_supplicant
 
@@ -120,6 +120,7 @@ dunst
 gnome-keyring
 htop
 imagemagick
+jgmenu
 jsoncpp
 libmpdclient
 lm_sensors
@@ -159,9 +160,6 @@ ttf-roboto
 ttf-ubuntu-font-family
 ttf-droid
 terminus-font
-# wqy-microhei
-# wqy-zenhei
-# noto-fonts-cjk
 
 # archlabs packages
 archlabs-aurman
@@ -170,7 +168,6 @@ archlabs-fonts
 archlabs-homepage
 archlabs-icons
 archlabs-installer
-archlabs-jgmenu
 archlabs-keyring
 archlabs-kickshaw
 archlabs-networkmanager-dmenu
