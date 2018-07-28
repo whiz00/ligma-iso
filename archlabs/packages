@@ -76,7 +76,7 @@ dialog
 os-prober
 wipe
 
-# audio/video codecs
+# codecs
 alsa-firmware
 alsa-lib
 alsa-plugins
@@ -114,13 +114,8 @@ tumbler
 xdg-user-dirs-gtk
 
 # utilities
-compton
-conky
-dunst
 gnome-keyring
-htop
 imagemagick
-jgmenu
 jsoncpp
 libmpdclient
 lm_sensors
@@ -141,16 +136,22 @@ zenity
 # applications
 arandr
 audacious
+compton
+conky
+dunst
 file-roller
 firefox
 geany
 gparted
 gsimplecal
+htop
+jgmenu
 mpv
 nitrogen
 pavucontrol
 ranger
 rofi
+termite
 thunar
 tint2
 w3m
@@ -161,9 +162,10 @@ ttf-ubuntu-font-family
 ttf-droid
 terminus-font
 
-# archlabs packages
+# archlabs
 archlabs-aurman
 archlabs-common
+archlabs-dARK
 archlabs-fonts
 archlabs-homepage
 archlabs-icons
@@ -179,7 +181,6 @@ archlabs-pipemenus
 archlabs-polybar
 archlabs-screenlock
 archlabs-skippy-xd
-archlabs-st
 archlabs-themes
 archlabs-user-skel
 archlabs-wallpapers

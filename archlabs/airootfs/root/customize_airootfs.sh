@@ -84,14 +84,14 @@ Thank you for trying out <b>ArchLabs Linux</b>\"" > /home/liveuser/bin/welcome.s
 
     # remove xorg configs in virtualbox
     sed -i '/automatically run startx/ i\
-grep -qi "hypervisor" <<< "$(dmesg)" && sudo rm -rf \/etc\/X11\/xorg.conf.d || sed -i "\/dmesg\/d" ~\/.zprofile' /home/liveuser/.zprofile
-
+(grep -qi "hypervisor" <<< "$(dmesg)" && [[ -d \/etc\/X11\/xorg.conf.d ]]) && sudo rm -rf \/etc\/X11\/xorg.conf.d || sed -i "\/dmesg\/d" ~\/.zprofile' /home/liveuser/.zprofile
 fi
 
 rm -f /tmp/.passwd
 
 # system services
-systemctl enable systemd-timesyncd.service NetworkManager.service -f
+systemctl enable systemd-timesyncd.service NetworkManager.service
+systemctl set-default multi-user.target
 
 # fonts
 ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d

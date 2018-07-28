@@ -4,10 +4,9 @@ set -eu
 
 iso_name=archlabs
 iso_label="AL_$(date +%Y%m)"
-iso_version="$(date +%Y.%m)"
+iso_version="$(date +%Y.%m.%d)"
 publisher="ArchLabs Linux <https://archlabslinux.com>"
 application="ArchLabs Linux Live/Rescue"
-sub_version=""
 install_dir=arch
 work_dir=work
 out_dir=out
@@ -30,9 +29,6 @@ OPTIONS:
 
    -V <iso_version>    Set an iso version (in filename)
                        Default: $iso_version
-
-   -S <sub_version>    Set an iso subversion (version suffix)
-                       Default: $sub_version
 
    -L <iso_label>      Set an iso label (disk label)
                        Default: $iso_label
@@ -138,8 +134,7 @@ make_boot_extra() {
 make_syslinux() {
     mkdir -p $work_dir/iso/$install_dir/boot/syslinux
     for _cfg in $script_path/syslinux/*.cfg; do
-        sed "s|%ARCHISO_LABEL%|${iso_label}|g;
-             s|%INSTALL_DIR%|${install_dir}|g" $_cfg > $work_dir/iso/$install_dir/boot/syslinux/${_cfg##*/}
+        sed "s|%ARCHISO_LABEL%|${iso_label}|g; s|%INSTALL_DIR%|${install_dir}|g" $_cfg > $work_dir/iso/$install_dir/boot/syslinux/${_cfg##*/}
     done
     cp "$script_path/syslinux/splash.png" $work_dir/iso/$install_dir/boot/syslinux
     cp "$work_dir/x86_64"/airootfs/usr/lib/syslinux/bios/*.c32 $work_dir/iso/$install_dir/boot/syslinux
@@ -169,8 +164,7 @@ make_efi() {
     cp "$script_path/efiboot/loader/loader.conf" $work_dir/iso/loader/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf" $work_dir/iso/loader/entries/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf" $work_dir/iso/loader/entries/
-    sed "s|%ARCHISO_LABEL%|${iso_label}|g;
-         s|%INSTALL_DIR%|${install_dir}|g" \
+    sed "s|%ARCHISO_LABEL%|${iso_label}|g; s|%INSTALL_DIR%|${install_dir}|g" \
         "$script_path/efiboot/loader/entries/archiso-x86_64-usb.conf" > $work_dir/iso/loader/entries/archiso-x86_64.conf
     URL="https://raw.githubusercontent.com/tianocore/edk2/master"
     curl -o $work_dir/iso/EFI/shellx64_v2.efi $URL/ShellBinPkg/UefiShell/X64/Shell.efi
@@ -196,8 +190,7 @@ make_efiboot() {
     cp "$script_path/efiboot/loader/loader.conf" $work_dir/efiboot/loader/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf" $work_dir/efiboot/loader/entries/
     cp "$script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf" $work_dir/efiboot/loader/entries/
-    sed "s|%ARCHISO_LABEL%|${iso_label}|g;
-         s|%INSTALL_DIR%|${install_dir}|g" \
+    sed "s|%ARCHISO_LABEL%|${iso_label}|g; s|%INSTALL_DIR%|${install_dir}|g" \
         "$script_path/efiboot/loader/entries/archiso-x86_64-cd.conf" > $work_dir/efiboot/loader/entries/archiso-x86_64.conf
     cp $work_dir/iso/EFI/shellx64_v2.efi $work_dir/efiboot/EFI/
     cp $work_dir/iso/EFI/shellx64_v1.efi $work_dir/efiboot/EFI/
@@ -215,8 +208,8 @@ make_prepare() {
 
 # Build ISO
 make_iso() {
-    mkarchiso $verbose -w "$work_dir" -D "$install_dir" -L "$iso_label" -P "$publisher" -A "$application" \
-        -o "$out_dir" iso "$iso_name-${iso_version}$sub_version.iso"
+    mkarchiso $verbose -w "$work_dir" -D "$install_dir" -L "$iso_label" -P "$publisher" \
+        -A "$application" -o "$out_dir" iso "$iso_name-$iso_version.iso"
 }
 
 if [[ $EUID -ne 0 ]]; then
@@ -224,11 +217,10 @@ if [[ $EUID -ne 0 ]]; then
     _usage 1
 fi
 
-while getopts 'N:V:S:L:D:P:A:w:o:g:vh' arg; do
+while getopts 'N:V:L:D:P:A:w:o:g:vh' arg; do
     case "$arg" in
         N) iso_name="$OPTARG" ;;
         V) iso_version="$OPTARG" ;;
-        S) sub_version="$OPTARG" ;;
         L) iso_label="$OPTARG" ;;
         D) install_dir="$OPTARG" ;;
         P) publisher="$OPTARG" ;;
