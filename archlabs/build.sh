@@ -1,12 +1,13 @@
 #!/bin/bash
+# vim:fdm=marker:fmr={,}
 
 set -eu
 
 iso_name=archlabs
 iso_label="AL_$(date +%Y%m)"
 iso_version="$(date +%Y.%m.%d)"
-publisher="ArchLabs Linux <https://archlabslinux.com>"
-application="ArchLabs Linux Live/Rescue"
+iso_publisher="ArchLabs Linux <https://archlabslinux.com>"
+iso_application="ArchLabs Linux Live/Rescue"
 install_dir=arch
 work_dir=work
 out_dir=out
@@ -17,47 +18,49 @@ script_path=$(readlink -f ${0%/*})
 
 umask 0022
 
-_usage() {
+_usage()
+{
     cat <<EOF
 
 USAGE: $0 [OPTIONS]
 
 OPTIONS:
 
-   -N <iso_name>       Set an iso filename (prefix)
-                       Default: $iso_name
+   -N <iso_name>         Set an iso filename (prefix)
+                         Default: $iso_name
 
-   -V <iso_version>    Set an iso version (in filename)
-                       Default: $iso_version
+   -V <iso_version>      Set an iso version (in filename)
+                         Default: $iso_version
 
-   -L <iso_label>      Set an iso label (disk label)
-                       Default: $iso_label
+   -L <iso_label>        Set an iso label (disk label)
+                         Default: $iso_label
 
-   -D <install_dir>    Set an install_dir (directory inside iso)
-                       Default: $install_dir
+   -D <install_dir>      Set an install_dir (directory inside iso)
+                         Default: $install_dir
 
-   -P <publisher>      Set the iso publisher
-                       Default: $publisher
+   -P <iso_publisher>    Set the iso iso_publisher
+                         Default: $iso_publisher
 
-   -A <application>    Set the iso application
-                       Default: $application
+   -A <iso_application>  Set the iso iso_application
+                         Default: $iso_application
 
-   -w <work_dir>       Set the working directory
-                       Default: $work_dir
+   -w <work_dir>         Set the working directory
+                         Default: $work_dir
 
-   -o <out_dir>        Set the output directory
-                       Default: $out_dir
+   -o <out_dir>          Set the output directory
+                         Default: $out_dir
 
-   -v                  Enable verbose output
+   -v                    Enable verbose output
 
-   -h                  This help message
+   -h                    This help message
 
 EOF
 exit "$1"
 }
 
 # Helper function to run make_*() only one time per architecture.
-run_once() {
+run_once()
+{
     if [[ ! -e $work_dir/build.$1 ]]; then
         $1
         touch "$work_dir/build.$1"
@@ -65,105 +68,117 @@ run_once() {
 }
 
 # Setup custom pacman.conf with current cache directories.
-make_pacman_conf() {
+make_pacman_conf()
+{
     local _cache_dirs
     _cache_dirs=($(pacman -v 2>&1 | grep '^Cache Dirs:' | sed 's/Cache Dirs:\s*//g'))
-    sed -r "s|^#?\\s*CacheDir.+|CacheDir = $(echo -n ${_cache_dirs[@]})|g" "$script_path/pacman.conf" > $work_dir/pacman.conf
+    sed -r "s|^#?\\s*CacheDir.+|CacheDir = $(echo -n "${_cache_dirs[@]}")|g" $script_path/pacman.conf > $work_dir/pacman.conf
 }
 
 # Base installation, plus needed packages (airootfs)
-make_basefs() {
-    mkarchiso "$verbose" -w "$work_dir/x86_64" -C "$work_dir/pacman.conf" -D "$install_dir" init
-    mkarchiso "$verbose" -w "$work_dir/x86_64" -C "$work_dir/pacman.conf" -D "$install_dir" -p "haveged intel-ucode memtest86+ mkinitcpio-nfs-utils nbd zsh efitools" install
+make_basefs()
+{
+    mkarchiso $verbose -w $work_dir/x86_64 -C $work_dir/pacman.conf -D $install_dir init
+    mkarchiso $verbose -w $work_dir/x86_64 -C $work_dir/pacman.conf -D $install_dir -p "haveged intel-ucode amd-ucode memtest86+ mkinitcpio-nfs-utils nbd zsh efitools" install
 }
 
 # Additional packages (airootfs)
-make_packages() {
-    mkarchiso "$verbose" -w "$work_dir/x86_64" -C "$work_dir/pacman.conf" -D "$install_dir" -p "$(grep -hv ^# "$script_path/packages")" install
+make_packages()
+{
+    mkarchiso $verbose -w $work_dir/x86_64 -C $work_dir/pacman.conf -D $install_dir -p "$(grep -hv ^# $script_path/packages)" install
 }
 
 # Copy mkinitcpio archiso hooks and build initramfs (airootfs)
-make_setup_mkinitcpio() {
+make_setup_mkinitcpio()
+{
     local _hook
-    mkdir -p "$work_dir/x86_64/airootfs/etc/initcpio/hooks"
-    mkdir -p "$work_dir/x86_64/airootfs/etc/initcpio/install"
+    mkdir -p $work_dir/x86_64/airootfs/etc/initcpio/{hooks,install}
     for _hook in archiso archiso_shutdown archiso_pxe_common archiso_pxe_nbd archiso_pxe_http archiso_pxe_nfs archiso_loop_mnt; do
-        cp /usr/lib/initcpio/hooks/$_hook "$work_dir/x86_64/airootfs/etc/initcpio/hooks"
-        cp /usr/lib/initcpio/install/$_hook "$work_dir/x86_64/airootfs/etc/initcpio/install"
+        cp /usr/lib/initcpio/hooks/$_hook $work_dir/x86_64/airootfs/etc/initcpio/hooks
+        cp /usr/lib/initcpio/install/$_hook $work_dir/x86_64/airootfs/etc/initcpio/install
     done
-    sed -i "s|/usr/lib/initcpio/|/etc/initcpio/|g" "$work_dir/x86_64/airootfs/etc/initcpio/install/archiso_shutdown"
-    cp /usr/lib/initcpio/install/archiso_kms "$work_dir/x86_64/airootfs/etc/initcpio/install"
-    cp /usr/lib/initcpio/archiso_shutdown "$work_dir/x86_64/airootfs/etc/initcpio"
-    cp "$script_path/mkinitcpio.conf" "$work_dir/x86_64/airootfs/etc/mkinitcpio-archiso.conf"
+    sed -i "s|/usr/lib/initcpio/|/etc/initcpio/|g" $work_dir/x86_64/airootfs/etc/initcpio/install/archiso_shutdown
+    cp /usr/lib/initcpio/install/archiso_kms $work_dir/x86_64/airootfs/etc/initcpio/install
+    cp /usr/lib/initcpio/archiso_shutdown $work_dir/x86_64/airootfs/etc/initcpio
+    cp $script_path/mkinitcpio.conf $work_dir/x86_64/airootfs/etc/mkinitcpio-archiso.conf
+    # shellcheck disable=2034
     gnupg_fd=
     if [[ $gpg_key ]]; then
       gpg --export $gpg_key >$work_dir/gpgkey
       exec 17<>$work_dir/gpgkey
     fi
-    ARCHISO_GNUPG_FD=${gpg_key:+17} mkarchiso "$verbose" -w "$work_dir/x86_64" -C "$work_dir/pacman.conf" -D "$install_dir" -r 'mkinitcpio -c /etc/mkinitcpio-archiso.conf -k /boot/vmlinuz-linux -g /boot/archiso.img' run
+    ARCHISO_GNUPG_FD=${gpg_key:+17} mkarchiso $verbose -w $work_dir/x86_64 -C $work_dir/pacman.conf -D $install_dir -r 'mkinitcpio -c /etc/mkinitcpio-archiso.conf -k /boot/vmlinuz-linux -g /boot/archiso.img' run
     if [[ $gpg_key ]]; then
       exec 17<&-
     fi
 }
 
 # Customize installation (airootfs)
-make_customize_airootfs() {
-    cp -af "$script_path/airootfs" "$work_dir/x86_64"
-    curl -o "$work_dir/x86_64/airootfs/etc/pacman.d/mirrorlist" \
-        'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&use_mirror_status=on'
-    mkarchiso $verbose -w "$work_dir/x86_64" -C "$work_dir/pacman.conf" -D "$install_dir" -r '/root/customize_airootfs.sh' run
-    rm "${work_dir}/x86_64/airootfs/root/customize_airootfs.sh"
+make_customize_airootfs()
+{
+    cp -af $script_path/airootfs $work_dir/x86_64
+    curl -o $work_dir/x86_64/airootfs/etc/pacman.d/mirrorlist 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&use_mirror_status=on'
+
+    mkarchiso $verbose -w $work_dir/x86_64 -C $work_dir/pacman.conf -D $install_dir -r '/root/customize_airootfs.sh' run
+    rm $work_dir/x86_64/airootfs/root/customize_airootfs.sh
 }
 
 # Prepare kernel/initramfs ${install_dir}/boot/
-make_boot() {
-    mkdir -p "$work_dir/iso/$install_dir/boot/x86_64"
-    cp "$work_dir/x86_64/airootfs/boot/archiso.img" "$work_dir/iso/$install_dir/boot/x86_64/archiso.img"
-    cp "$work_dir/x86_64/airootfs/boot/vmlinuz-linux" "$work_dir/iso/$install_dir/boot/x86_64/vmlinuz"
+make_boot()
+{
+    mkdir -p $work_dir/iso/$install_dir/boot/x86_64
+    cp $work_dir/x86_64/airootfs/boot/archiso.img $work_dir/iso/$install_dir/boot/x86_64/archiso.img
+    cp $work_dir/x86_64/airootfs/boot/vmlinuz-linux $work_dir/iso/$install_dir/boot/x86_64/vmlinuz
 }
 
 # Add other aditional/extra files to ${install_dir}/boot/
-make_boot_extra() {
-    cp "$work_dir/x86_64/airootfs/boot/memtest86+/memtest.bin" $work_dir/iso/$install_dir/boot/memtest
-    cp "$work_dir/x86_64/airootfs/usr/share/licenses/common/GPL2/license.txt" $work_dir/iso/$install_dir/boot/memtest.COPYING
-    cp "$work_dir/x86_64/airootfs/boot/intel-ucode.img" $work_dir/iso/$install_dir/boot/intel_ucode.img
-    cp "$work_dir/x86_64/airootfs/usr/share/licenses/intel-ucode/LICENSE" $work_dir/iso/$install_dir/boot/intel_ucode.LICENSE
+make_boot_extra()
+{
+    cp $work_dir/x86_64/airootfs/boot/memtest86+/memtest.bin $work_dir/iso/$install_dir/boot/memtest
+    cp $work_dir/x86_64/airootfs/usr/share/licenses/common/GPL2/license.txt $work_dir/iso/$install_dir/boot/memtest.COPYING
+    cp $work_dir/x86_64/airootfs/boot/intel-ucode.img $work_dir/iso/$install_dir/boot/intel_ucode.img
+    cp $work_dir/x86_64/airootfs/usr/share/licenses/intel-ucode/LICENSE $work_dir/iso/$install_dir/boot/intel_ucode.LICENSE
+    cp $work_dir/x86_64/airootfs/boot/amd-ucode.img $work_dir/iso/$install_dir/boot/amd_ucode.img
+    cp $work_dir/x86_64/airootfs/usr/share/licenses/amd-ucode/LICENSE $work_dir/iso/$install_dir/boot/amd_ucode.LICENSE
 }
 
 # Prepare /${install_dir}/boot/syslinux
-make_syslinux() {
+make_syslinux()
+{
     mkdir -p $work_dir/iso/$install_dir/boot/syslinux
-    for _cfg in $script_path/syslinux/*.cfg; do
+    for _cfg in "$script_path"/syslinux/*.cfg; do
         sed "s|%ARCHISO_LABEL%|${iso_label}|g; s|%INSTALL_DIR%|${install_dir}|g" $_cfg > $work_dir/iso/$install_dir/boot/syslinux/${_cfg##*/}
     done
-    cp "$script_path/syslinux/splash.png" $work_dir/iso/$install_dir/boot/syslinux
-    cp "$work_dir/x86_64"/airootfs/usr/lib/syslinux/bios/*.c32 $work_dir/iso/$install_dir/boot/syslinux
-    cp "$work_dir/x86_64/airootfs/usr/lib/syslinux/bios/lpxelinux.0" $work_dir/iso/$install_dir/boot/syslinux
-    cp "$work_dir/x86_64/airootfs/usr/lib/syslinux/bios/memdisk" $work_dir/iso/$install_dir/boot/syslinux
+    cp $script_path/syslinux/splash.png $work_dir/iso/$install_dir/boot/syslinux
+    cp $work_dir/x86_64/airootfs/usr/lib/syslinux/bios/*.c32 $work_dir/iso/$install_dir/boot/syslinux
+    cp $work_dir/x86_64/airootfs/usr/lib/syslinux/bios/lpxelinux.0 $work_dir/iso/$install_dir/boot/syslinux
+    cp $work_dir/x86_64/airootfs/usr/lib/syslinux/bios/memdisk $work_dir/iso/$install_dir/boot/syslinux
     mkdir -p $work_dir/iso/$install_dir/boot/syslinux/hdt
-    gzip -c -9 "$work_dir/x86_64/airootfs/usr/share/hwdata/pci.ids" > $work_dir/iso/$install_dir/boot/syslinux/hdt/pciids.gz
-    gzip -c -9 "$work_dir/x86_64"/airootfs/usr/lib/modules/*-ARCH/modules.alias > $work_dir/iso/$install_dir/boot/syslinux/hdt/modalias.gz
+    gzip -c -9 $work_dir/x86_64/airootfs/usr/share/hwdata/pci.ids > $work_dir/iso/$install_dir/boot/syslinux/hdt/pciids.gz
+    gzip -c -9 $work_dir/x86_64/airootfs/usr/lib/modules/*-ARCH/modules.alias > $work_dir/iso/$install_dir/boot/syslinux/hdt/modalias.gz
 }
 
 # Prepare /isolinux
-make_isolinux() {
+make_isolinux()
+{
     mkdir -p $work_dir/iso/isolinux
     sed "s|%INSTALL_DIR%|${install_dir}|g" "$script_path/isolinux/isolinux.cfg" > $work_dir/iso/isolinux/isolinux.cfg
-    cp "$work_dir/x86_64/airootfs/usr/lib/syslinux/bios/isolinux.bin" $work_dir/iso/isolinux/
-    cp "$work_dir/x86_64/airootfs/usr/lib/syslinux/bios/isohdpfx.bin" $work_dir/iso/isolinux/
-    cp "$work_dir/x86_64/airootfs/usr/lib/syslinux/bios/ldlinux.c32" $work_dir/iso/isolinux/
+    cp $work_dir/x86_64/airootfs/usr/lib/syslinux/bios/isolinux.bin $work_dir/iso/isolinux/
+    cp $work_dir/x86_64/airootfs/usr/lib/syslinux/bios/isohdpfx.bin $work_dir/iso/isolinux/
+    cp $work_dir/x86_64/airootfs/usr/lib/syslinux/bios/ldlinux.c32 $work_dir/iso/isolinux/
 }
 
 # Prepare /EFI
-make_efi() {
+make_efi()
+{
     mkdir -p $work_dir/iso/EFI/boot
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/PreLoader.efi $work_dir/iso/EFI/boot/bootx64.efi
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/HashTool.efi $work_dir/iso/EFI/boot/
     cp $work_dir/x86_64/airootfs/usr/lib/systemd/boot/efi/systemd-bootx64.efi $work_dir/iso/EFI/boot/loader.efi
     mkdir -p $work_dir/iso/loader/entries
-    cp "$script_path/efiboot/loader/loader.conf" $work_dir/iso/loader/
-    cp "$script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf" $work_dir/iso/loader/entries/
-    cp "$script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf" $work_dir/iso/loader/entries/
+    cp $script_path/efiboot/loader/loader.conf $work_dir/iso/loader/
+    cp $script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf $work_dir/iso/loader/entries/
+    cp $script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf $work_dir/iso/loader/entries/
     sed "s|%ARCHISO_LABEL%|${iso_label}|g; s|%INSTALL_DIR%|${install_dir}|g" \
         "$script_path/efiboot/loader/entries/archiso-x86_64-usb.conf" > $work_dir/iso/loader/entries/archiso-x86_64.conf
     URL="https://raw.githubusercontent.com/tianocore/edk2/master"
@@ -172,24 +187,29 @@ make_efi() {
 }
 
 # Prepare efiboot.img::/EFI for "El Torito" EFI boot mode
-make_efiboot() {
+make_efiboot()
+{
     mkdir -p $work_dir/iso/EFI/archiso
     truncate -s 64M $work_dir/iso/EFI/archiso/efiboot.img
     mkfs.fat -n ARCHISO_EFI $work_dir/iso/EFI/archiso/efiboot.img
+
     mkdir -p $work_dir/efiboot
     mount $work_dir/iso/EFI/archiso/efiboot.img $work_dir/efiboot
+
     mkdir -p $work_dir/efiboot/EFI/archiso
     cp $work_dir/iso/$install_dir/boot/x86_64/vmlinuz $work_dir/efiboot/EFI/archiso/vmlinuz.efi
     cp $work_dir/iso/$install_dir/boot/x86_64/archiso.img $work_dir/efiboot/EFI/archiso/archiso.img
     cp $work_dir/iso/$install_dir/boot/intel_ucode.img $work_dir/efiboot/EFI/archiso/intel_ucode.img
+
     mkdir -p $work_dir/efiboot/EFI/boot
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/PreLoader.efi $work_dir/efiboot/EFI/boot/bootx64.efi
     cp $work_dir/x86_64/airootfs/usr/share/efitools/efi/HashTool.efi $work_dir/efiboot/EFI/boot/
     cp $work_dir/x86_64/airootfs/usr/lib/systemd/boot/efi/systemd-bootx64.efi $work_dir/efiboot/EFI/boot/loader.efi
+
     mkdir -p $work_dir/efiboot/loader/entries
-    cp "$script_path/efiboot/loader/loader.conf" $work_dir/efiboot/loader/
-    cp "$script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf" $work_dir/efiboot/loader/entries/
-    cp "$script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf" $work_dir/efiboot/loader/entries/
+    cp $script_path/efiboot/loader/loader.conf $work_dir/efiboot/loader/
+    cp $script_path/efiboot/loader/entries/uefi-shell-v2-x86_64.conf $work_dir/efiboot/loader/entries/
+    cp $script_path/efiboot/loader/entries/uefi-shell-v1-x86_64.conf $work_dir/efiboot/loader/entries/
     sed "s|%ARCHISO_LABEL%|${iso_label}|g; s|%INSTALL_DIR%|${install_dir}|g" \
         "$script_path/efiboot/loader/entries/archiso-x86_64-cd.conf" > $work_dir/efiboot/loader/entries/archiso-x86_64.conf
     cp $work_dir/iso/EFI/shellx64_v2.efi $work_dir/efiboot/EFI/
@@ -198,18 +218,20 @@ make_efiboot() {
 }
 
 # Build airootfs filesystem image
-make_prepare() {
-    cp -a -l -f "$work_dir/x86_64/airootfs" $work_dir
-    mkarchiso $verbose -w "$work_dir" -D "$install_dir" pkglist
-    mkarchiso $verbose -w "$work_dir" -D "$install_dir" ${gpg_key:+-g $gpg_key} prepare
+make_prepare()
+{
+    cp -a -l -f $work_dir/x86_64/airootfs $work_dir
+    mkarchiso $verbose -w $work_dir -D $install_dir pkglist
+    mkarchiso $verbose -w $work_dir -D $install_dir ${gpg_key:+-g $gpg_key} prepare
     rm -rf $work_dir/airootfs
     # rm -rf $work_dir/x86_64/airootfs (if low space, this helps)
 }
 
 # Build ISO
-make_iso() {
-    mkarchiso $verbose -w "$work_dir" -D "$install_dir" -L "$iso_label" -P "$publisher" \
-        -A "$application" -o "$out_dir" iso "$iso_name-$iso_version.iso"
+make_iso()
+{
+    mkarchiso $verbose -w $work_dir -D $install_dir -L "$iso_label" -P "$iso_publisher" \
+        -A "$iso_application" -o $out_dir iso "$iso_name-$iso_version.iso"
 }
 
 if [[ $EUID -ne 0 ]]; then
@@ -223,30 +245,19 @@ while getopts 'N:V:L:D:P:A:w:o:g:vh' arg; do
         V) iso_version="$OPTARG" ;;
         L) iso_label="$OPTARG" ;;
         D) install_dir="$OPTARG" ;;
-        P) publisher="$OPTARG" ;;
-        A) application="$OPTARG" ;;
+        P) iso_publisher="$OPTARG" ;;
+        A) iso_application="$OPTARG" ;;
         w) work_dir="$OPTARG" ;;
         o) out_dir="$OPTARG" ;;
         g) gpg_key="$OPTARG" ;;
         v) verbose="-v" ;;
         h) _usage 0 ;;
-        *) echo "Invalid argument '$arg'"
-            _usage 1
+        *) echo "Invalid argument '$arg'"; _usage 1
     esac
 done
 
-mkdir -p "$work_dir"
+mkdir -p $work_dir
 
-run_once make_pacman_conf
-run_once make_basefs
-run_once make_packages
-run_once make_setup_mkinitcpio
-run_once make_customize_airootfs
-run_once make_boot
-run_once make_boot_extra
-run_once make_syslinux
-run_once make_isolinux
-run_once make_efi
-run_once make_efiboot
-run_once make_prepare
-run_once make_iso
+for f in make_{pacman_conf,basefs,packages,setup_mkinitcpio,customize_airootfs,boot,boot_extra,syslinux,isolinux,efi,efiboot,prepare,iso}; do
+    run_once $f
+done

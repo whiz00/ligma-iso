@@ -1,37 +1,51 @@
-# ~/.bashrc
+#!/bin/bash
 
-# not running interactively then bail
-[[ $- != *i* ]] && return
+# catch non-bash and non-interactive shells
+[[ $- == *i* && $BASH_VERSION ]] && SHELL=/bin/bash || return 0
 
-# shell opts
-shopt -s autocd
-shopt -s cdspell
-shopt -s cmdhist
-shopt -s histappend
+# set some defaults
+export MANWIDTH=100
+export HISTSIZE=10000
+export HISTIGNORE="q:f:v"
+
+# colors in less (manpager)
+export LESS_TERMCAP_mb=$'\e[01;31m'
+export LESS_TERMCAP_md=$'\e[01;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;44;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[01;32m'
+
+# ensure ~/bin is on the path
+[[ $PATH =~ ~/bin ]] || PATH=~/bin:$PATH
+
+set -o vi
+set -o notify
+
+shopt -s direxpand
+shopt -s checkhash
+shopt -s sourcepath
 shopt -s expand_aliases
+shopt -s autocd cdspell
+shopt -s extglob dotglob
+shopt -s no_empty_cmd_completion
+shopt -s autocd cdable_vars cdspell
+shopt -s cmdhist histappend histreedit histverify
+[[ $DISPLAY ]] && shopt -s checkwinsize
 
-# colors in less
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+# prompt if file sourcing below fails
+PS1='[\u@\h \W]\$ '
 
-# prompt
-PS1='\u@\h \W \$ '
+# comment out for a multi-line prompt without user@host
+# and fancy unicode linebreak-wraps
+export PROMPT_LNBR1=''
+export PROMPT_MULTILINE=''
+export PROMPT_USERFMT='\u\[\e[0m\]@\[\e[31m\]\h '
 
-# alias
-alias l='ls'
-alias la='ls -A'
-alias ll='ls -lA'
-alias ls='ls --color=auto'
-alias upd='sudo pacman -Syyu'
-alias pac='sudo pacman --color auto'
-alias merge='xrdb -merge ~/.Xresources'
-alias grubup='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias mirrors='sudo reflector --score 100 --fastest 25 \
-    --sort rate --save /etc/pacman.d/mirrorlist --verbose'
+# source shell configs
+for f in "$HOME/.bash/"*?.bash "$HOME/.zsh/generic/"*?.sh; do
+    . "$f"
+done
 
 al-info

@@ -3,13 +3,11 @@
 # catch non-zsh and non-interactive shells
 [[ $- == *i* && $ZSH_VERSION ]] && SHELL=/usr/bin/zsh || return 0
 
-# set some defaults
-export MANWIDTH=100
-export HISTSIZE=10000
-export SAVEHIST=10000
-
 # path to the framework root directory
 SIMPL_ZSH_DIR=~/.zsh
+
+# use ~/.cache history location when not root
+[[ $(whoami) == 'root' ]] || HISTFILE=~/.cache/.zsh_history
 
 # reduce system calls for timezone
 typeset -gx TZ=:/etc/localtime
@@ -31,14 +29,22 @@ for f in "$SIMPL_ZSH_DIR/generic/"*?.sh "$SIMPL_ZSH_DIR"/{settings,plugins}/*?.z
     . "$f" 2>/dev/null
 done
 
-# comment out for a multi-line prompt without user@host
-# and fancy unicode linebreak-wraps
-PROMPT_LNBR1=''
-PROMPT_MULTILINE=''
-PROMPT_USERFMT='%n%f@%F{red}%m'
+## User configuration below
 
-# load the prompt last
+export MANWIDTH=100
+export IGNOREEOF=100
+export HISTSIZE=10000
+export SAVEHIST=10000
+
+# ...
+
+# set the prompt last to allow configuration above to take effect
+#
+# To add or create your own theme create
+#
+#       themes/prompt_<PROMPT_NAME>_setup
+#
+# then change the prompt used here
+#
 prompt simpl
 
-# system info and AL ascii art
-al-info

@@ -1,9 +1,9 @@
 NAME="ArchLabs"
 ID=ArchLabs
 ID_LIKE="arch"
-VERSION_ID=x86_64
+VERSION_ID=2018.12.01
 PRETTY_NAME="ArchLabs Linux"
 ANSI_COLOR="0;36"
 HOME_URL="https://archlabsblog.wordpress.com"
 SUPPORT_URL="https://forum.archlabslinux.com/"
-BUG_REPORT_URL="https://github.com/ARCHLabs"
+BUG_REPORT_URL="https://bitbucket.org/archlabslinux"

@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-termite --class='installer' -t "ArchLabs Installer" -e "sudo /installer/installer" &

@@ -1,78 +1,47 @@
 # base
-acpid
 arch-install-scripts
 b43-firmware
 b43-fwcutter
-bridge-utils
 broadcom-wl
-btrfs-progs
 clonezilla
-crda
-darkhttpd
-ddrescue
 dhclient
 dhcpcd
-dmidecode
-dmraid
-dnsmasq
-dnsutils
 ethtool
 exfat-utils
 f2fs-tools
 fakeroot
-fsarchiver
-gnu-netcat
-gpm
 gptfdisk
-grml-zsh-config
 grub
-gvim
+vim
 hdparm
 ipw2100-fw
 ipw2200-fw
-irssi
-lftp
-lsscsi
-mtools
-ndisc6
+laptop-detect
 nfs-utils
 nilfs-utils
-nmap
 ntfs-3g
-openconnect
-openssh
-openvpn
 pacman-contrib
-partclone
 parted
-partimage
-ppp
-pptpclient
 refind-efi
-rp-pppoe
 rsync
 sdparm
-sg3_utils
 smartmontools
 sudo
-tcpdump
-testdisk
-usb_modeswitch
-vpnc
 wget
 wireless_tools
 wpa_actiond
-wvdial
 xl2tpd
 
 # xorg
 mesa
 xorg-apps
 xorg-drivers
+xorg-server
 xorg-xinit
 
 # installer
 dialog
+parted
 os-prober
 wipe
 
@@ -93,12 +62,7 @@ pulseaudio-alsa
 # xfce
 xfce4-settings
 xfce4-power-manager
-gtk-engines
 gtk-engine-murrine
-
-# openbox
-obconf
-openbox
 
 # network
 networkmanager
@@ -111,13 +75,9 @@ gvfs-afc
 gvfs-mtp
 gvfs-nfs
 tumbler
-xdg-user-dirs-gtk
 
 # utilities
 gnome-keyring
-imagemagick
-jsoncpp
-libmpdclient
 lm_sensors
 lsb-release
 numlockx
@@ -130,61 +90,25 @@ scrot
 unrar
 volumeicon
 wmctrl
+xclip
 xdotool
-zenity
 
 # applications
 arandr
-audacious
 compton
-conky
 dunst
-file-roller
-firefox
-geany
-gparted
+feh
 gsimplecal
 htop
-jgmenu
-mpv
 nitrogen
 pavucontrol
 ranger
-rofi
-termite
-thunar
-tint2
 w3m
 
 # fonts
-ttf-roboto
-ttf-ubuntu-font-family
-ttf-droid
 terminus-font
+ttf-dejavu
 
 # archlabs
-archlabs-aurman
-archlabs-common
-archlabs-dARK
-archlabs-fonts
-archlabs-homepage
-archlabs-icons
 archlabs-installer
-archlabs-keyring
-archlabs-kickshaw
-archlabs-networkmanager-dmenu
-archlabs-ob-autostart
-archlabs-obkey
-archlabs-oblogout
-archlabs-paranoid
-archlabs-pipemenus
-archlabs-polybar
-archlabs-screenlock
-archlabs-skippy-xd
-archlabs-themes
-archlabs-user-skel
-archlabs-wallpapers
-
-# vbox
-virtualbox-guest-modules-arch
-virtualbox-guest-utils
+archlabs_unstable/archlabs
