@@ -19,8 +19,6 @@ cat >> /root/.zshrc << EOF
 EOF
 
 systemctl enable systemd-timesyncd.service NetworkManager.service
-# ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
-# ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
 sed -i 's/#export/export/g' /etc/profile.d/freetype2.sh
 
 gpg --receive-keys C1A60EACE707FDA5

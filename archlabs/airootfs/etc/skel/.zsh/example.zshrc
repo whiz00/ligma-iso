@@ -25,7 +25,7 @@ typeset -U fpath=("$SIMPL_ZSH_DIR/"{completion,themes} $fpath)
 autoload -U promptinit && promptinit
 
 # source shell configuration files
-for f in "$SIMPL_ZSH_DIR/generic/"*?.sh "$SIMPL_ZSH_DIR"/{settings,plugins}/*?.zsh; do
+for f in "$SIMPL_ZSH_DIR"/{settings,plugins}/*?.zsh; do
     . "$f" 2>/dev/null
 done
 

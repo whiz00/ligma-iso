@@ -27,15 +27,17 @@ typeset -U fpath=("$SIMPL_ZSH_DIR/"{completion,themes} $fpath)
 autoload -U promptinit && promptinit
 
 # source shell configuration files
-for f in "$SIMPL_ZSH_DIR/generic/"*?.sh "$SIMPL_ZSH_DIR"/{settings,plugins}/*?.zsh; do
+for f in "$SIMPL_ZSH_DIR"/{settings,plugins}/*?.zsh; do
     . "$f" 2>/dev/null
 done
 
-# comment out for a multi-line prompt without user@host
-# and fancy unicode linebreak-wraps
-PROMPT_LNBR1=''
-PROMPT_MULTILINE=''
-PROMPT_USERFMT='%n%f@%F{red}%m'
+# uncomment these lines to disable the multi-line prompt
+# add user@host, and remove the unicode line-wrap characters
+
+# PROMPT_LNBR1=''
+# PROMPT_MULTILINE=''
+# PROMPT_USERFMT='%n%f@%F{red}%m'
+# PROMPT_ECODE="%(?,,%F{red}%? )"
 
 # load the prompt last
 prompt simpl

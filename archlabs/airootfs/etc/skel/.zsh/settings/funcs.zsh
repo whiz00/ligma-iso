@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/zsh
 
 # shell helper functions
 # mostly written by Nathaniel Maia, some pilfered from around the web
@@ -15,13 +15,6 @@ cd()
 {
     builtin cd "$@" && command ls --color=auto -F
 }
-
-if [[ $BASH_VERSION ]]; then
-    src()
-    {
-        . ~/.bashrc 2>/dev/null
-    }
-fi
 
 por()
 {
@@ -412,33 +405,6 @@ ask()
         y*|Y*) return 0 ;;
         *) return 1
     esac
-}
-
-args()
-{
-    # Bash or ksh93 debugging function for colored display of argv.
-    # Optionally set OFD to the desired output file descriptor.
-    { BASH_XTRACEFD=3 command eval ${BASH_VERSION+"$(</dev/fd/0)"}; } <<-'EOF' 3>/dev/null
-                case $- in *x*)
-                        set +x
-                        trap 'trap RETURN; set -x' RETURN
-                esac
-EOF
-
-    [[ ${OFD-1} == +([0-9]) ]] || return
-
-    if [[ -t ${OFD:-2} ]]; then
-        typeset -A clr=([green]=$(tput setaf 2) [sgr0]=$(tput sgr0))
-    else
-        typeset clr
-    fi
-
-    if ! ${1+false}; then
-        printf -- "${clr[green]}<${clr[sgr0]}%s${clr[green]}>${clr[sgr0]} " "$@"
-        echo
-    else
-        echo 'no args.'
-    fi >&"${OFD:-2}"
 }
 
 fast_chr()

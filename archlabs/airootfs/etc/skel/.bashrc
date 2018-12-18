@@ -37,14 +37,15 @@ shopt -s cmdhist histappend histreedit histverify
 # prompt if file sourcing below fails
 PS1='[\u@\h \W]\$ '
 
-# comment out for a multi-line prompt without user@host
-# and fancy unicode linebreak-wraps
-export PROMPT_LNBR1=''
-export PROMPT_MULTILINE=''
-export PROMPT_USERFMT='\u\[\e[0m\]@\[\e[31m\]\h '
+# uncomment these lines to disable the multi-line prompt
+# add user@host, and remove the unicode line-wrap characters
+
+# export PROMPT_LNBR1=''
+# export PROMPT_MULTILINE=''
+# export PROMPT_USERFMT='\u\[\e[0m\]@\[\e[31m\]\h '
 
 # source shell configs
-for f in "$HOME/.bash/"*?.bash "$HOME/.zsh/generic/"*?.sh; do
+for f in "$HOME/.bash/"*?.bash; do
     . "$f"
 done
 

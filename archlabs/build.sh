@@ -258,6 +258,11 @@ done
 
 mkdir -p $work_dir
 
-for f in make_{pacman_conf,basefs,packages,setup_mkinitcpio,customize_airootfs,boot,boot_extra,syslinux,isolinux,efi,efiboot,prepare,iso}; do
+funcs=(
+make_{pacman_conf,basefs,packages,setup_mkinitcpio,customize_airootfs}
+make_{boot,boot_extra,syslinux,isolinux,efi,efiboot,prepare,iso}
+)
+
+for f in "${funcs[@]}"; do
     run_once $f
 done

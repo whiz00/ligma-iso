@@ -6,42 +6,42 @@ set editing-mode vi
 set show-mode-in-prompt on
 
 $if Bash
-    $if term=linux
-        set vi-ins-mode-string \1\e[?0c\2
-        set vi-cmd-mode-string \1\e[?8c\2
-    $else
-        set vi-ins-mode-string \1\e[6 q\2
-        set vi-cmd-mode-string \1\e[2 q\2
-    $endif
-
     SPACE: magic-space
+$endif
 
-    $if mode=vi
-        set keymap vi-command
-        j: history-search-forward
-        k: history-search-backward
-        "\e[A": history-search-backward
-        "\e[B": history-search-forward
+$if term=linux
+    set vi-ins-mode-string \1\e[?0c\2
+    set vi-cmd-mode-string \1\e[?8c\2
+$else
+    set vi-ins-mode-string \1\e[6 q\2
+    set vi-cmd-mode-string \1\e[2 q\2
+$endif
 
-        set keymap vi-insert
-        TAB: menu-complete
-        "\e[Z": menu-complete-backward
-        "\e[A": history-search-backward
-        "\e[B": history-search-forward
-        "\e[1;5D": backward-word
-        "\e[1;5C": forward-word
-        "\C-l": clear-screen
-        "\C-r": vi-redo
-        "\C-a": beginning-of-line
-        "\C-e": end-of-line
-        "\C-w":backward-kill-word
+$if mode=vi
+    set keymap vi-command
+    j: history-search-forward
+    k: history-search-backward
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
 
-        # Ctrl-Space expands the alias to the left of the cursor
-        "\C-@": alias-expand-line
+    set keymap vi-insert
+    TAB: menu-complete
+    "\e[Z": menu-complete-backward
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+    "\e[1;5D": backward-word
+    "\e[1;5C": forward-word
+    "\C-l": clear-screen
+    "\C-r": vi-redo
+    "\C-a": beginning-of-line
+    "\C-e": end-of-line
+    "\C-w":backward-kill-word
 
-        # Alt-Enter sends a linebreak
-        "\e\C-m": "\026\n"
-    $endif
+    # Ctrl-Space expands the alias to the left of the cursor
+    "\C-@": alias-expand-line
+
+    # Alt-Enter sends a linebreak
+    "\e\C-m": "\026\n"
 $endif
 
 # tab completion menu settings

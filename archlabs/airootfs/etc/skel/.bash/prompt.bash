@@ -4,24 +4,6 @@
 # Simple prompt for bash
 # Written by Nathaniel Maia, 2018
 
-# basic settings
-
-: "${PROMPT_MULTILINE="\\n"}"
-: "${PROMPT_ARROW=">"}" # ➜ ➤ ► ▻ ▸ ▹ ❯
-
-# avoid fancy symbol in the linux terminal
-if [[ $TERM != linux && $PROMPT_MULTILINE ]]; then
-    : "${PROMPT_LNBR1="┌"}"   # ┌ ┏ ╓ ╒
-    : "${PROMPT_LNBR2="└"}"   # └ ┗ ╙ ╘
-fi
-
-# git settings
-: "${GIT_PS1_SHOWUPSTREAM="verbose git"}"
-: "${GIT_PS1_SHOWDIRTYSTATE="true"}"
-: "${GIT_PS1_SHOWCOLORHINTS="true"}"
-: "${GIT_PS1_SHOWSTASHSTATE="true"}"
-: "${GIT_PS1_SHOWUNTRACKEDFILES="true"}"
-
 # shell specific prompts
 
 # using '' not "" means it will be evaluated when used as the prompt NOT when defined (below)
@@ -29,20 +11,18 @@ fi
 
 # add some handy history commands, see `history --help`
 PROMPT_COMMAND='export exitcode=$?; history -n; history -w; history -c; history -r;'
+PROMPT_COMMAND+='__git_ps1 "$(__title)${MAGENTA}${PROMPT_LNBR1}$(__exitcode) '
+PROMPT_COMMAND+='${PROMPT_USERFMT}${MAGENTA}\w$(__ranger)${RESET}" '
+PROMPT_COMMAND+='" ${PROMPT_MULTILINE}${MAGENTA}${PROMPT_LNBR2}${PROMPT_ARROW}'
 
-# root gets a separate prompt with the 'root' in red and a red '#' for the prompt symbol
 if [[ $(whoami) == 'root' ]]; then
-    PROMPT_COMMAND+='__git_ps1 "$(__title)${MAGENTA}${PROMPT_LNBR1}$(__exitcode) ${RED}\u ${MAGENTA}\w$(__ranger)${RESET}" '
-    PROMPT_COMMAND+='" ${PROMPT_MULTILINE}${MAGENTA}${PROMPT_LNBR2}${PROMPT_ARROW} ${RED}\$${RESET} "'
+    PROMPT_COMMAND+=' ${PROMPT_USERCOL}#${RESET} "'
 else
-    PROMPT_COMMAND+='__git_ps1 "$(__title)${MAGENTA}${PROMPT_LNBR1}$(__exitcode) ${MAGENTA}\w$(__ranger)${RESET}" '
-    PROMPT_COMMAND+='" ${PROMPT_MULTILINE}${MAGENTA}${PROMPT_LNBR2}${PROMPT_ARROW} ${CYAN}\$${RESET} "'
+    PROMPT_COMMAND+=' ${PROMPT_USERCOL}\$${RESET} "'
 fi
 
-# PS2 is the command continuation prompt
-: "${PS2="==> "}"
-: "${PS3="choose: "}"
-
+PS2='==> '
+PS3='choose: '
 PS4='|${BASH_SOURCE} ${LINENO}${FUNCNAME[0]:+ ${FUNCNAME[0]}()}|  '
 
 ## ----------------------------------------------------------- ##
@@ -53,13 +33,41 @@ RESET='\[\e[0m\]'     BOLD='\[\e[1m\]'
 RED='\[\e[31m\]'      GREEN='\[\e[32m\]'
 YELLOW='\[\e[1;33m\]' BLUE='\[\e[34m\]'
 MAGENTA='\[\e[35m\]'  CYAN='\[\e[36m\]'
+
 shopt -q promptvars || shopt promptvars >/dev/null 2>&1
+
+# basic settings
+
+: "${PROMPT_MULTILINE="\\n"}"
+
+if [[ $(whoami) == 'root' ]]; then
+    : "${PROMPT_USERCOL="$RED"}"
+    : "${PROMPT_USERFMT="$PROMPT_USERCOL\\u$RESET@$RED\\h "}"
+else
+    : "${PROMPT_USERCOL="$CYAN"}"
+    : "${PROMPT_USERFMT=""}"
+fi
+
+# avoid fancy symbol in the linux terminal
+if [[ $TERM != linux && $PROMPT_MULTILINE ]]; then
+    : "${PROMPT_LNBR1="┌"}"  # ┌ ┏ ╓ ╒
+    : "${PROMPT_LNBR2="└"}"  # └ ┗ ╙ ╘
+    : "${PROMPT_ARROW=">"}"  # ➜ ➤ ► ▻ ▸ ▹ ❯
+fi
+
+# git settings
+: "${GIT_PS1_SHOWUPSTREAM="verbose git"}"
+: "${GIT_PS1_SHOWDIRTYSTATE="true"}"
+: "${GIT_PS1_SHOWCOLORHINTS="true"}"
+: "${GIT_PS1_SHOWSTASHSTATE="true"}"
+: "${GIT_PS1_SHOWUNTRACKEDFILES="true"}"
+
 
 # print last command's exit code in red
 __exitcode()
 {
     # shellcheck disable=2154
-    (( exitcode == 0 )) || printf " \e[31m($?)"
+    (( exitcode == 0 )) || printf " \e[31m$?"
 }
 
 # print blue '(r)' when in a nested ranger shell
