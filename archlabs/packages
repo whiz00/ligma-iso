@@ -1,22 +1,21 @@
-# base
-arch-install-scripts
+#base
 b43-firmware
 b43-fwcutter
 broadcom-wl
 clonezilla
 dhclient
 dhcpcd
+efibootmgr
 ethtool
 exfat-utils
 f2fs-tools
-fakeroot
 gptfdisk
 grub
+os-prober
 vim
 hdparm
 ipw2100-fw
 ipw2200-fw
-laptop-detect
 nfs-utils
 nilfs-utils
 ntfs-3g
@@ -25,90 +24,47 @@ parted
 refind-efi
 rsync
 sdparm
-smartmontools
 sudo
+smartmontools
 wget
 wireless_tools
 wpa_actiond
 xl2tpd
 
-# xorg
-mesa
-xorg-apps
-xorg-drivers
-xorg-server
-xorg-xinit
-
-# installer
-dialog
-parted
-os-prober
-wipe
-
-# codecs
+#codecs
 alsa-firmware
 alsa-lib
 alsa-plugins
-ffmpeg
-gst-libav
-gst-plugins-base
-gst-plugins-good
-gstreamer
-libmad
-libmatroska
 pulseaudio
 pulseaudio-alsa
-
-# xfce
-xfce4-settings
-xfce4-power-manager
-gtk-engine-murrine
 
 # network
 networkmanager
 wireless-regdb
 wpa_supplicant
 
-# filesystem
+#filesystem
 gvfs
-gvfs-afc
-gvfs-mtp
-gvfs-nfs
-tumbler
 
-# utilities
-gnome-keyring
+#utilities
 lm_sensors
 lsb-release
-numlockx
 p7zip
 pamixer
-playerctl
-polkit-gnome
 reflector
 scrot
 unrar
-volumeicon
-wmctrl
-xclip
-xdotool
 
-# applications
-arandr
-compton
-dunst
-feh
-gsimplecal
+#applications
 htop
-nitrogen
-pavucontrol
 ranger
 w3m
 
-# fonts
+#fonts
 terminus-font
 ttf-dejavu
 
-# archlabs
-archlabs
+#archlabs
+archlabs-keyring
+archlabs-scripts
 archlabs-installer

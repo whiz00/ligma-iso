@@ -49,7 +49,7 @@ else
 fi
 
 # avoid fancy symbol in the linux terminal
-if [[ $TERM != linux && $PROMPT_MULTILINE ]]; then
+if [[ $PROMPT_MULTILINE ]]; then
     : "${PROMPT_LNBR1="┌"}"  # ┌ ┏ ╓ ╒
     : "${PROMPT_LNBR2="└"}"  # └ ┗ ╙ ╘
     : "${PROMPT_ARROW=">"}"  # ➜ ➤ ► ▻ ▸ ▹ ❯

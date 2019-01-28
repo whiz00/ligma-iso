@@ -51,23 +51,23 @@ zle -N down-line-or-beginning-search
 # use vi-mode
 bindkey -v
 
-# allow v to edit the command line (standard behaviour)
+# v to edit the command line (standard behaviour)
 autoload -Uz edit-command-line
 bindkey -M vicmd 'v' edit-command-line
 
-# allow ctrl-p, ctrl-n for navigate history (standard behaviour)
+# Ctrl-p/n for navigate history (standard behaviour)
 bindkey '^P' up-history
 bindkey '^N' down-history
 
-# allow ctrl-h, ctrl-w, ctrl-? for char and word deletion (standard behaviour)
+# Ctrl-h/w/? for char and word deletion (standard behaviour)
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 
-# allow ctrl-/ to perform backward search in history
+# Ctrl-/ to perform backward search in history
 bindkey '^_' history-incremental-search-backward
 
-# allow ctrl-a and ctrl-e to move to beginning/end of line
+# Ctrl-a/e to move to beginning/end of line
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 
@@ -75,14 +75,16 @@ bindkey '^e' end-of-line
 bindkey "^K" up-line-or-beginning-search
 bindkey "^J" down-line-or-beginning-search
 
-# Ctrl-z now toggles
+# Ctrl-z toggles control flow
 bindkey '^Z' fancy-ctrl-z
 
-# Alt-Enter to enter a linebreak without running the command
+# Alt-Enter to enter a line break without running the command
 bindkey '^[^M' self-insert-unmeta
 
+# space expands aliases
 bindkey -M viins " " globalias
 bindkey -M viins "^ " magic-space
 bindkey -M isearch " " magic-space
 
+# shorter timeouts for escape keys
 export KEYTIMEOUT=1

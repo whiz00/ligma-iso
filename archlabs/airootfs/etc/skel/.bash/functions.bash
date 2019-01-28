@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/bash
 
 # shell helper functions
 # mostly written by Nathaniel Maia, some pilfered from around the web
@@ -14,6 +14,11 @@ unalias cd >/dev/null 2>&1
 cd()
 {
     builtin cd "$@" && command ls --color=auto -F
+}
+
+src()
+{
+    . ~/.bashrc 2>/dev/null
 }
 
 por()
@@ -36,6 +41,18 @@ pacsearch()
         -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
         -e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
         -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g')"
+}
+
+mir()
+{
+    if hash reflector >/dev/null 2>&1; then
+        su -c 'reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
+    else
+        local pg="https://www.archlinux.org/mirrorlist/?country=US&country=CA&use_mirror_status=on"
+        su -c "printf 'ranking the mirror list...\n'; curl -s '$pg' |
+            sed -e 's/^#Server/Server/' -e '/^#/d' |
+            rankmirrors -v -t -n 10 - > /etc/pacman.d/mirrorlist"
+    fi
 }
 
 tmuxx()
@@ -327,17 +344,6 @@ arc()
     esac
 }
 
-vbump()
-{
-    [[ -f PKGBUILD ]] || return 1
-    # shellcheck disable=1091
-    . PKGBUILD
-    # shellcheck disable=2154
-    new=$((pkgrel + 1))
-    sed -i "s/^pkgrel=.*/pkgrel=$new/" PKGBUILD
-    printf ">>>  Old pkgrel was: %s .. Updated to: %s\n" "$pkgrel" "$new"
-}
-
 killp()
 {
     local pid name sig="-TERM"   # default signal
@@ -407,6 +413,33 @@ ask()
     esac
 }
 
+args()
+{
+    # Bash or ksh93 debugging function for colored display of argv.
+    # Optionally set OFD to the desired output file descriptor.
+    { BASH_XTRACEFD=3 eval ${BASH_VERSION+"$(</dev/fd/0)"}; } <<-'EOF' 3>/dev/null
+                case $- in *x*)
+                        set +x
+                        trap 'trap RETURN; set -x' RETURN
+                esac
+EOF
+
+    [[ ${OFD-1} == +([0-9]) ]] || return
+
+    if [[ -t ${OFD:-2} ]]; then
+        typeset -A clr=([green]=$(tput setaf 2) [sgr0]=$(tput sgr0))
+    else
+        typeset clr
+    fi
+
+    if ! ${1+false}; then
+        printf -- "${clr[green]}<${clr[sgr0]}%s${clr[green]}>${clr[sgr0]} " "$@"
+        echo
+    else
+        echo 'no args.'
+    fi >&"${OFD:-2}"
+}
+
 fast_chr()
 {
     local __octal
@@ -446,19 +479,4 @@ EOF
     # shellcheck disable=2034
     fast_chr $(( t = p | c ))
     echo -n "$REPLY$s"
-}
-
-
-genecho()
-{
-    # on the fly echo script generation with quoting
-    {
-        printf "#!/bin/bash\n\n"
-        printf "echo "
-        for arg; do
-            arg=${arg/\'/\'\\\'\'}
-            printf "'%s' " "${arg}"
-        done
-        printf "\n"
-    } >s2
 }

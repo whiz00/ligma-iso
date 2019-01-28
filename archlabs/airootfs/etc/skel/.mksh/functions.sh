@@ -43,6 +43,18 @@ pacsearch()
         -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g')"
 }
 
+mir()
+{
+    if hash reflector >/dev/null 2>&1; then
+        su -c 'reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
+    else
+        local pg="https://www.archlinux.org/mirrorlist/?country=US&country=CA&use_mirror_status=on"
+        su -c "printf 'ranking the mirror list...\n'; curl -s '$pg' |
+            sed -e 's/^#Server/Server/' -e '/^#/d' |
+            rankmirrors -v -t -n 10 - > /etc/pacman.d/mirrorlist"
+    fi
+}
+
 tmuxx()
 {
     session="${1:-main}"
@@ -309,17 +321,6 @@ arc()
     esac
 }
 
-vbump()
-{
-    [[ -f PKGBUILD ]] || return 1
-    # shellcheck disable=1091
-    . PKGBUILD
-    # shellcheck disable=2154
-    new=$((pkgrel + 1))
-    sed -i "s/^pkgrel=.*/pkgrel=$new/" PKGBUILD
-    printf ">>>  Old pkgrel was: %s .. Updated to: %s\n" "$pkgrel" "$new"
-}
-
 killp()
 {
     local pid name sig="-TERM"   # default signal
@@ -457,17 +458,3 @@ EOF
     echo -n "$REPLY$s"
 }
 
-
-genecho()
-{
-    # on the fly echo script generation with quoting
-    {
-        printf "#!/bin/bash\n\n"
-        printf "echo "
-        for arg; do
-            arg=${arg/\'/\'\\\'\'}
-            printf "'%s' " "${arg}"
-        done
-        printf "\n"
-    } >s2
-}

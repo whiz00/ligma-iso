@@ -8,7 +8,7 @@
 # Boolean    -  <ON|OFF>
 # Attribute  -  (foreground,background,highlight?)
 
-aspect = 14
+aspect = 25
 
 separate_widget = ""
 
@@ -30,13 +30,13 @@ title_color = (RED,BLACK,ON)
 border_color = (WHITE,BLACK,ON)
 border2_color = border_color
 
-button_active_color = (WHITE,BLUE,ON)
+button_active_color = (BLACK,WHITE,ON)
 button_inactive_color = (WHITE,BLACK,ON)
 
-button_key_active_color = (RED,BLUE,ON)
+button_key_active_color = (BLACK,WHITE,ON)
 button_key_inactive_color = (RED,BLACK,ON)
 
-button_label_active_color = (WHITE,BLUE,ON)
+button_label_active_color = (BLACK,WHITE,ON)
 button_label_inactive_color = (WHITE,BLACK,ON)
 
 inputbox_color = (WHITE,BLACK,ON)
@@ -57,17 +57,17 @@ menubox_color = (WHITE,BLACK,ON)
 menubox_border_color = (WHITE,BLACK,ON)
 menubox_border2_color = menubox_border_color
 
-item_color = (WHITE,BLACK,OFF)
-item_selected_color = (WHITE,BLUE,ON)
+item_color = (WHITE,BLACK,ON)
+item_selected_color = (BLACK,WHITE,ON)
 
-tag_color = (WHITE,BLACK,OFF)
-tag_selected_color = (WHITE,BLUE,ON)
+tag_color = (WHITE,BLACK,ON)
+tag_selected_color = (BLACK,WHITE,ON)
 
 tag_key_color = (RED,BLACK,ON)
-tag_key_selected_color = (WHITE,BLUE,ON)
+tag_key_selected_color = (BLACK,WHITE,ON)
 
 check_color = (WHITE,BLACK,ON)
-check_selected_color = (WHITE,BLUE,ON)
+check_selected_color = (BLACK,WHITE,ON)
 
 uarrow_color = (GREEN,BLACK,ON)
 darrow_color = (GREEN,BLACK,ON)
@@ -75,5 +75,6 @@ darrow_color = (GREEN,BLACK,ON)
 itemhelp_color = (BLACK,WHITE,ON)
 
 form_text_color = (WHITE,BLACK,ON)
-form_active_text_color = (WHITE,BLUE,ON)
+form_active_text_color = (BLACK,WHITE,ON)
 form_item_readonly_color = (WHITE,BLACK,ON)
+

@@ -3,7 +3,7 @@
 $include /etc/inputrc
 
 set editing-mode vi
-set show-mode-in-prompt on
+set show-mode-in-prompt On
 
 $if Bash
     SPACE: magic-space
@@ -49,11 +49,11 @@ set colored-stats On
 set visible-stats On
 set page-completions Off
 set skip-completed-text On
-set print-completions-horizontally On
 set show-all-if-ambiguous On
-set mark-symlinked-directories On
-set colored-completion-prefix On
-set menu-complete-display-prefix On
 set completion-ignore-case On
 set enable-bracketed-paste On
 set echo-control-characters Off
+set colored-completion-prefix On
+set mark-symlinked-directories On
+set menu-complete-display-prefix On
+set print-completions-horizontally On

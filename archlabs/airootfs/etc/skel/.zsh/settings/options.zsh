@@ -1,38 +1,20 @@
 #!/bin/zsh
 
-# expand escapes within the prompt
-setopt prompt_subst
-
-# allow comments in the shell
-setopt interactivecomments
-
-# Ctrl-d doesn't exit the terminal
-setopt ignoreeof
+# expand escapes within the prompt and allow comments
+setopt prompt_subst interactivecomments
 
 # better cd handling
-setopt autocd
-setopt auto_pushd
-setopt pushdminus
-setopt pushd_ignore_dups
+setopt autocd autopushd pushdminus pushdsilent pushdtohome pushd_ignore_dups
 
 # completion
-setopt nonomatch
-setopt extendedglob
-setopt completealiases
+setopt correct nonomatch extendedglob completealiases
+setopt auto_menu always_to_end complete_in_word auto_param_slash
 
 # history
-setopt hist_verify
-setopt share_history
-setopt append_history
-setopt extended_history
-setopt hist_ignore_dups
-setopt hist_save_no_dups
-setopt hist_ignore_space
-setopt inc_append_history
-setopt hist_ignore_all_dups
-setopt hist_expire_dups_first
+setopt hist_verify share_history append_history extended_history
+setopt hist_ignore_dups hist_save_no_dups hist_ignore_space
+setopt inc_append_history hist_ignore_all_dups hist_expire_dups_first
 
 # job control
-setopt auto_continue
-setopt long_list_jobs
+setopt auto_continue long_list_jobs
 

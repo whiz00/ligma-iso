@@ -47,13 +47,17 @@ _preexec_update_git()
 
 _precmd_update_git()
 {
-    [[ $__EXECUTED_GIT_COMMAND ]] && { _update_git; unset __EXECUTED_GIT_COMMAND; }
+    if (( __EXECUTED_GIT_COMMAND )); then
+        _update_git
+        __EXECUTED_GIT_COMMAND=0
+    fi
 }
 
 _update_git()
 {
-    unset __CURRENT_GIT_STATUS
-    _GIT_STATUS=$(git status --porcelain --branch &>/dev/null | $GIT_PROMPT_DIR/$GIT_PROMPT_EXECUTABLE/gitstatus)
+    __CURRENT_GIT_STATUS=""
+    _GIT_STATUS=$(git status --porcelain --branch &>/dev/null |
+        $GIT_PROMPT_DIR/$GIT_PROMPT_EXECUTABLE/gitstatus)
     __CURRENT_GIT_STATUS=("${(@s: :)_GIT_STATUS}")
     GIT_BRANCH=$__CURRENT_GIT_STATUS[1]
     GIT_AHEAD=$__CURRENT_GIT_STATUS[2]
@@ -71,7 +75,9 @@ _update_git()
 
 _git_status()
 {
+    git rev-parse --is-inside-work-tree >/dev/null 2>&1 && __EXECUTED_GIT_COMMAND=1
     _precmd_update_git
+
     if [[ $__CURRENT_GIT_STATUS ]]; then
         local gstat="%f$GIT_PROMPT_PREFIX$GIT_PROMPT_BRANCH$GIT_BRANCH%f"
 

@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/usr/bin/zsh
 
-# shell helper functions
-# mostly written by Nathaniel Maia, some pilfered from around the web
+#     shell helper functions
+# most written by Nathaniel Maia
+# some pilfered from around the web
 
 # better ls and cd
 unalias ls >/dev/null 2>&1
@@ -16,9 +17,29 @@ cd()
     builtin cd "$@" && command ls --color=auto -F
 }
 
-src()
+f()
 {
-    . ~/.bashrc 2>/dev/null
+    hash nnn >/dev/null 2>&1 || return 1
+    : ${NNN_TMPFILE="/tmp/nnn"}
+    export NNN_TMPFILE
+    nnn "$@"
+    if [[ -f $NNN_TMPFILE ]]; then
+        . $NNN_TMPFILE
+        rm $NNN_TMPFILE
+    fi
+}
+
+mir()
+{
+    if hash reflector >/dev/null 2>&1; then
+        su -c 'reflector --score 100 --fastest 10 --sort rate \
+            --save /etc/pacman.d/mirrorlist --verbose'
+    else
+        local pg="https://www.archlinux.org/mirrorlist/?country=US&country=CA&use_mirror_status=on"
+        su -c "printf 'ranking the mirror list...\n'; curl -s '$pg' |
+            sed -e 's/^#Server/Server/' -e '/^#/d' |
+            rankmirrors -v -t -n 10 - > /etc/pacman.d/mirrorlist"
+    fi
 }
 
 por()
@@ -34,13 +55,14 @@ pss()
     select pkg in $(pacman -Ssq "$1"); do sudo pacman -S $pkg; break; done
 }
 
-pacsearch()
+psss()
 {
-    echo -e "$(pacman -Ss "$@" | sed \
-        -e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
-        -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
-        -e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
-        -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g')"
+    printf "$(pacman -Ss "$@" |
+        sed -e 's#core/.*#\\033[1;31m&\\033[0;37m#g' \
+            -e 's#extra/.*#\\033[0;32m&\\033[0;37m#g' \
+            -e 's#community/.*#\\033[1;35m&\\033[0;37m#g' \
+            -e 's#^.*/.* [0-9].*#\\033[0;36m&\\033[0;37m#g'
+    )\n"
 }
 
 tmuxx()
@@ -49,12 +71,11 @@ tmuxx()
     if ! grep -q "$session" <<< "$(tmux ls 2>/dev/null | awk -F':' '{print $1}')"; then
         tmux new -d -s "$session"
         tmux neww
-        tmux neww
-        tmux splitw -h
+        tmux neww weechat
         tmux selectw -t 1
         tmux -2 attach -d
     elif [[ -z $TMUX ]]; then
-        session_id="$(date +%Y%m%d%H%M%S)"
+        session_id="$(date +%d%H%M%S)"
         tmux new-session -d -t "$session" -s "$session_id"
         tmux attach-session -t "$session_id" \; set-option destroy-unattached
     fi
@@ -93,6 +114,19 @@ surfs()
     ) & disown
 }
 
+ranger()
+{
+    local dir tmpf
+    [[ $RANGER_LEVEL && $RANGER_LEVEL -gt 2 ]] && exit 0
+    local rcmd="command ranger"
+    [[ $TERM == 'linux' ]] && rcmd="command ranger --cmd='set colorscheme default'"
+    tmpf="$(mktemp -t tmp.XXXXXX)"
+    eval "$rcmd --choosedir='$tmpf' '${*:-$(pwd)}'"
+    [[ -f $tmpf ]] && dir="$(cat "$tmpf")"
+    [[ -e $tmpf ]] && rm -f "$tmpf"
+    [[ -z $dir || $dir == "$PWD" ]] || builtin cd "${dir}" || return 0
+}
+
 flac_to_mp3()
 {
     for i in "${1:-.}"/*.flac; do
@@ -122,7 +156,7 @@ _fetchpr()
     # shellcheck disable=2154
     [[ $ZSH_VERSION ]] && program=${funcstack#_fetchpr} || program='_fetchpr'
     if (( $# != 2 && $# != 3 )); then
-        printf "usage: %s <id> <branch> [remote]" "$program"
+        printf "usage: %s <id> <branch> [remote]\n" "$program"
         return 1
     else
         ref=$1
@@ -138,7 +172,7 @@ _fetchpr()
 
 sloc()
 {
-    [[ $# -eq 1 && -r $1 ]] || { printf "Usage: sloc <file>"; return 1; }
+    [[ $# -eq 1 && -r $1 ]] || { printf "Usage: sloc <file>\n"; return 1; }
     if [[ $1 == *.vim ]]; then
         awk '!/^[[:blank:]]*("|^$)/' "$1" | wc -l
     elif [[ $1 =~ (\.c|\.h|\.j) ]]; then
@@ -188,14 +222,14 @@ sanitize()
     chmod -R u=rwX,g=rX,o= "$@"
 }
 
-mp()
+myps()
 {
     ps "$@" -u $USER -o pid,%cpu,%mem,bsdtime,command
 }
 
 pp()
 {
-    mp f | awk '!/awk/ && $0~var' var=${1:-".*"}
+    myps f | awk '!/awk/ && $0~var' var=${1:-".*"}
 }
 
 ff()
@@ -208,40 +242,25 @@ fe()
     find . -type f -iname '*'"${1:-}"'*' -exec ${2:-file} {} \;
 }
 
-ranger()
-{
-    local dir tmpf
-    [[ $RANGER_LEVEL && $RANGER_LEVEL -gt 2 ]] && exit 0
-    local rcmd="command ranger"
-    [[ $TERM == 'linux' ]] && rcmd="command ranger --cmd='set colorscheme default'"
-    tmpf="$(mktemp -t tmp.XXXXXX)"
-    eval "$rcmd --choosedir='$tmpf' '${*:-$(pwd)}'"
-    [[ -f $tmpf ]] && dir="$(cat "$tmpf")"
-    [[ -e $tmpf ]] && rm -f "$tmpf"
-    [[ -z $dir || $dir == "$PWD" ]] || builtin cd "${dir}" || return 0
-}
-
 resize()
 {
-    hash convert >/dev/null 2>&1 || { printf "This function requires imagemagick\n"; return 1; }
-    local size="$1"; shift
-    if [[ $size =~ [1-9]*x[1-9] && $# -ge 1 ]]; then
-        if [[ $# -gt 1 || -d "$1" ]]; then
-            if [[ -d "$1" ]]; then
-                for i in "$1"/*; do
-                    [[ $i =~ (.jpg|.png) ]] && convert "$i" -resize "$1" "$i"
-                done
-            else
-                for i in "$@"; do
-                    [[ -f $i && $i =~ (.jpg|.png) ]] && convert "$i" -resize "$1" "$i"
-                done
-            fi
-        else
-            [[ -f $1 && $1 =~ (.jpg|.png) ]] && convert "$1" -resize "$1" "$1"
-        fi
+    if ! hash convert >/dev/null 2>&1; then
+        printf "error: requires imagemagick\n"
+    elif [[ $1 =~ (-h|--help) || ! ($# -ge 2 && $1 =~ [1-9][0-9]*x[1-9][0-9]*) ]]; then
+        printf "usage: resize [size] [path(s)]\n\n"
+        printf "note: when path is a directory convert images within\n"
     else
-        printf "Usage: resize [size] [directory or file(s)]\n\n%s\n" \
-            "When given a directory, all images within will be converted"
+        local size="$1"
+        shift
+        for i in "$@"; do
+            if [[ -d "$i" ]]; then
+                for j in $(find "$i" -maxdepth 1 -type f -name '*.jpg' -o -name '*.png' 2>/dev/null); do
+                    convert "$j" -verbose -resize "$size" "$j"
+                done
+            elif [[ -f $i && $i =~ (.jpg|.png) ]]; then
+                convert "$i" -verbose -resize "$size" "$i"
+            fi
+        done
     fi
 }
 
@@ -332,74 +351,87 @@ arc()
     esac
 }
 
-vbump()
-{
-    [[ -f PKGBUILD ]] || return 1
-    # shellcheck disable=1091
-    . PKGBUILD
-    # shellcheck disable=2154
-    new=$((pkgrel + 1))
-    sed -i "s/^pkgrel=.*/pkgrel=$new/" PKGBUILD
-    printf ">>>  Old pkgrel was: %s .. Updated to: %s\n" "$pkgrel" "$new"
-}
-
 killp()
 {
     local pid name sig="-TERM"   # default signal
     [[ $# -lt 1 || $# -gt 2 ]] && printf "Usage: killp [-SIGNAL] pattern" && return 1
     [[ $# -eq 2 ]] && sig=$1
-    for pid in $(mp | awk '!/awk/ && $0~pat { print $1 }' pat=${!#}); do
-        name=$(mp | awk '$1~var { print $5 }' var=$pid)
+    for pid in $(myps | awk '!/awk/ && $0~pat { print $1 }' pat=${!#}); do
+        name=$(myps | awk '$1~var { print $5 }' var=$pid)
         ask "Kill process $pid <$name> with signal $sig?" && kill $sig $pid
     done
 }
 
-mdf()
+mydf()
 {
     local cols
     cols=$(( ${COLUMNS:-$(tput cols)} / 3 ))
+    setopt KSHARRAYS
     for fs in "$@"; do
         [[ ! -d $fs ]] && printf "%s :No such file or directory" "$fs" && continue
         local info=($(command df -P $fs | awk 'END{ print $2,$3,$5 }'))
         local free=($(command df -Pkh $fs | awk 'END{ print $4 }'))
-        local nbstars=$((cols * info[1] / info[0]))
+        local nbstars=$((cols * ${info[1]} / ${info[0]} ))
         local out="["
         for ((i=0; i<cols; i++)); do
             [[ $i -lt $nbstars ]] && out=$out"*" || out=$out"-"
         done
-        out="${info[2]} $out] (${free[*]} free on $fs)"
-        printf "%s" "$out"
+        out="${info[-1]} $out] (${free[*]} free on $fs)"
+        printf "%s\n" "$out"
     done
+    unsetopt KSHARRAYS
+    return 0
 }
 
-mip()
+myip()
 {
     local ip
-    ip=$(/usr/bin/ifconfig "$(ifconfig | awk -F: '/RUNNING/ && !/LOOP/ {print $1}')" |
-        awk '/inet/ { print $2 } ' | sed -e s/addr://)
-    printf "%s" "${ip:-Not connected}"
+    ip=$(ip -4 addr show $(ip -4 addr |
+        awk '/state UP/ && !/LOOP/ {gsub(/:/, ""); print $2}') |
+        awk '/inet/ {print $2}')
+    printf "%s\n" "${ip:-Not connected}"
 }
 
 ii()
 {
-    echo -e "\nYou are logged on \e[1;31m$HOSTNAME"
-    echo -e "\n\e[1;31mAdditionnal information:\e[m " ; uname -a
-    echo -e "\n\e[1;31mUsers logged on:\e[m "         ; w -hs | awk '{print $1}' | sort | uniq
-    echo -e "\n\e[1;31mCurrent date:\e[m "            ; date
-    echo -e "\n\e[1;31mMachine stats:\e[m "           ; uptime
-    echo -e "\n\e[1;31mMemory stats:\e[m "            ; free
-    echo -e "\n\e[1;31mDiskspace:\e[m "               ; mdf / $HOME
-    echo -e "\n\e[1;31mLocal IP Address:\e[m"         ; mip
-    echo -e "\n\e[1;31mOpen connections:\e[m "        ; netstat -pan --inet;
-    echo
+    printf "\n\e[1;31mUsers logged in:\e[m "
+    w -hs | awk '{print $1}' | sort | uniq
+
+    printf "\n\e[1;31mLogged in on:\e[m "
+    hostname || printf "%s\n" "${HOST:-$HOSTNAME}"
+
+    printf "\n\e[1;31mCurrent date:\e[m "
+    date
+
+    printf "\n\e[1;31mMachine stats:\e[m"
+    uptime
+
+    printf "\n\e[1;31mKernel stats:\e[m "
+    uname -srnmo
+
+    printf "\n\e[1;31mMemory stats:\e[m\n"
+    free
+
+    printf "\n\e[1;31mDiskspace:\e[m\n"
+    mydf / /media/wdblue
+
+    printf "\n\e[1;31mLocal IP Address:\e[m\n"
+    myip
+
+    if hash netstat >/dev/null 2&1; then
+        printf "\n\e[1;31mOpen Connections:\e[m\n"
+        netstat -pan --inet
+    fi
+    return 0
 }
 
 rep()
 {
     local max=$1
     shift
+    local cmd="$*"
     for (( i=0; i<max; i++ )); do
-        eval "$@"
+        eval "$cmd"
     done
 }
 
@@ -410,33 +442,6 @@ ask()
         y*|Y*) return 0 ;;
         *) return 1
     esac
-}
-
-args()
-{
-    # Bash or ksh93 debugging function for colored display of argv.
-    # Optionally set OFD to the desired output file descriptor.
-    { BASH_XTRACEFD=3 eval ${BASH_VERSION+"$(</dev/fd/0)"}; } <<-'EOF' 3>/dev/null
-                case $- in *x*)
-                        set +x
-                        trap 'trap RETURN; set -x' RETURN
-                esac
-EOF
-
-    [[ ${OFD-1} == +([0-9]) ]] || return
-
-    if [[ -t ${OFD:-2} ]]; then
-        typeset -A clr=([green]=$(tput setaf 2) [sgr0]=$(tput sgr0))
-    else
-        typeset clr
-    fi
-
-    if ! ${1+false}; then
-        printf -- "${clr[green]}<${clr[sgr0]}%s${clr[green]}>${clr[sgr0]} " "$@"
-        echo
-    else
-        echo 'no args.'
-    fi >&"${OFD:-2}"
 }
 
 fast_chr()
@@ -478,19 +483,4 @@ EOF
     # shellcheck disable=2034
     fast_chr $(( t = p | c ))
     echo -n "$REPLY$s"
-}
-
-
-genecho()
-{
-    # on the fly echo script generation with quoting
-    {
-        printf "#!/bin/bash\n\n"
-        printf "echo "
-        for arg; do
-            arg=${arg/\'/\'\\\'\'}
-            printf "'%s' " "${arg}"
-        done
-        printf "\n"
-    } >s2
 }

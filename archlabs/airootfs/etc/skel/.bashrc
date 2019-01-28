@@ -4,7 +4,7 @@
 [[ $- == *i* && $BASH_VERSION ]] && SHELL=/bin/bash || return 0
 
 # set some defaults
-export MANWIDTH=100
+export MANWIDTH=90
 export HISTSIZE=10000
 export HISTIGNORE="q:f:v"
 

@@ -4,21 +4,15 @@
 [[ $- == *i* && $ZSH_VERSION ]] && SHELL=/usr/bin/zsh || return 0
 
 # set some defaults
-export MANWIDTH=100
+export MANWIDTH=90
 export HISTSIZE=10000
 export SAVEHIST=10000
 
 # path to the framework root directory
-SIMPL_ZSH_DIR=~/.zsh
-
-# reduce system calls for timezone
-typeset -gx TZ=:/etc/localtime
+SIMPL_ZSH_DIR=$HOME/.zsh
 
 # add ~/bin to the path if not already, the -U flag means 'unique'
-typeset -U path=(~/bin $path[@])
-
-# strip empty fields from the path
-path=("${path[@]:#}")
+typeset -U path=($HOME/bin "${path[@]:#}")
 
 # used internally by zsh for loading themes and completions
 typeset -U fpath=("$SIMPL_ZSH_DIR/"{completion,themes} $fpath)
