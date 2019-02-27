@@ -6,8 +6,8 @@ set -eu
 iso_name=archlabs
 iso_label="AL_$(date +%Y%m)"
 iso_version="$(date +%Y.%m.%d)"
-iso_publisher="ArchLabs Linux <https://archlabslinux.com>"
-iso_application="ArchLabs Linux Live/Rescue"
+iso_publisher="Ligma Linux>"
+iso_application="Ligma Linux Live"
 install_dir=arch
 work_dir=work
 out_dir=out
