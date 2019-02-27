@@ -64,7 +64,7 @@ w3m
 terminus-font
 ttf-dejavu
 
-#archlabs
-archlabs-keyring
-archlabs-scripts
-archlabs-installer
+#Ligma packages
+ligma-keyring
+ligma-scripts
+ligma-installer

@@ -3,7 +3,7 @@
 
 set -eu
 
-iso_name=archlabs
+iso_name=ligma
 iso_label="AL_$(date +%Y%m)"
 iso_version="$(date +%Y.%m.%d)"
 iso_publisher="Ligma Linux>"

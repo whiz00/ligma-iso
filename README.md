@@ -10,14 +10,13 @@ The package `archiso` must be intalled since it is used in the build script. Lik
 
     git clone --depth 1 https://github.com/whiz00/ligma-iso $HOME/ligma-iso
 
-2. Read and run the setup script. Build files must be owned by root and the pacman chache will be cleared in order for the iso to be created properly.
+2. Run the build script to create the iso. Build files must be owned by root and the pacman cache should be cleared in order to avoid problems building the iso. This is handled in the script.
 
     cd $HOME/ligma-iso
-    sudo ./setup.sh $USER
+    sudo ./run.sh $USER
 
-3. Last step is to build the iso (-v flag for verbose output). When the script is finished the iso will be located in a directory called 'out'
 
-    sudo ./build.sh -v
+When the script is finished the iso will be located in a directory called 'out'
 
 ### Customization
 
