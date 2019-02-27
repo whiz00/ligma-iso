@@ -1,4 +1,5 @@
 #!/bin/bash
-mkdir -pv $HOME/ligma-iso/build
-cp -r $HOME/ligma-iso/ $HOME/ligma-iso/build
+dir="$(/home/$1/ligma-iso)"
+mkdir -pv $dir/build
+sudo cp -r $dir $dir/build
 pacman -Scc
